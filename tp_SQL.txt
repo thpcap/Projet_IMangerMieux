@@ -1,10 +1,26 @@
-SELECT utilisateur.NOM,utilisateur.PRENOM,utilisateur.MAIL FROM utilisateur ORDER BY utilisateur.DATE_DE_NAISSANCE ASCù
+SELECT utilisateur.NOM,utilisateur.PRENOM,utilisateur.MAIL FROM utilisateur ORDER BY utilisateur.DATE_DE_NAISSANCE ASC;
 [{"NOM":"N\/A","PRENOM":"N\/A","MAIL":"admin@root.SU"},
  {"NOM":"benjane","PRENOM":"yassir","MAIL":"ya@gmail.com"},
  {"NOM":"CAPRON","PRENOM":"Thomas","MAIL":"thomascapron59@free.fr"},
  {"NOM":"UTILP1","PRENOM":"Util1","MAIL":"test@test.test"}]
 
-SELECT utilisateur.NOM,utilisateur.PRENOM,utilisateur.MAIL from utilisateur WHERE utilisateur.NOM='CAPRON'OR utilisateur.PRENOM='yassir'
+SELECT utilisateur.NOM,utilisateur.PRENOM,utilisateur.MAIL from utilisateur WHERE utilisateur.NOM='CAPRON'OR utilisateur.PRENOM='yassir';
 [{"NOM":"CAPRON","PRENOM":"Thomas","MAIL":"thomascapron59@free.fr"},
  {"NOM":"benjane","PRENOM":"yassir","MAIL":"ya@gmail.com"}]
- 
+
+SELECT utilisateur.NOM,utilisateur.PRENOM,utilisateur.MAIL from utilisateur WHERE utilisateur.MAIL='thomascapron59@free.fr';
+[{"NOM":"CAPRON","PRENOM":"Thomas","MAIL":"thomascapron59@free.fr"}]
+
+Nous pouvons améliorer les recherches en ajoutant des condition ou en rajoutant des ORDER BY ou GROUP BY...
+
+SELECT repas.ID_ALIMENT,repas.DATE,repas.ID_ALIMENT FROM repas WHERE repas.DATE BETWEEN '2024-03-10 00:00:00' AND NOW() ORDER by repas.DATE ASC
+[{"ID_ALIMENT":"4","DATE":"2024-10-17 13:00:00"},
+ {"ID_ALIMENT":"4","DATE":"2024-10-17 13:18:00"},
+ {"ID_ALIMENT":"1","DATE":"2024-10-18 00:00:00"}]
+
+SELECT aliment.LABEL_ALIMENT FROM aliment INNER JOIN repas ON repas.ID_ALIMENT=aliment.ID_ALIMENT INNER JOIN utilisateur ON utilisateur.LOGIN=repas.LOGIN WHERE utilisateur.LOGIN='ADMIN';
+{"LABEL_ALIMENT":"Pomme"}
+
+SELECT utilisateur.NOM, utilisateur.PRENOM,repas.DATE,aliment.LABEL_ALIMENT,repas.QUANTITE FROM aliment INNER JOIN repas ON repas.ID_ALIMENT=aliment.ID_ALIMENT INNER JOIN utilisateur ON utilisateur.LOGIN=repas.LOGIN WHERE utilisateur.LOGIN='ADMIN';
+[{"NOM":"N\/A","PRENOM":"N\/A","DATE":"2000-01-01 00:30:10","LABEL_ALIMENT":"Pomme","QUANTITE":"80"}]
+
