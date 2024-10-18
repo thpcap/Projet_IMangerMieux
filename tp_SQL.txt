@@ -1,0 +1,10 @@
+SELECT utilisateur.NOM,utilisateur.PRENOM,utilisateur.MAIL FROM utilisateur ORDER BY utilisateur.DATE_DE_NAISSANCE ASCù
+[{"NOM":"N\/A","PRENOM":"N\/A","MAIL":"admin@root.SU"},
+ {"NOM":"benjane","PRENOM":"yassir","MAIL":"ya@gmail.com"},
+ {"NOM":"CAPRON","PRENOM":"Thomas","MAIL":"thomascapron59@free.fr"},
+ {"NOM":"UTILP1","PRENOM":"Util1","MAIL":"test@test.test"}]
+
+SELECT utilisateur.NOM,utilisateur.PRENOM,utilisateur.MAIL from utilisateur WHERE utilisateur.NOM='CAPRON'OR utilisateur.PRENOM='yassir'
+[{"NOM":"CAPRON","PRENOM":"Thomas","MAIL":"thomascapron59@free.fr"},
+ {"NOM":"benjane","PRENOM":"yassir","MAIL":"ya@gmail.com"}]
+ 
