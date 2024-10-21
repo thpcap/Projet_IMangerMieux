@@ -1,3 +1,5 @@
+pour l'état de la base regader MPD_DATABASE.png
+
 SELECT utilisateur.NOM,utilisateur.PRENOM,utilisateur.MAIL FROM utilisateur ORDER BY utilisateur.DATE_DE_NAISSANCE ASC;
 [{"NOM":"N\/A","PRENOM":"N\/A","MAIL":"admin@root.SU"},
  {"NOM":"benjane","PRENOM":"yassir","MAIL":"ya@gmail.com"},
@@ -19,6 +21,8 @@ SELECT repas.ID_ALIMENT,repas.DATE,repas.ID_ALIMENT FROM repas WHERE repas.DATE 
  {"ID_ALIMENT":"1","DATE":"2024-10-18 00:00:00"}]
 
 SELECT aliment.LABEL_ALIMENT FROM aliment INNER JOIN repas ON repas.ID_ALIMENT=aliment.ID_ALIMENT INNER JOIN utilisateur ON utilisateur.LOGIN=repas.LOGIN WHERE utilisateur.LOGIN='ADMIN';
+ou
+SELECT A.LABEL_ALIMENT FROM aliment A INNER JOIN repas R ON R.ID_ALIMENT=A.ID_ALIMENT INNER JOIN utilisateur U ON U.LOGIN=R.LOGIN WHERE U.LOGIN='ADMIN'
 [{"LABEL_ALIMENT":"Pomme"}]
 
 SELECT utilisateur.NOM, utilisateur.PRENOM,repas.DATE,aliment.LABEL_ALIMENT,repas.QUANTITE FROM aliment INNER JOIN repas ON repas.ID_ALIMENT=aliment.ID_ALIMENT INNER JOIN utilisateur ON utilisateur.LOGIN=repas.LOGIN WHERE utilisateur.LOGIN='ADMIN';
@@ -30,4 +34,29 @@ SELECT COUNT(utilisateur.LOGIN) FROM utilisateur;
 SELECT aliment.LABEL_ALIMENT, repas.QUANTITE FROM aliment INNER JOIN repas ON repas.ID_ALIMENT=aliment.ID_ALIMENT INNER JOIN utilisateur ON utilisateur.LOGIN=repas.LOGIN WHERE utilisateur.LOGIN='ADMIN';
 [{"LABEL_ALIMENT":"Pomme","QUANTITE":"80"}]
 
-INSERT INTO repas(ID_ALIMENT, LOGIN, QUANTITE ,DATE) VALUES(1,'ADMIN',500,NOW())
+INSERT INTO nutriments(LIBELE_NUTRIMENT)VALUES('eau');
+INSERT INTO aliment(ID_TYPE,LABEL_ALIMENT)VALUES(2,'raisin');
+INSERT INTO contient(ID_ALIMENT,ID_NUTRIMENT,RATIOS)VALUES(
+    (SELECT ID_ALIMENT FROM aliment WHERE aliment.LABEL_ALIMENT='raisin')
+    ,(SELECT ID_NUTRIMENT FROM nutriments WHERE nutriments.LIBELE_NUTRIMENT='eau')
+    ,200
+);
+INSERT INTO repas(ID_ALIMENT, LOGIN, QUANTITE ,DATE) VALUES(
+    (SELECT ID_ALIMENT FROM aliment WHERE aliment.LABEL_ALIMENT='raisin')
+    ,'ADMIN'
+    ,500
+    ,NOW()
+);
+
+
+
+UPDATE contient SET contient.RATIOS=505.442 WHERE
+	contient.ID_ALIMENT IN (SELECT aliment.ID_ALIMENT FROM aliment WHERE aliment.LABEL_ALIMENT='Poisson') 
+	AND contient.ID_NUTRIMENT IN (SELECT nutriments.ID_NUTRIMENT FROM nutriments WHERE nutriments.LIBELE_NUTRIMENT='Protéines')
+
+
+UPDATE repas SET repas.DATE=NOW() WHERE repas.ID_REPAS=4;
+
+DELETE FROM utilisateur WHERE utilisateur.LOGIN='login1';
+cela delete l'utilisateur, les repas de l'utilisateur et les BESOINS de l'utilisateur.
+
