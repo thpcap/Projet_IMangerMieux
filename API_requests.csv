@@ -1,0 +1,2 @@
+﻿Name of Request;Usecase;Method;URL;DATA in;DATA out;Cookies in;Cookies out;Notes;Implementation State
+Test;None;Get;localholst/ProjetMangerMieux/Users.php;nothing;All Users with login, Name,email;none;none;DO NOT IMPLEMENT EXEMPLE ONLY;Not Implemented
