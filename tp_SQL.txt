@@ -19,8 +19,15 @@ SELECT repas.ID_ALIMENT,repas.DATE,repas.ID_ALIMENT FROM repas WHERE repas.DATE 
  {"ID_ALIMENT":"1","DATE":"2024-10-18 00:00:00"}]
 
 SELECT aliment.LABEL_ALIMENT FROM aliment INNER JOIN repas ON repas.ID_ALIMENT=aliment.ID_ALIMENT INNER JOIN utilisateur ON utilisateur.LOGIN=repas.LOGIN WHERE utilisateur.LOGIN='ADMIN';
-{"LABEL_ALIMENT":"Pomme"}
+[{"LABEL_ALIMENT":"Pomme"}]
 
 SELECT utilisateur.NOM, utilisateur.PRENOM,repas.DATE,aliment.LABEL_ALIMENT,repas.QUANTITE FROM aliment INNER JOIN repas ON repas.ID_ALIMENT=aliment.ID_ALIMENT INNER JOIN utilisateur ON utilisateur.LOGIN=repas.LOGIN WHERE utilisateur.LOGIN='ADMIN';
 [{"NOM":"N\/A","PRENOM":"N\/A","DATE":"2000-01-01 00:30:10","LABEL_ALIMENT":"Pomme","QUANTITE":"80"}]
 
+SELECT COUNT(utilisateur.LOGIN) FROM utilisateur;
+[{"COUNT(utilisateur.LOGIN)":"4"}]
+
+SELECT aliment.LABEL_ALIMENT, repas.QUANTITE FROM aliment INNER JOIN repas ON repas.ID_ALIMENT=aliment.ID_ALIMENT INNER JOIN utilisateur ON utilisateur.LOGIN=repas.LOGIN WHERE utilisateur.LOGIN='ADMIN';
+[{"LABEL_ALIMENT":"Pomme","QUANTITE":"80"}]
+
+INSERT INTO repas(ID_ALIMENT, LOGIN, QUANTITE ,DATE) VALUES(1,'ADMIN',500,NOW())
