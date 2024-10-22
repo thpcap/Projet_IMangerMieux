@@ -28,6 +28,10 @@ table {
     margin: auto; /* Centre le tableau */
     width: 100%; /* Utilise toute la largeur du conteneur */
 }
+#error{
+    display: none;
+    color: red;
+}
 
 th, td {
     padding: 10px; /* Ajoute un peu d'espace autour des cellules */

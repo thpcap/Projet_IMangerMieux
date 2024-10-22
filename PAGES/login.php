@@ -18,6 +18,9 @@
                             <th colspan="2"><h1>Se Connecter</h1></th>
                         </tr>
                         <tr>
+                            <th colspan="2"><p id="error">Login ou Mot de Passe erroné(s)</p></th>
+                        </tr>
+                        <tr>
                             <th>Login</th>
                             <td><input id="inputLogin" type="text"></td>
                         </tr>
@@ -44,7 +47,29 @@
         </div>
         <script>
             function login(){
-                
+                event.preventDefault();
+                const login = $('#inputLogin').val();
+                const mdp = $('#Mot_De_Passe').val();
+                let request=$.ajax({
+                    url: "http://localhost/Projet_IMangerMieux/API/Login.php",
+                    method: "POST",
+                    dataType: "json",
+                    data:JSON.stringify(
+                        {
+                            login:login,
+                            MotDePasse: mdp
+                        }
+                    ),
+                    contentType: "application/json"
+                });
+                request.done(function(reponse){
+                    if(reponse!=ok){
+                        $('#error').show();
+                    }
+                });
+                request.fail(function(xhr, status, error){
+                    
+                });
             }
         </script>
     </body>
