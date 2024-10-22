@@ -1,36 +1,65 @@
-body{
+body {
     display: flex;
     background-color: white;
     color: black;
     font-family: Arial, Helvetica, sans-serif;
-    height: 100vw;
-    width: 100vw;
+    height: 100vh; /* Utilisation de 100vh pour la hauteur de la fenêtre */
+    width: 100%; /* Utilisation de 100% pour la largeur */
     margin: 0;
 }
-#Menu{
+
+#Menu {
     background-color: beige;
     left: 0;
-    top:0;
-    width:20%;
+    top: 0;
+    width: 80%;
     height: 100%;
     padding: 20px;
     box-sizing: border-box;
     box-shadow: -5px 0 10px rgba(0, 0, 0, 1);
     text-align: center;
 }
-body.DarkMode{
-    background-color: black;
-    color:  white;
+
+#Menu h1 {
+    margin-bottom: 10px; /* Espace sous le titre "MENU" */
 }
-#Menu.DarkMode{
+
+#Menu a {
+    color: black; /* Changer la couleur des liens en noir */
+    text-decoration: none; /* Retirer le soulignement des liens */
+    display: block; /* Assurer que chaque lien occupe toute la largeur disponible */
+     /* Ajouter un peu d'espace autour des liens */
+}
+
+#Menu a:hover {
+    text-decoration: underline; /* Ajouter un soulignement au survol */
+}
+
+#Menu ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none; /* Retirer les puces des éléments de la liste */
+}
+
+#Menu li {
+    padding: 10px 0; /* Ajouter de l'espace entre les éléments du menu */
+}
+
+body.DarkMode {
+    background-color: black;
+    color: white;
+}
+
+#Menu.DarkMode {
     background-color: darkslategray;
     color: white;
     border-right: 1px solid white;
 }
+
 #content {
-    flex-grow: 1;  /* Fait en sorte que cette div prenne tout l'espace restant */
+    flex-grow: 1; /* Fait en sorte que cette div prenne tout l'espace restant */
     height: 100%;
     padding: 20px;
     box-sizing: border-box; /* Inclure le padding dans la taille */
     overflow: auto; /* Gérer le défilement du contenu s'il dépasse */
-  }
+}
