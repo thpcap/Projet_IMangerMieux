@@ -1,0 +1,35 @@
+body{
+    display: flex;
+    background-color: white;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100%;
+    width: 100%;
+}
+#Menu{
+    position: fixed;
+    background-color: beige;
+    left: 0;
+    top:0;
+    width:20%;
+    height: 100%;
+    border-right: 1px solid black;
+    padding: 20px;
+    box-sizing: border-box
+}
+body.DarkMode{
+    background-color: black;
+    color:  white;
+}
+#Menu.DarkMode{
+    background-color: darkslategray;
+    color: white;
+    border-right: 1px solid white;
+}
+#content {
+    flex-grow: 1;  /* Fait en sorte que cette div prenne tout l'espace restant */
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box; /* Inclure le padding dans la taille */
+    overflow: auto; /* Gérer le défilement du contenu s'il dépasse */
+  }
