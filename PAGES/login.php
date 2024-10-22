@@ -51,7 +51,7 @@
                 const login = $('#inputLogin').val();
                 const mdp = $('#Mot_De_Passe').val();
                 let request=$.ajax({
-                    url: "http://localhost/Projet_IMangerMieux/API/Login.php",
+                    url: "<?php require_once("ConfigFrontEnd.php"); echo URL_API ?>/Login.php",
                     method: "POST",
                     dataType: "json",
                     data:JSON.stringify(
