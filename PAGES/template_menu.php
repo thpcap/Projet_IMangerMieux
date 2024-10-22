@@ -1,4 +1,4 @@
-<?php
+<?php 
 function renderMenuToHTML($currentPageId) {
     // Définition du tableau qui structure le site
     $mymenu = array(
@@ -10,6 +10,8 @@ function renderMenuToHTML($currentPageId) {
     );
 
     // Génération du code HTML du menu
+    echo '<div id="Menu" class="DarkMode_">';
+    echo '<h1>MENU</h1>';
     echo '<nav>';
     echo '<ul class="menu">';
     
@@ -21,12 +23,8 @@ function renderMenuToHTML($currentPageId) {
     
     echo '</ul>';
     echo '</nav>';
+    echo '</div>'; // Fermeture du div Menu
+    
+
 }
 ?>
-
-
-    
-
-
-
-    

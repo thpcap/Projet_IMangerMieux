@@ -6,6 +6,6 @@
     <title>Document</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body class="DarkMode_">
 
 
