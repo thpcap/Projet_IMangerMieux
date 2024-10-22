@@ -66,12 +66,8 @@
                     if(!reponse.connected){
                         $('#error').show();
                     }else{
-                        window.location.replace(
-                        <?php
-                            require_once("ConfigFrontEnd.php");
-                            echo '"'.URL_Acceuil.'");';
-                        ?>
-                        
+                        //redirection sans l'historique vers la page d'acceuil
+                        window.location.replace("<?php require_once("ConfigFrontEnd.php");echo URL_Acceuil;?>");
                     }
                 });
                 request.fail(function(xhr, status, error){
