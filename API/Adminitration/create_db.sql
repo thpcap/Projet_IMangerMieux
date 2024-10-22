@@ -168,3 +168,8 @@ alter table UTILISATEUR add constraint FK_APPARTIENT foreign key (ID_SEXE)
 alter table UTILISATEUR add constraint FK_PRATIQUE foreign key (ID_PRATIQUE)
       references NIVEAU_DE_PRATIQUE (ID_PRATIQUE) on delete restrict on update cascade;
 
+INSERT INTO SEXE(LIBELE_SEXE,LIBELE_SEXE_COURT) VALUES ('Homme','H'),('Femme','F'),('Droid','D'),('Autre','A');
+INSERT INTO NIVEAU_DE_PRATIQUE(LIBELE_PRATIQUE) VALUES ('Nulle'),('Basse'),('Moyenne'),('Haute'),('Extreme');
+INSERT INTO TRANCHES_D_AGE(MAX_AGE,LIBELE_AGE) VALUES(5,'Moins de 5 ans');
+INSERT INTO TRANCHES_D_AGE(MIN_AGE,MAX_AGE,LIBELE_AGE) VALUES(5,10,'entre 5 et 10 ans'),(10,20,'entre 10 et 20 ans'),(20,30,'entre 20 et 30 ans'),(30,40,'entre 30 et 40 ans'),(40,50,'entre 40 et 50 ans');
+INSERT INTO TRANCHES_D_AGE(MIN_AGE,LIBELE_AGE) VALUES(50,'Plus de 50ans');

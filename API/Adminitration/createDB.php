@@ -7,7 +7,9 @@
         echo $th->getMessage();
     }
     try{
+        require_once("add_Users.php");
         require_once("insersionAliments.php");
     }catch (\Throwable $th) {
         echo $th->getMessage();
     }
+
