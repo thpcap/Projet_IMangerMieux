@@ -63,8 +63,15 @@
                     contentType: "application/json"
                 });
                 request.done(function(reponse){
-                    if(reponse!=ok){
+                    if(!reponse.connected){
                         $('#error').show();
+                    }else{
+                        window.location.replace(
+                        <?php
+                            require_once("ConfigFrontEnd.php");
+                            echo '"'.URL_Acceuil.'");';
+                        ?>
+                        
                     }
                 });
                 request.fail(function(xhr, status, error){
