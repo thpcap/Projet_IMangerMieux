@@ -1,5 +1,5 @@
 <?php 
-    require_once("init_PDO.php");
+    require_once("API\init_PDO.php");
     function addto($fichier,$querry,$pdo){
             // Vérifiez si le fichier existe
         if (!file_exists($fichier)) {
@@ -34,3 +34,5 @@
     $fichier = 'Donnes_A_ajouter/nutriments.csv';
     $querry="INSERT INTO nutriments(LIBELE_NUTRIMENT) VALUES (:libele_type)";
     addto($fichier, $querry,$pdo);
+
+    

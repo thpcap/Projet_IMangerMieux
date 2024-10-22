@@ -3,7 +3,6 @@
 /* Date de cr�ation :  11/10/2024 17:01:14                      */
 /*==============================================================*/
 
-
 drop table if exists ALIMENT;
 
 drop table if exists A_BESOINS;
