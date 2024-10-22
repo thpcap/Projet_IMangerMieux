@@ -57,7 +57,7 @@
                     data:JSON.stringify(
                         {
                             login:login,
-                            MotDePasse: mdp
+                            motDePasse: mdp
                         }
                     ),
                     contentType: "application/json"
