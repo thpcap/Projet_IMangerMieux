@@ -1,13 +1,6 @@
 <?php 
 function renderMenuToHTML($currentPageId) {
-    // Définition du tableau qui structure le site
-    $mymenu = array(
-        'accueil' => array('Accueil'),
-        'mange' => array('Mange'),
-        'statistiques' => array('Mes statistiques'),
-        'recommendations' => array('Mes recommendations'),
-        'contact'=> array('Contact')
-    );
+    require_once("ConfigFrontEnd.php");
 
     // Génération du code HTML du menu
     echo '<div id="Menu" class="DarkMode_">';
