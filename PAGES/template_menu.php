@@ -1,0 +1,32 @@
+<?php
+function renderMenuToHTML($currentPageId) {
+    // Définition du tableau qui structure le site
+    $mymenu = array(
+        'accueil' => array('Accueil'),
+        'mange' => array('Mange'),
+        'statistiques' => array('Mes statistiques'),
+        'recommendations' => array('Mes recommendations'),
+        'contact'=> array('Contact')
+    );
+
+    // Génération du code HTML du menu
+    echo '<nav>';
+    echo '<ul class="menu">';
+    
+    foreach ($mymenu as $pageId => $pageParameters) {
+        // Si la page actuelle est égale à la page du tableau, ajouter une classe active
+        $class = ($currentPageId == $pageId) ? ' class="active"' : '';
+        echo '<li' . $class . '><a href="index.php?page=' . $pageId . '">' . $pageParameters[0] . '</a></li>';
+    }
+    
+    echo '</ul>';
+    echo '</nav>';
+}
+?>
+
+
+    
+
+
+
+    
