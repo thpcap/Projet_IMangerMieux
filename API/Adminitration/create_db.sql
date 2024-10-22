@@ -3,28 +3,7 @@
 /* Date de cr�ation :  11/10/2024 17:01:14                      */
 /*==============================================================*/
 
-
-drop table if exists ALIMENT;
-
-drop table if exists A_BESOINS;
-
-drop table if exists COMPOSE;
-
-drop table if exists CONTIENT;
-
-drop table if exists NIVEAU_DE_PRATIQUE;
-
-drop table if exists NUTRIMENTS;
-
-drop table if exists REPAS;
-
-drop table if exists SEXE;
-
-drop table if exists TRANCHES_D_AGE;
-
-drop table if exists TYPE_ALIMENT;
-
-drop table if exists UTILISATEUR;
+DROP TABLE if exists `aliment`, `a_besoins`, `compose`, `contient`, `niveau_de_pratique`, `nutriments`, `repas`, `sexe`, `tranches_d_age`, `type_aliment`, `utilisateur` cascade;
 
 /*==============================================================*/
 /* Table : ALIMENT                                              */
@@ -33,7 +12,7 @@ create table ALIMENT
 (
    ID_ALIMENT           bigint not null AUTO_INCREMENT,
    ID_TYPE              bigint not null,
-   LABEL_ALIMENT        varchar(50) not null,
+   LABEL_ALIMENT        varchar(256) not null,
    primary key (ID_ALIMENT)
 );
 
@@ -86,7 +65,7 @@ create table NIVEAU_DE_PRATIQUE
 create table NUTRIMENTS
 (
    ID_NUTRIMENT         bigint not null AUTO_INCREMENT,
-   LIBELE_NUTRIMENT     varchar(50) not null,
+   LIBELE_NUTRIMENT     varchar(255) not null,
    primary key (ID_NUTRIMENT)
 );
 
@@ -189,3 +168,8 @@ alter table UTILISATEUR add constraint FK_APPARTIENT foreign key (ID_SEXE)
 alter table UTILISATEUR add constraint FK_PRATIQUE foreign key (ID_PRATIQUE)
       references NIVEAU_DE_PRATIQUE (ID_PRATIQUE) on delete restrict on update cascade;
 
+INSERT INTO SEXE(LIBELE_SEXE,LIBELE_SEXE_COURT) VALUES ('Homme','H'),('Femme','F'),('Droid','D'),('Autre','A');
+INSERT INTO NIVEAU_DE_PRATIQUE(LIBELE_PRATIQUE) VALUES ('Nulle'),('Basse'),('Moyenne'),('Haute'),('Extreme');
+INSERT INTO TRANCHES_D_AGE(MAX_AGE,LIBELE_AGE) VALUES(5,'Moins de 5 ans');
+INSERT INTO TRANCHES_D_AGE(MIN_AGE,MAX_AGE,LIBELE_AGE) VALUES(5,10,'entre 5 et 10 ans'),(10,20,'entre 10 et 20 ans'),(20,30,'entre 20 et 30 ans'),(30,40,'entre 30 et 40 ans'),(40,50,'entre 40 et 50 ans');
+INSERT INTO TRANCHES_D_AGE(MIN_AGE,LIBELE_AGE) VALUES(50,'Plus de 50ans');

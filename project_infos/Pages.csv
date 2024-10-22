@@ -1,5 +1,5 @@
 ﻿Name of Page;Usecase;URL;Page Description;liens;accès;Notes;Implementation State
-connection;se connecter;http://localhost/Projet_IMangerMieux/;formulaire de connection;si connectée acceuil / creation de compte;entrée du site/deconnexion/creation de compte;;non implementé
+login;se connecter;http://localhost/Projet_IMangerMieux/login;formulaire de connection;si connectée acceuil / creation de compte;entrée du site/deconnexion/creation de compte;;non implementé
 creation_de_compte;creer un compte;http://localhost/Projet_IMangerMieux/Pages/creation_de_compte;formulaire de creation de compte;si connectée acceuil / connection;connexion;;non implementé
 acceuil;infos derniers al mangés;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=acceuil;affichage des derniers aliment mangés;menu/création_repas;connection/creation_de_compte/si entrée avec session;;non implementé
 modif_user;modifier et acceder à l'user;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=modif_user;modifier l'user/voir les donnés/supprimer l'user;menu/se desinscrire;menu(clic sur le nom et prenom);;non implementé
