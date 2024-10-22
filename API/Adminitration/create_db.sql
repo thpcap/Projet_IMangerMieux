@@ -3,27 +3,7 @@
 /* Date de cr�ation :  11/10/2024 17:01:14                      */
 /*==============================================================*/
 
-drop table if exists ALIMENT;
-
-drop table if exists A_BESOINS;
-
-drop table if exists COMPOSE;
-
-drop table if exists CONTIENT;
-
-drop table if exists NIVEAU_DE_PRATIQUE;
-
-drop table if exists NUTRIMENTS;
-
-drop table if exists REPAS;
-
-drop table if exists SEXE;
-
-drop table if exists TRANCHES_D_AGE;
-
-drop table if exists TYPE_ALIMENT;
-
-drop table if exists UTILISATEUR;
+DROP TABLE if exists `aliment`, `a_besoins`, `compose`, `contient`, `niveau_de_pratique`, `nutriments`, `repas`, `sexe`, `tranches_d_age`, `type_aliment`, `utilisateur` cascade;
 
 /*==============================================================*/
 /* Table : ALIMENT                                              */
@@ -32,7 +12,7 @@ create table ALIMENT
 (
    ID_ALIMENT           bigint not null AUTO_INCREMENT,
    ID_TYPE              bigint not null,
-   LABEL_ALIMENT        varchar(50) not null,
+   LABEL_ALIMENT        varchar(256) not null,
    primary key (ID_ALIMENT)
 );
 
@@ -85,7 +65,7 @@ create table NIVEAU_DE_PRATIQUE
 create table NUTRIMENTS
 (
    ID_NUTRIMENT         bigint not null AUTO_INCREMENT,
-   LIBELE_NUTRIMENT     varchar(50) not null,
+   LIBELE_NUTRIMENT     varchar(255) not null,
    primary key (ID_NUTRIMENT)
 );
 
