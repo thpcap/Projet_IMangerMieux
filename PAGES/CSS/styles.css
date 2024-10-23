@@ -35,7 +35,7 @@ header {
     color: black; /* Changer la couleur des liens en noir */
     text-decoration: none; /* Retirer le soulignement des liens */
     display: block; /* Assurer que chaque lien occupe toute la largeur disponible */
-     /* Ajouter un peu d'espace autour des liens */
+    margin: 6px; /* Ajouter un peu d'espace autour des liens */
 }
 
 #Menu a:hover {
@@ -49,7 +49,7 @@ header {
 }
 
 #Menu li {
-    padding: 2px 0; /* Ajouter de l'espace entre les éléments du menu */
+    padding: px 0; /* Ajouter de l'espace entre les éléments du menu */
     background-color: beige;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);

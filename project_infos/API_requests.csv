@@ -1,7 +1,7 @@
 ﻿Name of Request;Usecase;Method;URL;DATA in;DATA out;Cookies in;Cookies out;Notes;Implementation State
 log_in;se connecter;POST;http://localhost/Projet_IMangerMieux/API/login.php;Login/mot de passe;connected=true si connexion reussie connected=false sinon;;session/login;ne stoke pas le mdp;implementé
 create_user;creer son compte;POST;http://localhost/Projet_IMangerMieux/API/create_user.php;Login/mot de passe/nom/prénom/date de naissance/id_sexe/id_niveau_spotif/@mail;;;session/login;ne stoke pas le mdp;implementé
-user_Info;recuperer les infos du user;GET;http://localhost/Projet_IMangerMieux/API/User.php;login;nom/prenom/ID SEXE/IdAGE/IDPratique/DATE De Naissance/Mail;session;;;non implementé
+user_Info;recuperer les infos du user;GET;http://localhost/Projet_IMangerMieux/API/User.php;login;nom/prenom/ID SEXE/IdAGE/IDPratique/DATE De Naissance/Mail;session;;;implementé
 nutriments_Infos;recuperer tous les % des nutriments du jour par reapport aux besoins;GET;http://localhost/Projet_IMangerMieux/API/Nutriments.php;login/temps(jour/semaine/mois);% de chaque nutriments par rapport au besoins;session;;;non implementé
 al_Infos;recupere les n derniers aliments mangés;GET;http://localhost/Projet_IMangerMieux/API/Aliments.php;login/nbal;nomAL/QuantitéeAL/DateAL;session;;si nbal==null-> tous les aliments du user;non implementé
 create_repas;créer un repas;POST;http://localhost/Projet_IMangerMieux/API/Repas.php;login/Date/Quantitée/ALID;;session;;si date==null-> date courante;non implementé

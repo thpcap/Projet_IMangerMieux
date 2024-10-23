@@ -8,7 +8,7 @@
     $mymenu = array(
         'accueil' => array('Accueil'),
         'mange' => array('Mange'),
-        'statistiques' => array('Mes statistiques'),
-        'recommendations' => array('Mes recommendations'),
+        'statistiques' => array('Statistiques'),
+        'recommendations' => array('Recommendations'),
         'contact'=> array('Contact')
     );
