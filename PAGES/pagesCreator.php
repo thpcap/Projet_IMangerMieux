@@ -14,7 +14,7 @@
         <header class="header">
             <?php
             require_once('template_menu.php');
-            renderMenuToHTML('index');
+            renderMenuToHTML($currentPageId);
             ?>
         </header>
 

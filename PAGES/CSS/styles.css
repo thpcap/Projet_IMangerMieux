@@ -8,11 +8,10 @@ body {
     margin: 0;
 }
 
-#Menu {
+header {
     background-color: beige;
     left: 0;
     top: 0;
-    width: 80%;
     height: 100%;
     padding: 20px;
     box-sizing: border-box;
@@ -42,7 +41,17 @@ body {
 }
 
 #Menu li {
-    padding: 10px 0; /* Ajouter de l'espace entre les éléments du menu */
+    padding: 2px 0; /* Ajouter de l'espace entre les éléments du menu */
+    background-color: bisque;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 3px;
+}
+
+#Menu li.active{
+    background-color:white ;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 body.DarkMode {
@@ -63,3 +72,4 @@ body.DarkMode {
     box-sizing: border-box; /* Inclure le padding dans la taille */
     overflow: auto; /* Gérer le défilement du contenu s'il dépasse */
 }
+

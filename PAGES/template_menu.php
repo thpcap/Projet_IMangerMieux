@@ -11,7 +11,7 @@ function renderMenuToHTML($currentPageId) {
     foreach ($mymenu as $pageId => $pageParameters) {
         // Si la page actuelle est égale à la page du tableau, ajouter une classe active
         $class = ($currentPageId == $pageId) ? ' class="active"' : '';
-        echo '<li' . $class . '><a href="index.php?page=' . $pageId . '">' . $pageParameters[0] . '</a></li>';
+        echo '<li' . $class . '><a href="pagesCreator.php?page=' . $pageId . '">' . $pageParameters[0] . '</a></li>';
     }
     
     echo '</ul>';
