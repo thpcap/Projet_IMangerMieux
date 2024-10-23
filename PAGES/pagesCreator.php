@@ -1,7 +1,7 @@
 <?php 
     session_start();
     require_once('ConfigFrontEnd.php');
-    if($_SESSION['connected']){
+    if(isset($_SESSION['connected'])&&$_SESSION['connected']){
         require_once('template_header.php'); /** contenu de header */
         require_once('template_menu.php');  /** contenu menu */ 
         $currentPageId = 'accueil';
@@ -12,6 +12,7 @@
         ?>
 
         <header class="header">
+            <div id="userdata"></div>
             <?php
             require_once('template_menu.php');
             renderMenuToHTML($currentPageId);
@@ -28,7 +29,48 @@
     }else{
         header("Location:".URL_Login);
     }
-    
-
+?>   
+    <script>
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+        $(document).ready(function(){
+            function fetchUserData() {
+                const login = getCookie('login');
+                if (!login) {
+                    $('#userdata').html('Aucun utilisateur connecté.'+login);
+                    return;
+                }
+                $.ajax({
+                    url: "<?php echo URL_API ?>/user.php?login="+login, // Remplacez par l'URL de votre endpoint
+                    method: "GET",
+                    success: function(data) {
+                        // Vérifiez si les données contiennent des résultats
+                        if (Array.isArray(data) && data.length > 0) {
+                            // Affichez le nom et le prénom dans la div userdata
+                            $('#userdata').html(`<p id='prenom'>${data[0].PRENOM}</p><p id='nom'>${data[0].NOM}</p>`);
+                        } else {
+                            $('#userdata').html('');
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('Erreur lors de la récupération des données utilisateur:', textStatus, errorThrown);
+                        $('#userdata').html('Erreur lors de la récupération des données utilisateur.');
+                    }
+                });
+            }
+            fetchUserData();
+                $('#userdata').on('click',
+                    function(){
+                        window.location.href="<?php echo URL_Modif_User;?>";
+                    }
+                );
+            }
+        );
+    </script>
+    </body>
+</html>
 
 

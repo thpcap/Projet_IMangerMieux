@@ -18,6 +18,14 @@ header {
     box-shadow: -5px 0 10px rgba(0, 0, 0, 1);
     text-align: center;
 }
+#Menu{
+    background-color: bisque;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
 
 #Menu h1 {
     margin-bottom: 10px; /* Espace sous le titre "MENU" */
@@ -42,7 +50,7 @@ header {
 
 #Menu li {
     padding: 2px 0; /* Ajouter de l'espace entre les éléments du menu */
-    background-color: bisque;
+    background-color: beige;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     margin-bottom: 3px;
@@ -73,3 +81,14 @@ body.DarkMode {
     overflow: auto; /* Gérer le défilement du contenu s'il dépasse */
 }
 
+#userdata{
+    padding: 2%;
+    background-color: bisque;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+#userdata:hover{
+    background-color: wheat;
+    cursor: pointer;
+}
