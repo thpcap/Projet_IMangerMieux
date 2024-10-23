@@ -1,7 +1,7 @@
 <?php 
 function renderMenuToHTML($currentPageId) {
     require_once("ConfigFrontEnd.php");
-
+    global $mymenu;
     // Génération du code HTML du menu
     echo '<div id="Menu" class="DarkMode_">';
     echo '<h1>MENU</h1>';
