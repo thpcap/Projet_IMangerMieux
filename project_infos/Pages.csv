@@ -1,10 +1,10 @@
-﻿Name of Page;Usecase;URL;Page Description;liens;accès;Notes;Implementation State
-login;se connecter;http://localhost/Projet_IMangerMieux/login;formulaire de connection;si connectée acceuil / creation de compte;entrée du site/deconnexion/creation de compte;;implementé
-creation_de_compte;creer un compte;http://localhost/Projet_IMangerMieux/Pages/creation_de_compte;formulaire de creation de compte;si connectée acceuil / connection;connexion;;implementé
-acceuil;infos derniers al mangés;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=acceuil;affichage des derniers aliment mangés;menu/création_repas;connection/creation_de_compte/si entrée avec session;;non  implementé
-modif_user;modifier et acceder à l'user;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=modif_user;modifier l'user/voir les donnés/supprimer l'user;menu/se desinscrire;menu(clic sur le nom et prenom);;non implementé
-création_repas;ajouter des aliment mangés;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=creation_repas;ajouter un aliment mangé;menu;acceuil;;non implementé
-mange;afficher tous les al mangés;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=mange;afficher tous les al mangés dans un tableau;menu;menu;;non implementé
-statistiques;afficher les statistiques;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=statistiques;afficher les statistiques des nutriments par jour sur 1 semaine;menu;menu;;non implementé
-recommendations;afficher les recommendation OMS;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=recommendations;afficher les recommendations de l'OMS pour l'utilisateur;menu;menu;;non implementé
-contact/rapport de beug?;afficher les infos de contact;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=contact;afficher les infos de contact;menu;menu;;implementé à moitié
+﻿Implementation State;Name of Page;Usecase;URL;Page Description;liens;accès;Notes
+implementé;login;se connecter;http://localhost/Projet_IMangerMieux/login;formulaire de connection;si connectée acceuil / creation de compte;entrée du site/deconnexion/creation de compte;
+implementé;creation_de_compte;creer un compte;http://localhost/Projet_IMangerMieux/Pages/creation_de_compte;formulaire de creation de compte;si connectée acceuil / connection;connexion;
+non  implementé;acceuil;infos derniers al mangés;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=acceuil;affichage des derniers aliment mangés;menu/création_repas;connection/creation_de_compte/si entrée avec session;
+implementé;modif_user;modifier et acceder à l'user;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=modif_user;modifier l'user/voir les donnés/supprimer l'user;menu/se desinscrire;menu(clic sur le nom et prenom);
+non implementé;création_repas;ajouter des aliment mangés;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=creation_repas;ajouter un aliment mangé;menu;acceuil;
+non implementé;mange;afficher tous les al mangés;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=mange;afficher tous les al mangés dans un tableau;menu;menu;
+non implementé;statistiques;afficher les statistiques;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=statistiques;afficher les statistiques des nutriments par jour sur 1 semaine;menu;menu;
+non implementé;recommendations;afficher les recommendation OMS;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=recommendations;afficher les recommendations de l'OMS pour l'utilisateur;menu;menu;
+implementé à moitié;contact/rapport de beug?;afficher les infos de contact;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=contact;afficher les infos de contact;menu;menu;
