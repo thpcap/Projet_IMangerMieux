@@ -18,7 +18,7 @@
                 $sexe = escape_special_characters($data->sexe);
                 $niveauPratique = escape_special_characters($data->niveauPratique);
                 $login = escape_special_characters($data->login);
-                $motDePasse = escape_special_characters($data->motDePasse);
+                $motDePasse = $data->motDePasse;
 
                 // Vérifier que la date est valide
                 $dateTime = DateTime::createFromFormat('Y-m-d', $date);

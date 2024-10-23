@@ -38,10 +38,6 @@ header {
     margin: 6px; /* Ajouter un peu d'espace autour des liens */
 }
 
-#Menu a:hover {
-    text-decoration: underline; /* Ajouter un soulignement au survol */
-}
-
 #Menu ul {
     padding: 0;
     margin: 0;
@@ -55,11 +51,17 @@ header {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     margin-bottom: 3px;
 }
+#Menu li:hover{
+    background-color: wheat;
+}
 
 #Menu li.active{
     background-color:white ;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+#Menu li.active:hover{
+    background-color:whitesmoke;
 }
 
 body.DarkMode {
@@ -91,4 +93,22 @@ body.DarkMode {
 #userdata:hover{
     background-color: wheat;
     cursor: pointer;
+}
+.modifyUser > #content{
+    display: flex;
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    width: 100%;
+}
+.modifyUser{
+    width: 100%;
+}
+.centered {
+    display: block;
+    background-color: beige;
+    height: auto; /* Ajuste la hauteur en fonction du contenu */
+    text-align: center; /* Centre le texte */
+    padding: 50px; /* Padding intérieur */
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 1); /* Ombre */
 }

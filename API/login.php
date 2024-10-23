@@ -12,7 +12,7 @@
             if (isset($data->login) && isset($data->motDePasse)) {
                 // Échapper l'entrée pour prévenir l'injection SQL
                 $login = escape_special_characters($data->login);
-                $motDePasse = escape_special_characters($data->motDePasse);
+                $motDePasse =$data->motDePasse;
 
                 // Préparer la requête SQL
                 $stmt = $pdo->prepare("
