@@ -8,7 +8,7 @@ create_repas;créer un repas;POST;http://localhost/Projet_IMangerMieux/API/Repas
 AL_list;recuperer les aliments;GET;http://localhost/Projet_IMangerMieux/API/AlimentsList.php;(String Rech/nal);liste de tous les AL;;;possible système de recherche;non implementé
 Modif_user;modifier un user;PUT;http://localhost/Projet_IMangerMieux/API/User.php;login/nom/prenom/ID SEXE/IdAGE/IDPratique/DATE De Naissance/Mail;;session;;;implementé
 Besoin_Infos;recuperer les besoins d'un user;GET;http://localhost/Projet_IMangerMieux/API/Besoins.php;Login;Besoins en nutriments;session;;;non implementé
-DELETE_User;Supprimer un user;DELETE;http://localhost/Projet_IMangerMieux/API/User.php;Login/mdp?;;session;destruction de session/cookies;possible demande de mdp;non implementé
+DELETE_User;Supprimer un user;DELETE;http://localhost/Projet_IMangerMieux/API/User.php;Login/mdp?;;session;destruction de session/cookies;possible demande de mdp;implementé
 DELETE_Repas;suprimer un repas;DELETE;http://localhost/Projet_IMangerMieux/API/Repas.php;login/repasID;;session;;;non implementé
 deconnexion;se deconnecter;POST;http://localhost/Projet_IMangerMieux/API/Disconnect.php;Login;;session;destruction de session/cookies;;non implementé
 API_Infos;renvoie ce Fichier;GET;http://localhost/Projet_IMangerMieux/API/Infos.php;;ce fichier;;;;non implementé

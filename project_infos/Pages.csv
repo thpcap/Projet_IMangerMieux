@@ -7,4 +7,4 @@ création_repas;ajouter des aliment mangés;http://localhost/Projet_IMangerMieux
 mange;afficher tous les al mangés;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=mange;afficher tous les al mangés dans un tableau;menu;menu;;non implementé
 statistiques;afficher les statistiques;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=statistiques;afficher les statistiques des nutriments par jour sur 1 semaine;menu;menu;;non implementé
 recommendations;afficher les recommendation OMS;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=recommendations;afficher les recommendations de l'OMS pour l'utilisateur;menu;menu;;non implementé
-contact/rapport de beug?;afficher les infos de contact;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=contact;afficher les infos de contact;menu;menu;;non implementé
+contact/rapport de beug?;afficher les infos de contact;http://localhost/Projet_IMangerMieux/Pages/creation_Pages?page=contact;afficher les infos de contact;menu;menu;;implementé à moitié

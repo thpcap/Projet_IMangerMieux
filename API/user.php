@@ -233,6 +233,7 @@
 
                             // Fermer la session et envoyer une réponse de succès
                             session_destroy();
+                            setcookie('login','', time() - 3600, '/');
                             http_response_code(200); // Succès
                             echo json_encode(['success' => 'Utilisateur supprimé avec succès.']);
                         } else {
