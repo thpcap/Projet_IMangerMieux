@@ -26,7 +26,11 @@ header {
     padding-right: 5px;
     padding-bottom: 5px;
 }
-
+#graphique {
+    margin-top: 20px; /* Espace entre le menu et le graphique */
+    width: 100%;
+    height: 100px;
+}
 #Menu h1 {
     margin-bottom: 10px; /* Espace sous le titre "MENU" */
 }

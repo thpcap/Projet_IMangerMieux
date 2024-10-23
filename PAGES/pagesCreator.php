@@ -19,6 +19,7 @@
             require_once('template_menu.php');
             renderMenuToHTML($currentPageId);
             ?>
+            <div id="graphique"></div>
         </header>
 
         <?php
