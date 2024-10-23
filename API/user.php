@@ -232,6 +232,7 @@
                             $stmt->execute([':login' => $login]);
 
                             // Fermer la session et envoyer une réponse de succès
+                            $_SESSION=[];
                             session_destroy();
                             setcookie('login','', time() - 3600, '/');
                             http_response_code(200); // Succès
@@ -255,7 +256,7 @@
                 break;
 
         default:
-            // Si une méthode autre que GET est utilisée, renvoyer une erreur 405
+            // Si une méthode autre  est utilisée, renvoyer une erreur 405
             http_response_code(405); // Méthode non autorisée
             echo json_encode(['error' => 'Méthode non autorisée.']);
             break;

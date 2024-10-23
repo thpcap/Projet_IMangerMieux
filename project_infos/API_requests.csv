@@ -10,7 +10,7 @@ implementé;Modif_user;modifier un user;PUT;http://localhost/Projet_IMangerMieux
 non implementé;Besoin_Infos;recuperer les besoins d'un user;GET;http://localhost/Projet_IMangerMieux/API/Besoins.php;Login;Besoins en nutriments;session;;
 implementé;DELETE_User;Supprimer un user;DELETE;http://localhost/Projet_IMangerMieux/API/User.php;Login/mdp?;;session;destruction de session/cookies;possible demande de mdp
 non implementé;DELETE_Repas;suprimer un repas;DELETE;http://localhost/Projet_IMangerMieux/API/Repas.php;login/repasID;;session;;
-non implementé;deconnexion;se deconnecter;POST;http://localhost/Projet_IMangerMieux/API/Disconnect.php;Login;;session;destruction de session/cookies;
+implementé;deconnexion;se deconnecter;POST;http://localhost/Projet_IMangerMieux/API/Disconnect.php;Login;;session;destruction de session/cookies;
 non implementé;API_Infos;renvoie ce Fichier;GET;http://localhost/Projet_IMangerMieux/API/Infos.php;;ce fichier;;;
 implementé;sexe_List;renvoie la liste des sexes;GET;http://localhost/Projet_IMangerMieux/API/sexes.php;;liste des sexes avec leur id;;;
 implementé;pratique_List;renvoie la liste des niveaux de pratiques spotive;GET;http://localhost/Projet_IMangerMieux/API/niveaux_de_pratique.php;;liste des niveaux de pratiques spotive avec leur id;;;

@@ -84,6 +84,7 @@ body.DarkMode {
 }
 
 #userdata{
+    margin-top: 10px;
     padding: 2%;
     background-color: bisque;
     border-radius: 20px;
@@ -114,4 +115,15 @@ body.DarkMode {
 }
 .content{
     margin-left: 5px;
+}
+#logoutButton{
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    border: 0;
+}
+#logoutButton:hover{
+    background-color: whitesmoke;
+    cursor: pointer;
 }

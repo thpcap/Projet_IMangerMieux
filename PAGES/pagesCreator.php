@@ -12,7 +12,9 @@
         ?>
 
         <header class="header">
+            <button id='logoutButton'>Deconnexion</button>
             <div id="userdata"></div>
+            
             <?php
             require_once('template_menu.php');
             renderMenuToHTML($currentPageId);
@@ -62,13 +64,30 @@
                 });
             }
             fetchUserData();
-                $('#userdata').on('click',
-                    function(){
-                        window.location.href="<?php echo URL_Modif_User;?>";
-                    }
-                );
-            }
-        );
+            
+            $('#logoutButton').on('click',
+                function() {
+                    event.stopPropagation(); // Empêche la propagation de l'événement
+                    $.ajax({
+                        url: "<?php echo URL_API ?>/disconnect.php", // Remplacez par l'URL de votre endpoint de déconnexion
+                        method: "POST",
+                        success: function(response) {
+                            // Rediriger vers index.php après la déconnexion
+                            window.location.href = "index.php";
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.error('Erreur lors de la déconnexion:', textStatus, errorThrown);
+                        }
+                    });
+                }
+            );
+            $('#userdata').on('click',
+                function(){
+                    window.location.href="<?php echo URL_Modif_User;?>";
+                }
+            );
+        });
+            
     </script>
     </body>
 </html>
