@@ -19,7 +19,7 @@
             require_once('template_menu.php');
             renderMenuToHTML($currentPageId);
             ?>
-            <div id="graphique"></div>
+            <canvas id="myChart" width="150" height="150"></canvas>
         </header>
 
         <?php
@@ -34,6 +34,7 @@
     }
 ?>   
     <script>
+        
         function getCookie(name) {
             const value = `; ${document.cookie}`;
             const parts = value.split(`; ${name}=`);
@@ -47,7 +48,7 @@
                     return;
                 }
                 $.ajax({
-                    url: "<?php echo URL_API ?>/user.php?login="+login, // Remplacez par l'URL de votre endpoint
+                    url: "http://localhost/Projet_IMangerMieux/API/user.php?login="+login, // Remplacez par l'URL de votre endpoint
                     method: "GET",
                     success: function(data) {
                         // Vérifiez si les données contiennent des résultats
@@ -70,7 +71,7 @@
                 function() {
                     event.stopPropagation(); // Empêche la propagation de l'événement
                     $.ajax({
-                        url: "<?php echo URL_API ?>/disconnect.php", // Remplacez par l'URL de votre endpoint de déconnexion
+                        url: "http://localhost/Projet_IMangerMieux/API/disconnect.php", // Remplacez par l'URL de votre endpoint de déconnexion
                         method: "POST",
                         success: function(response) {
                             // Rediriger vers index.php après la déconnexion
@@ -84,11 +85,45 @@
             );
             $('#userdata').on('click',
                 function(){
-                    window.location.href="<?php echo URL_Modif_User;?>";
+                    window.location.href="pagesCreator.php?page=modifUser";
                 }
             );
-        });
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Energie', 'Protéines', 'Glucides', 'Eau', 'Sel'],
+                    datasets: [{
+                        label: 'Nutriments en %des AR',
+                        data: [50, 60, 80, 95, 100],
+                        backgroundColor: ['#5DADE2', '#48C9B0', '#F4D03F', '#E67E22', '#EC7063']
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', // This makes the bar chart horizontal
+                    responsive: false, // To allow custom sizing
+                    scales: {
+                        x: {
+                            beginAtZero: true // Ensures bars start from zero
+                        }
+                    },
+                    width: 150, // Set the width of the chart
+                    plugins: {
+                        legend: {
+                            labels: {
+                                boxWidth: 0 // Removes the box/rectangle before the label
+                            }
+                        }
+                    }
+                }
+            });
+        
             
+        });
+        
+        
+    
+      
     </script>
     </body>
 </html>
