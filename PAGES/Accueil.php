@@ -1,8 +1,11 @@
-<h1>Gestion des Repas</h1>
-    
+
+
     <!-- Table pour afficher les utilisateurs -->
 <table id="repasTable" class="display">
         <thead>
+            <tr>
+                <th colspan="4"><h1>Gestion des Repas</h1></th>
+            </tr>
             <tr>
                 <th>ID_REPAS</th>
                 <th>Quantite</th>
@@ -28,7 +31,7 @@
             let isEditingRow = null; // Stocker la ligne en cours d'édition
             let table = $('#repasTable').DataTable({
                 ajax: {
-                    url: 'http://localhost/Projet_IMangerMieux/Projet_IMangerMieux/API/accueil_aliment.php', // Met à jour avec le chemin correct de ton API
+                    url: '<?php require_once('ConfigFrontEnd.php'); echo URL_API;?>/accueil_aliment.php', // Met à jour avec le chemin correct de ton API
                     dataSrc: '',
                     error: function(xhr, error, thrown) {
                         console.log(xhr.responseText); // Affiche les détails de l'erreur dans la console

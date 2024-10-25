@@ -1,8 +1,6 @@
 <?php
     require_once('init_PDO.php');
     require_once('usefullFunctions.php');
-
-
     switch ($_SERVER["REQUEST_METHOD"]) {
         case 'POST':
             // Récupérer l'entrée JSON
