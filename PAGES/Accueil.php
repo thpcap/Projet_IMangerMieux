@@ -1,8 +1,8 @@
 <div id="appContainer">
-    <h1>Liste des Repas</h1>
+    <h1>Liste des Aliments Consommés Depuis une Semaine</h1>
 
     <!-- Formulaire pour créer ou modifier un repas dans un tableau -->
-    <div>
+    <div id="formContainer" style="display:none;">
         <h2 id="formTitle">Créer un nouveau repas</h2>
         <form id="createMealForm">
             <table>
@@ -32,10 +32,11 @@
     <table id="repasTable" class="display">
         <thead>
             <tr>
-                <th>ID Repas</th>
+                <th><button id="toggleFormButton">+</button></th> <!-- Bouton dans l'en-tête -->
+                <th style="display: none;">ID Repas</th> <!-- Cacher la colonne ID Repas -->
+                <th>Aliment</th> <!-- Déplacer le nom de l'aliment ici -->
                 <th>Quantité</th>
                 <th>Date</th>
-                <th>Aliment</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -58,14 +59,16 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(data) {
                 const tableBody = $('#repasTable tbody');
-                tableBody.empty();
+                tableBody.empty(); // Vide le corps de la table avant de remplir
+
                 data.forEach(meal => {
                     tableBody.append(`
                         <tr>
-                            <td>${meal.ID_REPAS}</td>
+                            <td></td> <!-- Cellule vide pour aligner avec le bouton -->
+                            <td style="display: none;">${meal.ID_REPAS}</td> <!-- Cellule ID Repas cachée -->
+                            <td>${meal.LABEL_ALIMENT}</td> <!-- Afficher le nom de l'aliment ici -->
                             <td>${meal.QUANTITE}</td>
                             <td>${new Date(meal.DATE).toLocaleDateString('fr-FR')}</td>
-                            <td>${meal.LABEL_ALIMENT}</td>
                             <td>
                                 <button class="edit-button" data-id="${meal.ID_REPAS}" data-quantite="${meal.QUANTITE}" data-date="${new Date(meal.DATE).toISOString().split('T')[0]}" data-id-aliment="${meal.ID_ALIMENT}">Modifier</button>
                                 <button class="delete-button" data-id="${meal.ID_REPAS}">Supprimer</button>
@@ -90,6 +93,14 @@ $(document).ready(function() {
                     $('#setNowDate').prop('checked', false); // Décocher la case à cocher
                     $('#formTitle').text('Modifier le repas'); // Changer le titre du formulaire
                     $('#submitButton').text('Mettre à jour'); // Changer le texte du bouton
+
+                    // Affiche le formulaire
+                    $('#formContainer').show();
+
+                    // Change le texte du bouton + en - si le formulaire n'était pas déjà affiché
+                    if (!$('#formContainer').is(':visible')) {
+                        $('#toggleFormButton').text('-');
+                    }
                 });
             },
             error: function(xhr, status, error) {
@@ -184,6 +195,18 @@ $(document).ready(function() {
         const parts = value.split(`; ${name}=`);
         if (parts.length === 2) return parts.pop().split(';').shift();
     }
+
+    // Afficher ou cacher le formulaire lors du clic sur le bouton +
+    $('#toggleFormButton').on('click', function() {
+        $('#formContainer').toggle(); // Alterne la visibilité du formulaire
+        // Change le texte du bouton selon la visibilité du formulaire
+        if ($('#formContainer').is(':visible')) {
+            $('#toggleFormButton').text('-');
+        } else {
+            $('#toggleFormButton').text('+');
+        }
+    });
+
 
     fetchRepas();
 });
