@@ -3,13 +3,13 @@ implementé;log_in;se connecter;POST;http://localhost/Projet_IMangerMieux/API/lo
 implementé;create_user;creer son compte;POST;http://localhost/Projet_IMangerMieux/API/create_user.php;Login/mot de passe/nom/prénom/date de naissance/id_sexe/id_niveau_spotif/@mail;;;session/login;ne stoke pas le mdp
 implementé;user_Info;recuperer les infos du user;GET;http://localhost/Projet_IMangerMieux/API/User.php;login;nom/prenom/ID SEXE/IdAGE/IDPratique/DATE De Naissance/Mail;session;;
 non implementé;nutriments_Infos;recuperer tous les % des nutriments du jour par reapport aux besoins;GET;http://localhost/Projet_IMangerMieux/API/Nutriments.php;login/temps(jour/semaine/mois);% de chaque nutriments par rapport au besoins;session;;
-non implementé;al_Infos;recupere les n derniers aliments mangés;GET;http://localhost/Projet_IMangerMieux/API/Aliments.php;login/nbal;nomAL/QuantitéeAL/DateAL;session;;si nbal==null-> tous les aliments du user
-non implementé;create_repas;créer un repas;POST;http://localhost/Projet_IMangerMieux/API/Repas.php;login/Date/Quantitée/ALID;;session;;si date==null-> date courante
+implementé;al_Infos;recupere les aliments mangés depuis une semaine;GET;http://localhost/Projet_IMangerMieux/API/repas.php;login/nbal;nomAL/QuantitéeAL/DateAL;session;;si nbal==null-> tous les aliments du user
+implementé;create_repas;créer un repas;POST;http://localhost/Projet_IMangerMieux/API/Repas.php;login/Date/Quantitée/ALID;;session;;si date==null-> date courante
 non implementé;AL_list;recuperer les aliments;GET;http://localhost/Projet_IMangerMieux/API/AlimentsList.php;(String Rech/nal);liste de tous les AL;;;possible système de recherche
 implementé;Modif_user;modifier un user;PUT;http://localhost/Projet_IMangerMieux/API/User.php;login/nom/prenom/ID SEXE/IdAGE/IDPratique/DATE De Naissance/Mail;;session;;
 non implementé;Besoin_Infos;recuperer les besoins d'un user;GET;http://localhost/Projet_IMangerMieux/API/Besoins.php;Login;Besoins en nutriments;session;;
 implementé;DELETE_User;Supprimer un user;DELETE;http://localhost/Projet_IMangerMieux/API/User.php;Login/mdp?;;session;destruction de session/cookies;possible demande de mdp
-non implementé;DELETE_Repas;suprimer un repas;DELETE;http://localhost/Projet_IMangerMieux/API/Repas.php;login/repasID;;session;;
+implementé;DELETE_Repas;suprimer un repas;DELETE;http://localhost/Projet_IMangerMieux/API/Repas.php;login/repasID;;session;;
 implementé;deconnexion;se deconnecter;POST;http://localhost/Projet_IMangerMieux/API/Disconnect.php;Login;;session;destruction de session/cookies;
 non implementé;API_Infos;renvoie ce Fichier;GET;http://localhost/Projet_IMangerMieux/API/Infos.php;;ce fichier;;;
 implementé;sexe_List;renvoie la liste des sexes;GET;http://localhost/Projet_IMangerMieux/API/sexes.php;;liste des sexes avec leur id;;;
