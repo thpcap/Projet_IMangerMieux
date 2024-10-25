@@ -71,7 +71,7 @@
                     }
                 });
                 request.fail(function(xhr, status, error){
-                    
+                    $('#error').show();
                 });
             }
         </script>

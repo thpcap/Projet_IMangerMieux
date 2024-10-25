@@ -9,8 +9,6 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Inclure jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- Inclure DataTables JS -->
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 </head>

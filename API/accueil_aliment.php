@@ -1,11 +1,44 @@
 <?php
-require_once('init_db.php');
-header("Access-Control-Allow-Origin: *");
-header('Content-Type: application/json');
-
-// Connexion à la base de données
-$pdo = connectDB();
+require_once('init_PDO.php');
 setHeaders();
+
+// Récupérer tous les repas (READ)
+function getAllRepas($pdo) {
+    $sql = "SELECT * FROM repas";
+    $statement = $pdo->prepare($sql);
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// Récupérer un repas par ID (READ)
+function getRepasById($pdo, $id) {
+    $sql = "SELECT * FROM repas WHERE id = :id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(['id' => $id]);
+    return $statement->fetch(PDO::FETCH_ASSOC);
+}
+
+// Créer un repas (CREATE)
+function createRepas($pdo, $quantite, $date) {
+    $sql = "INSERT INTO repas (quantite, date) VALUES (:quantite, :date)";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(['quantite' => $quantite, 'date' => $date]);
+    return $pdo->lastInsertId(); // Retourne l'ID du nouveau repas
+}
+
+// Mettre à jour un repas (UPDATE)
+function updateRepas($pdo, $id, $quantite, $date) {
+    $sql = "UPDATE repas SET quantite = :quantite, date = :date WHERE id = :id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(['quantite' => $quantite, 'date' => $date, 'id' => $id]);
+}
+
+// Supprimer un repas (DELETE)
+function deleteRepas($pdo, $id) {
+    $sql = "DELETE FROM repas WHERE id = :id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(['id' => $id]);
+}
 
 // Gestion des requêtes HTTP
 $method = $_SERVER['REQUEST_METHOD'];

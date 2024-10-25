@@ -36,7 +36,7 @@
                     // Connexion réussie
                     setHeaders();
                     session_start();
-                    $_SESSION['login'] = $login; // Stocker le login échappé dans la session
+                    $_SESSION['login'] = $login;
                     $_SESSION['connected'] = true;
                     setcookie('login',$login, 0, "/");
                     http_response_code(200); // OK

@@ -48,7 +48,7 @@
                     return;
                 }
                 $.ajax({
-                    url: "http://localhost/Projet_IMangerMieux/API/user.php?login="+login, // Remplacez par l'URL de votre endpoint
+                    url: "<?php require_once('ConfigFrontEnd.php'); echo URL_API ?>/user.php?login=" + login,
                     method: "GET",
                     success: function(data) {
                         // Vérifiez si les données contiennent des résultats
@@ -71,7 +71,7 @@
                 function() {
                     event.stopPropagation(); // Empêche la propagation de l'événement
                     $.ajax({
-                        url: "http://localhost/Projet_IMangerMieux/API/disconnect.php", // Remplacez par l'URL de votre endpoint de déconnexion
+                        url: "<?php echo URL_API ?>/disconnect.php",
                         method: "POST",
                         success: function(response) {
                             // Rediriger vers index.php après la déconnexion
