@@ -1,165 +1,190 @@
+<div id="appContainer">
+    <h1>Liste des Repas</h1>
 
+    <!-- Formulaire pour créer ou modifier un repas dans un tableau -->
+    <div>
+        <h2 id="formTitle">Créer un nouveau repas</h2>
+        <form id="createMealForm">
+            <table>
+                <tr>
+                    <td><label for="quantite">Quantité :</label></td>
+                    <td><input type="number" id="quantite" name="quantite" required></td>
+                </tr>
+                <tr>
+                    <td><label for="date">Date :</label></td>
+                    <td>
+                        <input type="date" id="date" name="date">
+                        <input type="checkbox" id="setNowDate" name="setNowDate">
+                        <label for="setNowDate">Utiliser la date actuelle</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="id_aliment">ID Aliment :</label></td>
+                    <td><input type="number" id="id_aliment" name="id_aliment" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button type="submit" id="submitButton">Ajouter Repas</button></td>
+                </tr>
+            </table>
+        </form>
+    </div>
 
-    <!-- Table pour afficher les utilisateurs -->
-<table id="repasTable" class="display">
+    <table id="repasTable" class="display">
         <thead>
             <tr>
-                <th colspan="4"><h1>Gestion des Repas</h1></th>
-            </tr>
-            <tr>
-                <th>ID_REPAS</th>
-                <th>Quantite</th>
+                <th>ID Repas</th>
+                <th>Quantité</th>
                 <th>Date</th>
+                <th>Aliment</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Les données seront peuplées dynamiquement via AJAX -->
+            <!-- Les données seront peuplées dynamiquement via JavaScript -->
         </tbody>
-</table>
-
-<h3 id="formTitle">Ajouter un utilisateur</h3>
-<form id="addRepasForm">
-        <input type="hidden" id="repasId"> <!-- Champ caché pour stocker l'ID de l'utilisateur lors de la modification -->
-        <label>Quantite: </label><input type="text" id="quantite" ><br>
-        <label>Date: </label><input type="date" id="date" ><br>
-        <button type="submit">Ajouter</button>
-</form>
+    </table>
+</div>
 
 <script>
-        $(document).ready(function() {
-            let isEditingRow = null; // Stocker la ligne en cours d'édition
-            let table = $('#repasTable').DataTable({
-                ajax: {
-                    url: '<?php require_once('ConfigFrontEnd.php'); echo URL_API;?>/accueil_aliment.php', // Met à jour avec le chemin correct de ton API
-                    dataSrc: '',
-                    error: function(xhr, error, thrown) {
-                        console.log(xhr.responseText); // Affiche les détails de l'erreur dans la console
-                        alert("Erreur lors du chargement des utilisateurs : " + xhr.status + " " + thrown);
-                    }
-                },
-                columns: [
-                    { data: 'ID_REPAS' },
-                    { data: 'QUANTITE' },
-                    { data: 'DATE' },
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            return `
-                                <button class="editBtn">Modifier</button>
-                                <button class="saveBtn" style="display:none;">Sauvegarder</button>
-                                <button class="deleteBtn">Supprimer</button>
-                                
-                            `;
-                        }
-                    }
-                ]
-            });
+$(document).ready(function() {
+    const apiUrl = '<?php require_once('ConfigFrontEnd.php'); echo URL_API;?>/repas.php';
+    let currentMealId = null; // ID du repas actuellement sélectionné pour modification
 
-            // Gérer la soumission du formulaire pour ajouter un utilisateur
-            $('#addRepasForm').on('submit', function(e) {
-                e.preventDefault();
-                let quantite = $('#quantite').val();
-                let date = $('#date').val();
-
-                // Mode ajout : envoyer une requête POST pour ajouter un nouvel utilisateur
-                $.ajax({
-                    url: 'http://localhost/Projet_IMangerMieux/Projet_IMangerMieux/API/accueil_aliment.php',
-                    method: 'POST',
-                    data: JSON.stringify({ QUANTITE: quantite, DATE: date }),
-                    contentType: 'application/json',
-                    success: function(response) {
-                        table.ajax.reload(); // Recharger les données de la table
-                        alert('Repas ajouté avec succès');
-                        resetForm();
-                    },
-                    error: function(xhr, status, error) {
-                        console.log(xhr.responseText);
-                        alert("Erreur lors de l'ajout du repas : " + xhr.status + " " + error);
-                    }
+    function fetchRepas() {
+        const login = getCookie('login');
+        $.ajax({
+            url: `${apiUrl}?login=${login}`,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                const tableBody = $('#repasTable tbody');
+                tableBody.empty();
+                data.forEach(meal => {
+                    tableBody.append(`
+                        <tr>
+                            <td>${meal.ID_REPAS}</td>
+                            <td>${meal.QUANTITE}</td>
+                            <td>${new Date(meal.DATE).toLocaleDateString('fr-FR')}</td>
+                            <td>${meal.LABEL_ALIMENT}</td>
+                            <td>
+                                <button class="edit-button" data-id="${meal.ID_REPAS}" data-quantite="${meal.QUANTITE}" data-date="${new Date(meal.DATE).toISOString().split('T')[0]}" data-id-aliment="${meal.ID_ALIMENT}">Modifier</button>
+                                <button class="delete-button" data-id="${meal.ID_REPAS}">Supprimer</button>
+                            </td>
+                        </tr>
+                    `);
                 });
-            });
+                $('#repasTable').DataTable();
 
-            // Gérer le bouton "Modifier" directement dans le tableau
-            $('#repasTable tbody').on('click', '.editBtn', function() {
-                let row = $(this).closest('tr'); // Sélectionner la ligne parent
-                let data = table.row(row).data();
-
-                if (isEditingRow) {
-                    alert("Une autre ligne est déjà en cours de modification. Sauvegardez ou annulez les modifications.");
-                    return;
-                }
-
-                isEditingRow = row;
-
-                // Rendre les cellules de la ligne éditables
-                row.find('td:eq(1)').html(`<input type="text" value="${data.quantite}" class="edit-quantite">`);
-                row.find('td:eq(2)').html(`<input type="date" value="${data.date}" class="edit-date">`);
-
-                // Afficher le bouton "Sauvegarder" et cacher le bouton "Modifier"
-                row.find('.editBtn').hide();
-                row.find('.saveBtn').show();
-            });
-
-            // Gérer le bouton "Sauvegarder"
-            $('#repasTable tbody').on('click', '.saveBtn', function() {
-                let row = $(this).closest('tr'); // Sélectionner la ligne parent
-                let repasId = row.find('td:eq(0)').text();
-                let newQuantite = row.find('.edit-quantite').val();
-                let newDate = row.find('.edit-date').val();
-
-                // Envoyer la mise à jour via AJAX
-                $.ajax({
-                    url: `http://localhost/Projet_IMangerMieux/Projet_IMangerMieux/API/accueil_aliment.php?id=${repasId}`,
-                    method: 'PUT',
-                    data: JSON.stringify({ ID_REPAS: repasId, QUANTITE: newQuantite, DATE: newDate }),
-                    contentType: 'application/json',
-                    success: function(response) {
-                        // Mettre à jour les cellules du tableau avec les nouvelles valeurs
-                        row.find('td:eq(1)').text(newQuantite);
-                        row.find('td:eq(2)').text(newDate);
-
-                        // Réinitialiser les boutons
-                        row.find('.editBtn').show();
-                        row.find('.saveBtn').hide();
-
-                        // Réinitialiser la ligne d'édition
-                        isEditingRow = null;
-                        alert('Repas modifié avec succès.');
-                    },
-                    error: function(xhr, status, error) {
-                        console.log(xhr.responseText);
-                        alert("Erreur lors de la modification du Repas : " + xhr.status + " " + error);
-                    }
+                // Événements de suppression
+                $('.delete-button').on('click', function() {
+                    const mealId = $(this).data('id');
+                    deleteRepas(mealId);
                 });
-            });
 
-            // Gérer le bouton "Supprimer"
-            $('#repasTable tbody').on('click', '.deleteBtn', function() {
-                let row = $(this).closest('tr');
-                let data = table.row(row).data();
-                if (confirm('Êtes-vous sûr de vouloir supprimer ce repas ?')) {
-                    $.ajax({
-                        url: `http://localhost/Projet_IMangerMieux/Projet_IMangerMieux/API/accueil_aliment.php?id=${data.ID_REPAS}`,
-                        method: 'DELETE',
-                        success: function() {
-                            table.ajax.reload(); // Recharger les données
-                            alert('Repas supprimé');
-                        },
-                        error: function(xhr, status, error) {
-                            console.log(xhr.responseText);
-                            alert("Erreur lors de la suppression du repas: " + xhr.status + " " + error);
-                        }
-                    });
-                }
-            });
-
-            // Fonction pour réinitialiser le formulaire
-            function resetForm() {
-                $('#quantite').val('');
-                $('#date').val('');
+                // Événements de modification
+                $('.edit-button').on('click', function() {
+                    currentMealId = $(this).data('id');
+                    $('#quantite').val($(this).data('quantite'));
+                    $('#date').val($(this).data('date'));
+                    $('#id_aliment').val($(this).data('id-aliment'));
+                    $('#setNowDate').prop('checked', false); // Décocher la case à cocher
+                    $('#formTitle').text('Modifier le repas'); // Changer le titre du formulaire
+                    $('#submitButton').text('Mettre à jour'); // Changer le texte du bouton
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("Erreur lors de la récupération des repas:", error);
+                alert("Erreur lors de la récupération des repas.");
             }
         });
+    }
+
+    function deleteRepas(id_repas) {
+        const login = getCookie('login');
+        $.ajax({
+            url: `${apiUrl}`,
+            method: 'DELETE',
+            contentType: 'application/json',
+            data: JSON.stringify({ login: login, id_repas: id_repas }),
+            success: function(response) {
+                alert("Repas supprimé avec succès.");
+                fetchRepas();
+            },
+            error: function(xhr, status, error) {
+                console.error("Erreur lors de la suppression du repas:", xhr.responseText);
+                alert("Erreur lors de la suppression du repas.");
+            }
+        });
+    }
+
+    $('#createMealForm').on('submit', function(event) {
+        event.preventDefault();
+
+        const date = $('#date').val();
+        const isCheckboxChecked = $('#setNowDate').is(':checked');
+
+        if (!date && !isCheckboxChecked) {
+            alert("Veuillez remplir la date ou cocher 'Utiliser la date actuelle'.");
+            return;
+        }
+
+        const quantite = $('#quantite').val();
+        const id_aliment = $('#id_aliment').val();
+        const login = getCookie('login');
+        const finalDate = isCheckboxChecked ? new Date().toISOString().split('T')[0] : date;
+
+        if (currentMealId) {
+            // Si nous modifions un repas
+            $.ajax({
+                url: `${apiUrl}`,
+                method: 'PUT', // Utiliser PUT pour mettre à jour
+                contentType: 'application/json',
+                data: JSON.stringify({ login: login, id_repas: currentMealId, quantite: quantite, date: finalDate, id_aliment: id_aliment }),
+                success: function(response) {
+                    alert("Repas mis à jour avec succès.");
+                    fetchRepas();
+                    resetForm();
+                },
+                error: function(xhr, status, error) {
+                    console.error("Erreur lors de la mise à jour du repas:", xhr.responseText);
+                    alert("Erreur lors de la mise à jour du repas.");
+                }
+            });
+        } else {
+            // Sinon, nous ajoutons un nouveau repas
+            $.ajax({
+                url: apiUrl,
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ login: login, quantite: quantite, date: finalDate, id_aliment: id_aliment }),
+                success: function(response) {
+                    alert("Repas ajouté avec succès.");
+                    fetchRepas();
+                    resetForm();
+                },
+                error: function(xhr, status, error) {
+                    console.error("Erreur lors de l'ajout du repas:", xhr.responseText);
+                    alert("Erreur lors de l'ajout du repas.");
+                }
+            });
+        }
+    });
+
+    // Fonction pour réinitialiser le formulaire
+    function resetForm() {
+        $('#createMealForm')[0].reset();
+        $('#setNowDate').prop('checked', false);
+        $('#formTitle').text('Créer un nouveau repas');
+        $('#submitButton').text('Ajouter Repas');
+        currentMealId = null; // Réinitialiser l'ID du repas
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    fetchRepas();
+});
 </script>
-
-

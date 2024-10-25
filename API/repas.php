@@ -173,7 +173,7 @@
 
                 case 'DELETE':
                     // Récupérer l'ID_REPAS et le login à partir de l'entrée JSON
-                    parse_str(file_get_contents("php://input"), $data);
+                    $data = json_decode(file_get_contents('php://input'), true); // Récupérer les données JSON
             
                     if (isset($data['login']) && isset($data['id_repas'])) {
                         $login = $data['login'];
