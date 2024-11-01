@@ -1,9 +1,9 @@
 <div id="appContainer">
     <h1>Liste des Aliments Consommés Depuis une Semaine</h1>
 
-    <!-- Formulaire pour créer ou modifier un repas dans un tableau -->
+    <!-- Formulaire uniquement pour l'ajout d'un repas -->
     <div id="formContainer" style="display:none;">
-        <h2 id="formTitle">Créer un nouveau repas</h2>
+        <h2>Créer un nouveau repas</h2>
         <form id="createMealForm">
             <table>
                 <tr>
@@ -32,9 +32,9 @@
     <table id="repasTable" class="display">
         <thead>
             <tr>
-                <th><button id="toggleFormButton">+</button></th> <!-- Bouton dans l'en-tête -->
-                <th style="display: none;">ID Repas</th> <!-- Cacher la colonne ID Repas -->
-                <th>Aliment</th> <!-- Déplacer le nom de l'aliment ici -->
+                <th><button id="toggleFormButton">+</button></th>
+                <th style="display: none;">ID Repas</th>
+                <th>Aliment</th>
                 <th>Quantité</th>
                 <th>Date</th>
                 <th>Actions</th>
@@ -63,45 +63,23 @@ $(document).ready(function() {
 
                 data.forEach(meal => {
                     tableBody.append(`
-                        <tr>
+                        <tr data-id="${meal.ID_REPAS}">
                             <td></td> <!-- Cellule vide pour aligner avec le bouton -->
-                            <td style="display: none;">${meal.ID_REPAS}</td> <!-- Cellule ID Repas cachée -->
-                            <td>${meal.LABEL_ALIMENT}</td> <!-- Afficher le nom de l'aliment ici -->
-                            <td>${meal.QUANTITE}</td>
-                            <td>${new Date(meal.DATE).toLocaleDateString('fr-FR')}</td>
+                            <td style="display: none;">${meal.ID_REPAS}</td>
+                            <td>${meal.LABEL_ALIMENT}</td>
+                            <td contenteditable="false" class="editable-cell" data-field="quantite">${meal.QUANTITE}</td>
+                            <td contenteditable="false" class="editable-cell" data-field="date">${new Date(meal.DATE).toLocaleDateString('fr-FR')}</td>
                             <td>
-                                <button class="edit-button" data-id="${meal.ID_REPAS}" data-quantite="${meal.QUANTITE}" data-date="${new Date(meal.DATE).toISOString().split('T')[0]}" data-id-aliment="${meal.ID_ALIMENT}">Modifier</button>
-                                <button class="delete-button" data-id="${meal.ID_REPAS}">Supprimer</button>
+                                <button class="edit-button">Modifier</button>
+                                <button class="delete-button">Supprimer</button>
                             </td>
                         </tr>
                     `);
                 });
                 $('#repasTable').DataTable();
 
-                // Événements de suppression
-                $('.delete-button').on('click', function() {
-                    const mealId = $(this).data('id');
-                    deleteRepas(mealId);
-                });
-
-                // Événements de modification
-                $('.edit-button').on('click', function() {
-                    currentMealId = $(this).data('id');
-                    $('#quantite').val($(this).data('quantite'));
-                    $('#date').val($(this).data('date'));
-                    $('#id_aliment').val($(this).data('id-aliment'));
-                    $('#setNowDate').prop('checked', false); // Décocher la case à cocher
-                    $('#formTitle').text('Modifier le repas'); // Changer le titre du formulaire
-                    $('#submitButton').text('Mettre à jour'); // Changer le texte du bouton
-
-                    // Affiche le formulaire
-                    $('#formContainer').show();
-
-                    // Change le texte du bouton + en - si le formulaire n'était pas déjà affiché
-                    if (!$('#formContainer').is(':visible')) {
-                        $('#toggleFormButton').text('-');
-                    }
-                });
+                // Attacher les événements de modification et de suppression
+                attachTableEvents();
             },
             error: function(xhr, status, error) {
                 console.error("Erreur lors de la récupération des repas:", error);
@@ -110,10 +88,70 @@ $(document).ready(function() {
         });
     }
 
+    // Fonction pour attacher les événements de modification et de suppression
+    function attachTableEvents() {
+        $('.edit-button').on('click', function() {
+            const row = $(this).closest('tr');
+            const isEditing = $(this).text() === 'Enregistrer';
+
+            if (!isEditing) {
+                // Activer l'édition
+                row.find('[data-field="quantite"]').attr('contenteditable', 'true').addClass('editing');
+                row.find('[data-field="date"]').attr('contenteditable', 'true').addClass('editing');
+                $(this).text('Enregistrer'); // Changer le texte du bouton en "Enregistrer"
+            } else {
+                // Sauvegarder les modifications
+                const id_repas = row.data('id');
+                const quantite = row.find('[data-field="quantite"]').text().trim();
+                const date = row.find('[data-field="date"]').text().trim();
+
+                // Appeler la fonction pour mettre à jour
+                updateRepas(id_repas, quantite, date);
+
+                // Désactiver l'édition
+                row.find('[data-field="quantite"]').attr('contenteditable', 'false').removeClass('editing');
+                row.find('[data-field="date"]').attr('contenteditable', 'false').removeClass('editing');
+                $(this).text('Modifier'); // Revenir au texte "Modifier"
+            }
+        });
+
+        $('.delete-button').on('click', function() {
+            const id_repas = $(this).closest('tr').data('id');
+            deleteRepas(id_repas);
+        });
+    }
+
+    // Fonction pour mettre à jour un repas spécifique
+    function updateRepas(id_repas, quantite, date) {
+        const login = getCookie('login');
+        const updateData = {
+            login: login,
+            id_repas: id_repas,
+            quantite: quantite,
+            date: new Date(date.split('/').reverse().join('-')).toISOString().split('T')[0] // Formatage de la date
+        };
+
+        $.ajax({
+            url: apiUrl,
+            method: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(updateData),
+            success: function(response) {
+                alert("Repas mis à jour avec succès.");
+                fetchRepas(); // Recharger les données pour afficher la mise à jour
+            },
+            error: function(xhr, status, error) {
+                console.error("Erreur lors de la mise à jour du repas:", xhr.responseText);
+                alert("Erreur lors de la mise à jour du repas.");
+            }
+        });
+    }
+
+    // Fonction pour supprimer un repas
     function deleteRepas(id_repas) {
         const login = getCookie('login');
         $.ajax({
-            url: `${apiUrl}`,
+            url: apiUrl,
             method: 'DELETE',
             contentType: 'application/json',
             data: JSON.stringify({ login: login, id_repas: id_repas }),
@@ -128,68 +166,32 @@ $(document).ready(function() {
         });
     }
 
+    // Gestion du formulaire de création
     $('#createMealForm').on('submit', function(event) {
         event.preventDefault();
 
-        const date = $('#date').val();
-        const isCheckboxChecked = $('#setNowDate').is(':checked');
-
-        if (!date && !isCheckboxChecked) {
-            alert("Veuillez remplir la date ou cocher 'Utiliser la date actuelle'.");
-            return;
-        }
-
         const quantite = $('#quantite').val();
+        const date = $('#setNowDate').is(':checked') ? new Date().toISOString().split('T')[0] : $('#date').val();
         const id_aliment = $('#id_aliment').val();
-        const login = getCookie('login');
-        const finalDate = isCheckboxChecked ? new Date().toISOString().split('T')[0] : date;
 
-        if (currentMealId) {
-            // Si nous modifions un repas
-            $.ajax({
-                url: `${apiUrl}`,
-                method: 'PUT', // Utiliser PUT pour mettre à jour
-                contentType: 'application/json',
-                data: JSON.stringify({ login: login, id_repas: currentMealId, quantite: quantite, date: finalDate, id_aliment: id_aliment }),
-                success: function(response) {
-                    alert("Repas mis à jour avec succès.");
-                    fetchRepas();
-                    resetForm();
-                },
-                error: function(xhr, status, error) {
-                    console.error("Erreur lors de la mise à jour du repas:", xhr.responseText);
-                    alert("Erreur lors de la mise à jour du repas.");
-                }
-            });
-        } else {
-            // Sinon, nous ajoutons un nouveau repas
-            $.ajax({
-                url: apiUrl,
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ login: login, quantite: quantite, date: finalDate, id_aliment: id_aliment }),
-                success: function(response) {
-                    alert("Repas ajouté avec succès.");
-                    fetchRepas();
-                    resetForm();
-                },
-                error: function(xhr, status, error) {
-                    console.error("Erreur lors de l'ajout du repas:", xhr.responseText);
-                    alert("Erreur lors de l'ajout du repas.");
-                }
-            });
-        }
+        $.ajax({
+            url: apiUrl,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ login: getCookie('login'), quantite: quantite, date: date, id_aliment: id_aliment }),
+            success: function(response) {
+                alert("Repas ajouté avec succès.");
+                fetchRepas();
+                $('#createMealForm')[0].reset();
+            },
+            error: function(xhr, status, error) {
+                console.error("Erreur lors de l'ajout du repas:", xhr.responseText);
+                alert("Erreur lors de l'ajout du repas.");
+            }
+        });
     });
 
-    // Fonction pour réinitialiser le formulaire
-    function resetForm() {
-        $('#createMealForm')[0].reset();
-        $('#setNowDate').prop('checked', false);
-        $('#formTitle').text('Créer un nouveau repas');
-        $('#submitButton').text('Ajouter Repas');
-        currentMealId = null; // Réinitialiser l'ID du repas
-    }
-
+    // Fonction pour obtenir le cookie
     function getCookie(name) {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
@@ -198,16 +200,11 @@ $(document).ready(function() {
 
     // Afficher ou cacher le formulaire lors du clic sur le bouton +
     $('#toggleFormButton').on('click', function() {
-        $('#formContainer').toggle(); // Alterne la visibilité du formulaire
-        // Change le texte du bouton selon la visibilité du formulaire
-        if ($('#formContainer').is(':visible')) {
-            $('#toggleFormButton').text('-');
-        } else {
-            $('#toggleFormButton').text('+');
-        }
+        $('#formContainer').toggle();
+        $(this).text($('#formContainer').is(':visible') ? '-' : '+');
     });
 
-
+    // Charger initialement les repas
     fetchRepas();
 });
 </script>
