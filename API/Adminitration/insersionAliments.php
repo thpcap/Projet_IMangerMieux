@@ -33,7 +33,7 @@
     addto($fichier, $querry, $pdo);
 
     // Insertion des NUTRIMENTS
-    $fichier = 'Donnes_A_ajouter/NUTRIMENTS.csv';
+    $fichier = 'Donnes_A_ajouter/nutriments.csv';
     $querry = "INSERT INTO NUTRIMENTS (LIBELE_NUTRIMENT) VALUES (:libele_type)";
     addto($fichier, $querry, $pdo);
 
