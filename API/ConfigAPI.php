@@ -5,3 +5,4 @@
     define('_MYSQL_USER', 'root');
     define('_MYSQL_PASSWORD', 'root');
     date_default_timezone_set('Europe/Paris'); //fuseau horaire
+    define('_Contact_Email','imangermieux@gmail.com');
