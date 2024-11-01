@@ -1,6 +1,6 @@
 <?php
 
-    require_once("C:\UwAmp\www\Projet_IMangerMieux\API\init_PDO.php");
+    require_once("../init_PDO.php");
 
     function addto($fichier, $querry, $pdo) {
         if (!file_exists($fichier)) {
@@ -29,12 +29,12 @@
 
     // Insertion des types d'aliments
     $fichier = 'Donnes_A_ajouter/types d\'aliments.csv';
-    $querry = "INSERT INTO type_aliment (LIBELE_TYPE) VALUES (:libele_type)";
+    $querry = "INSERT INTO TYPE_ALIMENT (LIBELE_TYPE) VALUES (:libele_type)";
     addto($fichier, $querry, $pdo);
 
-    // Insertion des nutriments
-    $fichier = 'Donnes_A_ajouter/nutriments.csv';
-    $querry = "INSERT INTO nutriments (LIBELE_NUTRIMENT) VALUES (:libele_type)";
+    // Insertion des NUTRIMENTS
+    $fichier = 'Donnes_A_ajouter/NUTRIMENTS.csv';
+    $querry = "INSERT INTO NUTRIMENTS (LIBELE_NUTRIMENT) VALUES (:libele_type)";
     addto($fichier, $querry, $pdo);
 
     // Insertion des aliments
@@ -45,7 +45,7 @@
         // Préparation des requêtes SQL
         $insertAlimentStmt = $pdo->prepare("
             INSERT INTO ALIMENT (ID_TYPE, LABEL_ALIMENT) 
-            VALUES ((SELECT ID_TYPE FROM type_aliment WHERE LIBELE_TYPE = :libele_type), :label_aliment)
+            VALUES ((SELECT ID_TYPE FROM TYPE_ALIMENT WHERE LIBELE_TYPE = :libele_type), :label_aliment)
         ");
         $insertContientStmt = $pdo->prepare("
             INSERT INTO CONTIENT (ID_ALIMENT, ID_NUTRIMENT, RATIOS) 
@@ -59,7 +59,7 @@
             $nomAliment = $row[1];  // Nom d'aliment (ex: "Pomme")
 
             // Vérifier si le type d'aliment existe
-            $stmt = $pdo->prepare("SELECT ID_TYPE FROM type_aliment WHERE LIBELE_TYPE = :libele_type");
+            $stmt = $pdo->prepare("SELECT ID_TYPE FROM TYPE_ALIMENT WHERE LIBELE_TYPE = :libele_type");
             $stmt->execute([':libele_type' => $typeAliment]);
             $idType = $stmt->fetchColumn();
 
@@ -75,7 +75,7 @@
 
                     $idAliment = $pdo->lastInsertId();  // Récupérer l'ID de l'aliment inséré
 
-                    // Parcourir les nutriments à partir de la 3ème colonne
+                    // Parcourir les NUTRIMENTS à partir de la 3ème colonne
                     foreach ($row as $index => $nutrientValue) {
                         if ($index > 1 && !empty($nutrientValue)) {
                             $nutrientName = $header[$index]; // Nom du nutriment depuis l'en-tête
@@ -84,7 +84,7 @@
                                 $nutrientName='null';
                             }
                             // Vérifier si le nutriment existe dans la base de données
-                            $nutrientStmt = $pdo->prepare("SELECT ID_NUTRIMENT FROM nutriments WHERE LIBELE_NUTRIMENT = :libele_nutriment");
+                            $nutrientStmt = $pdo->prepare("SELECT ID_NUTRIMENT FROM NUTRIMENTS WHERE LIBELE_NUTRIMENT = :libele_nutriment");
                             $nutrientStmt->execute([':libele_nutriment' => $nutrientName]);
                             $idNutriment = $nutrientStmt->fetchColumn();
 

@@ -7,7 +7,7 @@
     switch ($_SERVER["REQUEST_METHOD"]) {
         case 'GET':
             // Préparer la requête SQL pour récupérer tous les sexes
-            $stmt = $pdo->prepare("SELECT sexe.ID_SEXE, sexe.LIBELE_SEXE FROM sexe;");
+            $stmt = $pdo->prepare("SELECT SEXE.ID_SEXE, SEXE.LIBELE_SEXE FROM SEXE;");
             try {
                 $stmt->execute();
                 $data = $stmt->fetchAll(PDO::FETCH_ASSOC); // Récupérer tous les résultats

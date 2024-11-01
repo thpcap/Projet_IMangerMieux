@@ -7,7 +7,7 @@
     switch ($_SERVER["REQUEST_METHOD"]) {
         case 'GET':
             // Préparer la requête SQL pour récupérer tous les niveaux de pratique
-            $stmt = $pdo->prepare("SELECT niveau_de_pratique.ID_PRATIQUE, niveau_de_pratique.LIBELE_PRATIQUE FROM niveau_de_pratique;");
+            $stmt = $pdo->prepare("SELECT NIVEAU_DE_PRATIQUE.ID_PRATIQUE, NIVEAU_DE_PRATIQUE.LIBELE_PRATIQUE FROM NIVEAU_DE_PRATIQUE;");
             try {
                 $stmt->execute();
                 $data = $stmt->fetchAll(PDO::FETCH_ASSOC); // Récupérer tous les résultats

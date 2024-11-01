@@ -21,10 +21,10 @@ switch ($_SERVER["REQUEST_METHOD"]) {
             }
 
             $stmt = $pdo->prepare(
-                "SELECT repas.ID_REPAS, repas.QUANTITE, repas.DATE, aliment.LABEL_ALIMENT 
-                FROM repas 
-                INNER JOIN aliment ON repas.ID_ALIMENT = aliment.ID_ALIMENT 
-                WHERE repas.LOGIN = :login AND repas.DATE >= DATE_SUB(NOW(), INTERVAL 7 DAY)"
+                "SELECT REPAS.ID_REPAS, REPAS.QUANTITE, REPAS.DATE, aliment.LABEL_ALIMENT 
+                FROM REPAS 
+                INNER JOIN aliment ON REPAS.ID_ALIMENT = aliment.ID_ALIMENT 
+                WHERE REPAS.LOGIN = :login AND REPAS.DATE >= DATE_SUB(NOW(), INTERVAL 7 DAY)"
             );
 
             try {
@@ -65,7 +65,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 
             if ($alimentExists) {
                 $stmt = $pdo->prepare(
-                    "INSERT INTO repas (LOGIN, QUANTITE, DATE, ID_ALIMENT) VALUES (:login, :quantite, :date, :id_aliment)"
+                    "INSERT INTO REPAS (LOGIN, QUANTITE, DATE, ID_ALIMENT) VALUES (:login, :quantite, :date, :id_aliment)"
                 );
 
                 try {
@@ -87,50 +87,50 @@ switch ($_SERVER["REQUEST_METHOD"]) {
             }
         } else {
             http_response_code(400);
-            echo json_encode(['error' => 'Données manquantes pour la création du repas.']);
+            echo json_encode(['error' => 'Données manquantes pour la création du REPAS.']);
         }
         break;
 
     case 'PUT':
         $data = json_decode(file_get_contents('php://input'), true);
 
-        if (!isset($data['login']) || !isset($data['id_repas']) || !isset($data['quantite']) || !isset($data['date'])) {
+        if (!isset($data['login']) || !isset($data['id_REPAS']) || !isset($data['quantite']) || !isset($data['date'])) {
             $missingFields = [];
             if (!isset($data['login'])) $missingFields[] = 'login';
-            if (!isset($data['id_repas'])) $missingFields[] = 'id_repas';
+            if (!isset($data['id_REPAS'])) $missingFields[] = 'id_REPAS';
             if (!isset($data['quantite'])) $missingFields[] = 'quantite';
             if (!isset($data['date'])) $missingFields[] = 'date';
 
             http_response_code(400);
-            echo json_encode(['error' => 'Données manquantes pour la mise à jour du repas.', 'missing_fields' => $missingFields]);
+            echo json_encode(['error' => 'Données manquantes pour la mise à jour du REPAS.', 'missing_fields' => $missingFields]);
             exit;
         }
 
         $login = $data['login'];
-        $id_repas = $data['id_repas'];
+        $id_REPAS = $data['id_REPAS'];
         $quantite = $data['quantite'];
         $date = $data['date'];
         $id_aliment = $data['id_aliment'];
 
         if ($login !== $_SESSION['login']) {
             http_response_code(401);
-            echo json_encode(['error' => 'Vous ne pouvez pas modifier ce repas.']);
+            echo json_encode(['error' => 'Vous ne pouvez pas modifier ce REPAS.']);
             exit;
         }
 
         $stmt = $pdo->prepare(
-            "SELECT LOGIN FROM repas WHERE ID_REPAS = :id_repas"
+            "SELECT LOGIN FROM REPAS WHERE ID_REPAS = :id_REPAS"
         );
-        $stmt->execute([':id_repas' => $id_repas]);
+        $stmt->execute([':id_REPAS' => $id_REPAS]);
         $existingMeal = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($existingMeal && $existingMeal['LOGIN'] === $login) {
             $updateFields = [
                 ':quantite' => $quantite,
                 ':date' => $date,
-                ':id_repas' => $id_repas
+                ':id_REPAS' => $id_REPAS
             ];
-            $sql = "UPDATE repas SET QUANTITE = :quantite, DATE = :date";
+            $sql = "UPDATE REPAS SET QUANTITE = :quantite, DATE = :date";
 
             // Ajouter `ID_ALIMENT` dans la mise à jour uniquement si présent
             if ($id_aliment !== null) {
@@ -148,7 +148,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
                 }
             }
 
-            $sql .= " WHERE ID_REPAS = :id_repas";
+            $sql .= " WHERE ID_REPAS = :id_REPAS";
             $stmt = $pdo->prepare($sql);
 
             try {
@@ -168,24 +168,24 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     case 'DELETE':
         $data = json_decode(file_get_contents('php://input'), true);
 
-        if (isset($data['login']) && isset($data['id_repas'])) {
+        if (isset($data['login']) && isset($data['id_REPAS'])) {
             $login = $data['login'];
-            $id_repas = $data['id_repas'];
+            $id_REPAS = $data['id_REPAS'];
 
             if ($login !== $_SESSION['login']) {
                 http_response_code(401);
-                echo json_encode(['error' => 'Vous ne pouvez pas supprimer ce repas.']);
+                echo json_encode(['error' => 'Vous ne pouvez pas supprimer ce REPAS.']);
                 exit;
             }
 
-            $stmt = $pdo->prepare("SELECT LOGIN FROM repas WHERE ID_REPAS = :id_repas");
-            $stmt->execute([':id_repas' => $id_repas]);
+            $stmt = $pdo->prepare("SELECT LOGIN FROM REPAS WHERE ID_REPAS = :id_REPAS");
+            $stmt->execute([':id_REPAS' => $id_REPAS]);
             $existingMeal = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($existingMeal && $existingMeal['LOGIN'] === $login) {
-                $stmt = $pdo->prepare("DELETE FROM repas WHERE ID_REPAS = :id_repas");
+                $stmt = $pdo->prepare("DELETE FROM REPAS WHERE ID_REPAS = :id_REPAS");
                 try {
-                    $stmt->execute([':id_repas' => $id_repas]);
+                    $stmt->execute([':id_REPAS' => $id_REPAS]);
                     http_response_code(200);
                     echo json_encode(['message' => 'Repas supprimé avec succès.']);
                 } catch (PDOException $e) {
@@ -198,7 +198,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
             }
         } else {
             http_response_code(400);
-            echo json_encode(['error' => 'Données manquantes pour la suppression du repas.']);
+            echo json_encode(['error' => 'Données manquantes pour la suppression du REPAS.']);
         }
         break;
 

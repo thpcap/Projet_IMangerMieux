@@ -21,25 +21,25 @@
                 // Vérifier que le login correspond à celui de la session
                 if($login !== $_SESSION['login']) {
                     http_response_code(403); // Interdit
-                    echo json_encode(['error' => 'Accès interdit. Vous ne pouvez pas accéder aux informations d\'autres utilisateurs.']);
+                    echo json_encode(['error' => 'Accès interdit. Vous ne pouvez pas accéder aux informations d\'autres UTILISATEURs.']);
                     exit;
                 }
 
-                // Préparer la requête SQL pour récupérer les informations utilisateur
+                // Préparer la requête SQL pour récupérer les informations UTILISATEUR
                 $stmt = $pdo->prepare("
                     SELECT 
-                        utilisateur.LOGIN, 
-                        utilisateur.NOM, 
-                        utilisateur.PRENOM, 
-                        utilisateur.DATE_DE_NAISSANCE, 
-                        utilisateur.MAIL, 
-                        utilisateur.ID_SEXE, 
-                        utilisateur.ID_AGE, 
-                        utilisateur.ID_PRATIQUE 
+                        UTILISATEUR.LOGIN, 
+                        UTILISATEUR.NOM, 
+                        UTILISATEUR.PRENOM, 
+                        UTILISATEUR.DATE_DE_NAISSANCE, 
+                        UTILISATEUR.MAIL, 
+                        UTILISATEUR.ID_SEXE, 
+                        UTILISATEUR.ID_AGE, 
+                        UTILISATEUR.ID_PRATIQUE 
                     FROM 
-                        utilisateur 
+                        UTILISATEUR 
                     WHERE 
-                        utilisateur.LOGIN = :login;
+                        UTILISATEUR.LOGIN = :login;
                 ");
 
                 try {
@@ -47,7 +47,7 @@
                     $stmt->execute([':login' => $_SESSION['login']]);
                     $dataRes = $stmt->fetchAll(PDO::FETCH_ASSOC); // Récupérer tous les résultats
 
-                    // Vérification si l'utilisateur a été trouvé
+                    // Vérification si l'UTILISATEUR a été trouvé
                     if (empty($dataRes)) {
                         http_response_code(404); // Non trouvé
                         echo json_encode(['error' => 'Utilisateur non trouvé.']);
@@ -58,7 +58,7 @@
                     // Calculer l'ID d'âge à partir de la date de naissance
                     $stmtAge = $pdo->prepare("
                         SELECT ID_AGE 
-                        FROM tranches_d_age 
+                        FROM TRANCHES_D_AGE 
                         WHERE :dateNaissance BETWEEN 
                             COALESCE(DATE_SUB(NOW(), INTERVAL MAX_AGE YEAR), '1900-01-01') 
                             AND 
@@ -77,7 +77,7 @@
                     if ($dataRes[0]['ID_AGE'] != $idAge) {
                         // Mettre à jour l'ID d'âge dans la base de données
                         $updateStmt = $pdo->prepare("
-                            UPDATE utilisateur 
+                            UPDATE UTILISATEUR 
                             SET ID_AGE = :idAge 
                             WHERE LOGIN = :login
                         ");
@@ -87,7 +87,7 @@
                     // Mettre à jour le tableau de réponse avec le nouvel ID d'âge
                     $dataRes[0]['ID_AGE'] = $idAge;
 
-                    // Renvoyer la réponse JSON avec les informations utilisateur
+                    // Renvoyer la réponse JSON avec les informations UTILISATEUR
                     http_response_code(200); // OK
                     echo json_encode($dataRes);
 
@@ -106,7 +106,7 @@
         case 'PUT':
             // Récupérer l'entrée JSON
             $data = json_decode(file_get_contents("php://input"));
-            $set = isset($data->login) && isset($data->email) && isset($data->nom) && isset($data->prenom) && isset($data->sexe) && isset($data->niveauPratique) && isset($data->date);
+            $set = isset($data->login) && isset($data->email) && isset($data->nom) && isset($data->prenom) && isset($data->SEXE) && isset($data->niveauPratique) && isset($data->date);
 
             // Vérifier que toutes les données requises sont présentes
             if ($set) {
@@ -116,7 +116,7 @@
                 $prenom = escape_special_characters($data->prenom);
                 $email = escape_special_characters($data->email);
                 $date = escape_special_characters($data->date);
-                $sexe = escape_special_characters($data->sexe);
+                $SEXE = escape_special_characters($data->SEXE);
                 $niveauPratique = escape_special_characters($data->niveauPratique);
 
                 // Vérifier la validité de la date
@@ -134,8 +134,8 @@
                     exit;
                 }
 
-                // Vérifier si l'utilisateur avec le login existe
-                $stmt = $pdo->prepare("SELECT COUNT(*) FROM utilisateur WHERE LOGIN = :login");
+                // Vérifier si l'UTILISATEUR avec le login existe
+                $stmt = $pdo->prepare("SELECT COUNT(*) FROM UTILISATEUR WHERE LOGIN = :login");
                 $stmt->execute([':login' => $login]);
                 $userExists = $stmt->fetchColumn();
 
@@ -145,14 +145,14 @@
                     exit;
                 }
 
-                // Vérifier que l'ID du sexe existe
-                $stmt = $pdo->prepare("SELECT COUNT(*) FROM sexe WHERE ID_SEXE = :sexe");
-                $stmt->execute([':sexe' => $sexe]);
-                $sexeExists = $stmt->fetchColumn();
+                // Vérifier que l'ID du SEXE existe
+                $stmt = $pdo->prepare("SELECT COUNT(*) FROM SEXE WHERE ID_SEXE = :SEXE");
+                $stmt->execute([':SEXE' => $SEXE]);
+                $SEXEExists = $stmt->fetchColumn();
 
-                if ($sexeExists == 0) {
+                if ($SEXEExists == 0) {
                     http_response_code(400); // Mauvaise requête
-                    echo json_encode(['error' => 'L\'ID du sexe est invalide.']);
+                    echo json_encode(['error' => 'L\'ID du SEXE est invalide.']);
                     exit;
                 }
 
@@ -167,15 +167,15 @@
                     exit;
                 }
 
-                // Mise à jour des données de l'utilisateur
+                // Mise à jour des données de l'UTILISATEUR
                 $stmt = $pdo->prepare("
-                    UPDATE utilisateur
+                    UPDATE UTILISATEUR
                     SET 
                         NOM = :nom,
                         PRENOM = :prenom,
                         DATE_DE_NAISSANCE = :date,
                         MAIL = :email,
-                        ID_SEXE = :sexe,
+                        ID_SEXE = :SEXE,
                         ID_PRATIQUE = :niveauPratique
                     WHERE LOGIN = :login
                 ");
@@ -186,7 +186,7 @@
                         ':prenom' => $prenom,
                         ':date' => $date,
                         ':email' => $email,
-                        ':sexe' => $sexe,
+                        ':SEXE' => $SEXE,
                         ':niveauPratique' => $niveauPratique,
                         ':login' => $login
                     ]);
@@ -205,7 +205,7 @@
             }
             break;
             case 'DELETE':
-                // Supprimer un utilisateur
+                // Supprimer un UTILISATEUR
                 // Récupérer l'entrée JSON
                 $data = json_decode(file_get_contents("php://input"));
     
@@ -213,14 +213,14 @@
                     $login = escape_special_characters($data->login);
                     $password = $data->motDePasse; // Le mot de passe brut pour la vérification
     
-                    // Vérifier que l'utilisateur est en train de supprimer son propre compte
+                    // Vérifier que l'UTILISATEUR est en train de supprimer son propre compte
                     if ($login !== $_SESSION['login']) {
                         http_response_code(403); // Interdit
-                        echo json_encode(['error' => 'Accès interdit. Vous ne pouvez pas supprimer un autre compte utilisateur.']);
+                        echo json_encode(['error' => 'Accès interdit. Vous ne pouvez pas supprimer un autre compte UTILISATEUR.']);
                         exit;
                     }
-                    // Rechercher l'utilisateur et vérifier le mot de passe en clair (non haché)
-                    $stmt = $pdo->prepare("SELECT utilisateur.MDP FROM utilisateur WHERE utilisateur.LOGIN = :login");
+                    // Rechercher l'UTILISATEUR et vérifier le mot de passe en clair (non haché)
+                    $stmt = $pdo->prepare("SELECT UTILISATEUR.MDP FROM UTILISATEUR WHERE UTILISATEUR.LOGIN = :login");
                     $stmt->execute([':login' => $login]);
                     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -228,7 +228,7 @@
                         // Comparer le mot de passe en clair (non haché)
                         if ($password === $user['MDP']) {
                             // Le mot de passe est correct, procéder à la suppression
-                            $stmt = $pdo->prepare("DELETE FROM utilisateur WHERE LOGIN = :login");
+                            $stmt = $pdo->prepare("DELETE FROM UTILISATEUR WHERE LOGIN = :login");
                             $stmt->execute([':login' => $login]);
 
                             // Fermer la session et envoyer une réponse de succès
@@ -243,7 +243,7 @@
                             echo json_encode(['error' => 'Mot de passe incorrect.']);
                         }
                     } else {
-                        // L'utilisateur n'a pas été trouvé
+                        // L'UTILISATEUR n'a pas été trouvé
                         http_response_code(404); // Non trouvé
                         echo json_encode(['error' => 'Utilisateur non trouvé.']);
                     }

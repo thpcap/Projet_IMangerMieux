@@ -1,5 +1,5 @@
 <?php
-    require_once("C:\UwAmp\www\Projet_IMangerMieux\API\init_PDO.php"); // Assurez-vous d'avoir une connexion PDO
+    require_once("../init_PDO.php"); // Assurez-vous d'avoir une connexion PDO
 
     // Fonction pour générer un âge aléatoire basé sur les tranches d'âge
     function getRandomAgeRange($pdo) {
@@ -27,7 +27,7 @@
     }
 
     // Lecture du fichier CSV
-    $fichier = 'C:\UwAmp\www\Projet_IMangerMieux\API\Adminitration\Donnes_A_ajouter\aliases.csv'; // Remplacez par le chemin de votre fichier CSV
+    $fichier = 'Donnes_A_ajouter/aliases.csv'; // Remplacez par le chemin de votre fichier CSV
     if (($handle = fopen($fichier, 'r')) !== FALSE) {
         $header = fgetcsv($handle, 1000, ","); // Lire l'en-tête
         while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {

@@ -14,10 +14,10 @@
 
                 // Préparer la requête SQL
                 $stmt = $pdo->prepare("
-                    SELECT utilisateur.LOGIN 
-                    FROM utilisateur 
-                    WHERE utilisateur.LOGIN = :login 
-                    AND utilisateur.MDP = :motDePasse;
+                    SELECT UTILISATEUR.LOGIN 
+                    FROM UTILISATEUR 
+                    WHERE UTILISATEUR.LOGIN = :login 
+                    AND UTILISATEUR.MDP = :motDePasse;
                 ");
 
                 try {
@@ -28,7 +28,7 @@
                     exit;
                 }
 
-                // Récupérer l'utilisateur
+                // Récupérer l'UTILISATEUR
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 if ($user) {
                     // Connexion réussie
