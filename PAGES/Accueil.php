@@ -1,4 +1,4 @@
-<div id="appContainer">
+<div id="appContainer" style="margin: auto; margin-top:20px">
     <h1>Liste des Aliments Consommés Depuis une Semaine</h1>
 
     <!-- Formulaire uniquement pour l'ajout d'un repas -->

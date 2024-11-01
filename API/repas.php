@@ -110,7 +110,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         $id_repas = $data['id_repas'];
         $quantite = $data['quantite'];
         $date = $data['date'];
-        $id_aliment = $data['id_aliment'] ?? null;
+        $id_aliment = $data['id_aliment'];
 
         if ($login !== $_SESSION['login']) {
             http_response_code(401);
