@@ -59,7 +59,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
             $date = $data['date'];
             $id_aliment = $data['id_aliment'];
 
-            $stmt = $pdo->prepare("SELECT COUNT(*) FROM aliment WHERE ID_ALIMENT = :id_aliment");
+            $stmt = $pdo->prepare("SELECT COUNT(*) FROM ALEIMENT WHERE ID_ALIMENT = :id_aliment");
             $stmt->execute([':id_aliment' => $id_aliment]);
             $alimentExists = $stmt->fetchColumn();
 

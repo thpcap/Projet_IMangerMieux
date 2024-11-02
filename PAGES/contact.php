@@ -71,7 +71,7 @@
                     },
                     error: function (xhr, status, error) {
                         console.error('Erreur lors de l’envoi du message :', error);
-                        alert("Erreur lors de l'envoi du message.");
+                        alert("Erreur lors de l'envoi du message. veuillez nous contacter àl'adresse imangermieux@gmail.com ");
                     },
                 });
             });
