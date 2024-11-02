@@ -37,7 +37,7 @@
                 }
 
                 // Vérifier que l'adresse e-mail n'existe pas déjà
-                $stmt = $pdo->prepare("SELECT COUNT(*) FROM utilisateur WHERE MAIL = :email");
+                $stmt = $pdo->prepare("SELECT COUNT(*) FROM UTILISATEUR WHERE MAIL = :email");
                 $stmt->execute([':email' => $email]);
                 $emailExists = $stmt->fetchColumn();
 
@@ -49,7 +49,7 @@
                 }
 
                 // Vérifier que le login n'existe pas déjà
-                $stmt = $pdo->prepare("SELECT COUNT(*) FROM utilisateur WHERE LOGIN = :login");
+                $stmt = $pdo->prepare("SELECT COUNT(*) FROM UTILISATEUR WHERE LOGIN = :login");
                 $stmt->execute([':login' => $login]);
                 $loginExists = $stmt->fetchColumn();
 
@@ -61,7 +61,7 @@
                 }
 
                 // Vérifier que l'ID du sexe existe
-                $stmt = $pdo->prepare("SELECT COUNT(*) FROM sexe WHERE ID_SEXE = :sexe");
+                $stmt = $pdo->prepare("SELECT COUNT(*) FROM SEXE WHERE ID_SEXE = :sexe");
                 $stmt->execute([':sexe' => $sexe]);
                 $sexeExists = $stmt->fetchColumn();
 
@@ -73,7 +73,7 @@
                 }
 
                 // Vérifier que l'ID du niveau de pratique existe
-                $stmt = $pdo->prepare("SELECT COUNT(*) FROM niveau_de_pratique WHERE ID_PRATIQUE = :niveauPratique");
+                $stmt = $pdo->prepare("SELECT COUNT(*) FROM NIVEAU_DE_PRATIQUE WHERE ID_PRATIQUE = :niveauPratique");
                 $stmt->execute([':niveauPratique' => $niveauPratique]);
                 $niveauPratiqueExists = $stmt->fetchColumn();
 
@@ -86,7 +86,7 @@
 
                 // Préparer la requête SQL pour l'insertion
                 $stmt = $pdo->prepare("
-                    INSERT INTO utilisateur (NOM, PRENOM, DATE_DE_NAISSANCE, MAIL, ID_SEXE, ID_PRATIQUE, LOGIN, MDP, ID_AGE) 
+                    INSERT INTO UTILISATEUR (NOM, PRENOM, DATE_DE_NAISSANCE, MAIL, ID_SEXE, ID_PRATIQUE, LOGIN, MDP, ID_AGE) 
                     VALUES (
                         :nom,
                         :prenom,
@@ -96,12 +96,12 @@
                         :niveauPratique,
                         :login,
                         :motDePasse,
-                        (SELECT tranches_d_age.ID_AGE 
-                         FROM tranches_d_age 
+                        (SELECT TRANCHE_D_AGE.ID_AGE 
+                         FROM TRANCHE_D_AGE 
                          WHERE :date BETWEEN 
-                               COALESCE(DATE_SUB(NOW(), INTERVAL tranches_d_age.MAX_AGE YEAR), '1900-01-01') 
+                               COALESCE(DATE_SUB(NOW(), INTERVAL TRANCHE_D_AGE.MAX_AGE YEAR), '1900-01-01') 
                          AND 
-                               COALESCE(DATE_SUB(NOW(), INTERVAL tranches_d_age.MIN_AGE YEAR), NOW()))
+                               COALESCE(DATE_SUB(NOW(), INTERVAL TRANCHE_D_AGE.MIN_AGE YEAR), NOW()))
                     );
                 ");
 
