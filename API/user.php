@@ -106,7 +106,7 @@
         case 'PUT':
             // Récupérer l'entrée JSON
             $data = json_decode(file_get_contents("php://input"));
-            $set = isset($data->login) && isset($data->email) && isset($data->nom) && isset($data->prenom) && isset($data->SEXE) && isset($data->niveauPratique) && isset($data->date);
+            $set = isset($data->login) && isset($data->email) && isset($data->nom) && isset($data->prenom) && isset($data->sexe) && isset($data->niveauPratique) && isset($data->date);
 
             // Vérifier que toutes les données requises sont présentes
             if ($set) {
@@ -116,7 +116,7 @@
                 $prenom = escape_special_characters($data->prenom);
                 $email = escape_special_characters($data->email);
                 $date = escape_special_characters($data->date);
-                $SEXE = escape_special_characters($data->SEXE);
+                $SEXE = escape_special_characters($data->sexe);
                 $niveauPratique = escape_special_characters($data->niveauPratique);
 
                 // Vérifier la validité de la date
@@ -157,7 +157,7 @@
                 }
 
                 // Vérifier que l'ID du niveau de pratique existe
-                $stmt = $pdo->prepare("SELECT COUNT(*) FROM niveau_de_pratique WHERE ID_PRATIQUE = :niveauPratique");
+                $stmt = $pdo->prepare("SELECT COUNT(*) FROM NIVEAU_DE_PRATIQUE WHERE ID_PRATIQUE = :niveauPratique");
                 $stmt->execute([':niveauPratique' => $niveauPratique]);
                 $niveauPratiqueExists = $stmt->fetchColumn();
 
