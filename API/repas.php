@@ -21,9 +21,9 @@ switch ($_SERVER["REQUEST_METHOD"]) {
             }
 
             $stmt = $pdo->prepare(
-                "SELECT REPAS.ID_REPAS, REPAS.QUANTITE, REPAS.DATE, aliment.LABEL_ALIMENT 
+                "SELECT REPAS.ID_REPAS, REPAS.QUANTITE, REPAS.DATE, ALIMENT.LABEL_ALIMENT 
                 FROM REPAS 
-                INNER JOIN aliment ON REPAS.ID_ALIMENT = aliment.ID_ALIMENT 
+                INNER JOIN ALIMENT ON REPAS.ID_ALIMENT = ALIMENT.ID_ALIMENT 
                 WHERE REPAS.LOGIN = :login AND REPAS.DATE >= DATE_SUB(NOW(), INTERVAL 7 DAY)"
             );
 

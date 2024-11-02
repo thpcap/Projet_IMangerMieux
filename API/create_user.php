@@ -96,12 +96,12 @@
                         :niveauPratique,
                         :login,
                         :motDePasse,
-                        (SELECT TRANCHE_D_AGE.ID_AGE 
+                        (SELECT TRANCHES_D_AGE.ID_AGE 
                          FROM TRANCHE_D_AGE 
                          WHERE :date BETWEEN 
-                               COALESCE(DATE_SUB(NOW(), INTERVAL TRANCHE_D_AGE.MAX_AGE YEAR), '1900-01-01') 
+                               COALESCE(DATE_SUB(NOW(), INTERVAL TRANCHES_D_AGE.MAX_AGE YEAR), '1900-01-01') 
                          AND 
-                               COALESCE(DATE_SUB(NOW(), INTERVAL TRANCHE_D_AGE.MIN_AGE YEAR), NOW()))
+                               COALESCE(DATE_SUB(NOW(), INTERVAL TRANCHES_D_AGE.MIN_AGE YEAR), NOW()))
                     );
                 ");
 
