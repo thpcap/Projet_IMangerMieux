@@ -1,38 +1,107 @@
 body {
-    background-color: white;
-    color: black;
-    font-family: Arial, Helvetica, sans-serif;
-    width: 100vw;
-    padding-top: 15%;
-    margin: 0;
-    display: flex;
+    background-color: white; /* Couleur de fond du corps */
+    color: black; /* Couleur du texte */
+    font-family: Arial, Helvetica, sans-serif; /* Police de caractères */
+    width: 100vw; /* Largeur de la fenêtre */
+    margin: 0; /* Pas de marge */
+    display: flex; /* Utilisation de flexbox pour le centrage */
     justify-content: center; /* Centre horizontalement */
     align-items: center; /* Centre verticalement */
 }
 
 .centerd {
-    display: block;
-    background-color: beige;
+    margin-top: 20px; /* Espace en haut */
+    display: block; /* Affichage en bloc */
+    background-color: beige; /* Couleur de fond du formulaire */
     height: auto; /* Ajuste la hauteur en fonction du contenu */
     text-align: center; /* Centre le texte */
-    padding: 50px; /* Padding intérieur */
-    border-radius: 20px;
+    padding: 20px; /* Padding intérieur */
+    padding-right: 50px;
+    padding-left: 50px;
+    border-radius: 20px; /* Coins arrondis */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 1); /* Ombre */
-}
-#submit{
-    background-color: white;
-    padding: 5px;
-    border-radius: 10px;
-}
-table {
-    margin: auto; /* Centre le tableau */
-    width: 100%; /* Utilise toute la largeur du conteneur */
-}
-#error{
-    display: none;
-    color: red;
+    animation: fadeIn 0.5s; /* Animation de fade-in pour l'apparition du formulaire */
 }
 
-th, td {
-    padding: 10px; /* Ajoute un peu d'espace autour des cellules */
+table {
+    margin: auto; /* Centre le tableau */
+    margin-top: 0;
+    width: 100%; /* Utilise toute la largeur du conteneur */
+}
+
+
+input{
+    width: calc(100% - 10px); /* Prend toute la largeur moins le padding */
+    padding: 5px; /* Espacement intérieur */
+    margin: 10px 0; /* Espacement vertical */
+    border-radius: 5px; /* Coins arrondis */
+    border: 2px solid #ccc; /* Bordure grise */
+    transition: border-color 0.3s; /* Transition douce pour la couleur de la bordure */
+}
+
+input:focus {
+    outline: none; /* Enlève la bordure de focus */
+    border-color: #FF7F50; /* Changement de couleur de la bordure lors du focus */
+}
+
+#submit {
+    background-color: white; /* Couleur de fond du bouton */
+    padding: 5px; /* Espacement intérieur */
+    border-radius: 10px; /* Coins arrondis */
+    cursor: pointer; /* Curseur en forme de main au survol */
+    transition: background-color 0.3s, transform 0.2s; /* Transition douce pour le survol */
+}
+
+#submit:hover {
+    background-color: #e0e0e0; /* Couleur de fond plus sombre au survol */
+    transform: scale(1.02); /* Légère augmentation de taille au survol */
+}
+
+#error {
+    display: none; /* Masqué par défaut */
+    color: red; /* Couleur du message d'erreur */
+    animation: fadeIn 0.3s; /* Animation pour l'apparition du message d'erreur */
+    margin: 10px 0; /* Espacement autour du message d'erreur */
+}
+
+th{
+    padding: 0;
+}
+td {
+    padding: 5px; /* Espacement autour des cellules du tableau */
+}
+
+/* Animation pour le fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* Opacité initiale */
+        transform: translateY(-20px); /* Déplacement vers le haut */
+    }
+    to {
+        opacity: 1; /* Opacité finale */
+        transform: translateY(0); /* Position finale */
+    }
+}
+
+select {
+    width: 100%; /* Remplit toute la largeur de la cellule */
+    padding: 10px; /* Ajoute du padding à l'intérieur */
+    border: 1px solid #ccc; /* Bordure par défaut */
+    border-radius: 5px; /* Coins arrondis */
+    transition: border-color 0.3s; /* Animation pour le changement de couleur */
+}
+
+/* Bordure en focus */
+select:focus {
+    outline: none; /* Enlève la bordure de focus par défaut */
+    border: 2px solid #40E0D0; /* Bordure turquoise clair */
+}
+
+/* Style pour les options dans le select */
+select option {
+    padding: 10px; /* Ajoute du padding aux options (note : padding ne s'applique pas toujours sur tous les navigateurs) */
+}
+
+select:hover {
+    background-color: #e9e9e9; /* Fond légèrement plus sombre au survol */
 }

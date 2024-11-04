@@ -8,3 +8,12 @@
     <img src="../logo/pulp-fiction-john-travolta.gif" alt="dont underestimate my power" height="200px" style="border-radius: 20px; box-shadow:0 0 10px rgba(0, 0, 0, 0.2);">
 </div>
 
+<script>
+    $(document).ready(function() {
+        $('#content').css({
+            opacity: 1,
+            transform: 'translateY(0)'
+        });
+    });
+</script>
+
