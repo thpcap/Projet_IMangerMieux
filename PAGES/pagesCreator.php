@@ -1,3 +1,4 @@
+
 <?php 
     session_start();
     require_once('ConfigFrontEnd.php');
@@ -10,8 +11,10 @@
             $currentPageId = $_GET['page'];  
         }
         ?>
-
-        <header class="header">
+        <button id="menuButton" >☰</button>
+        <header class="header" style="display:none">
+            
+            <br id="mbr">
             <button id='logoutButton'>Deconnexion</button>
             <div id="userdata"></div>
             
@@ -116,6 +119,11 @@
                         }
                     }
                 }
+            });
+            $('#menuButton').on('click',function(){
+                event.stopPropagation(); // Empêche la propagation de l'événement
+                $('.header').toggle();
+                
             });
         
             

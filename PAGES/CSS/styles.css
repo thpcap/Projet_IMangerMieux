@@ -17,6 +17,7 @@ header {
     box-sizing: border-box;
     box-shadow: -5px 0 10px rgba(0, 0, 0, 1);
     text-align: center;
+    z-index: 10;
 }
 #Menu{
     background-color: bisque;
@@ -57,6 +58,7 @@ header {
 }
 #Menu li:hover{
     background-color: wheat;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 #Menu li.active{
@@ -66,6 +68,7 @@ header {
 }
 #Menu li.active:hover{
     background-color:whitesmoke;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 body.DarkMode {
@@ -98,6 +101,7 @@ body.DarkMode {
 #userdata:hover{
     background-color: wheat;
     cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 .modifyUser > #content{
     display: flex;
@@ -130,4 +134,21 @@ body.DarkMode {
 #logoutButton:hover{
     background-color: whitesmoke;
     cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    
+}
+#menuButton{
+    position:absolute;
+    left:5px;
+    top:5px;
+    z-index:100;
+    box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: bisque;
+    border: 0;
+    width: 50px;
+    border-radius: 20px;
+}
+#menuButton:hover{
+    background-color: wheat;
+    box-shadow:0 0 10px rgba(0, 0, 0, 0.8);
 }
