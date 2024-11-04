@@ -1,21 +1,6 @@
 
 <section class="contact-page">
     <div id="content">
-        <table id="tableContact">
-            <tbody>
-                <tr>
-                    <th><h1>Thomas CAPRON</h1></th>
-                    <td><a href="mailto:thomas.capron@example.com" type="email">thomas.capron@example.com</a></td>
-                    
-                </tr>
-                <tr>
-                    <th><h1>Yassir BENJANE</h1></th>
-                    <td><a href="mailto:yabenjane@gmail.com" type="email">yabenjane@gmail.com</a></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div id="contactContainer">
             <h1>Nous Contacter</h1>
             <p>Vous avez rencontré un problème ? Envoyez-nous un message, et nous vous répondrons dans les plus brefs délais.</p>
 
@@ -44,7 +29,6 @@
             </form>
 
             <p id="confirmationMessage" style="display:none;">Merci ! Votre message a été envoyé. Nous reviendrons vers vous sous 24 à 48 heures.</p>
-        </div>
     </div>
     <script>
         $(document).ready(function () {
@@ -71,7 +55,7 @@
                     },
                     error: function (xhr, status, error) {
                         console.error('Erreur lors de l’envoi du message :', error);
-                        alert("Erreur lors de l'envoi du message. veuillez nous contacter àl'adresse imangermieux@gmail.com ");
+                        alert("Erreur lors de l'envoi du message. veuillez nous contacter à l'adresse imangermieux@gmail.com ");
                     },
                 });
             });
