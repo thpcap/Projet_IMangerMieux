@@ -7,7 +7,7 @@
     //tableau qui structure le menu
     $mymenu = array(
         'accueil' => array('Accueil'),
-        'mange' => array('Mange'),
+        'repas' => array('Repas'),
         'statistiques' => array('Statistiques'),
         'recommendations' => array('Recommendations'),
         'contact'=> array('Contact')

@@ -95,8 +95,8 @@
                     labels: ['Energie', 'Protéines', 'Glucides', 'Eau', 'Sel'],
                     datasets: [{
                         label: 'Nutriments en %des AR',
-                        data: [50, 60, 80, 95, 100],
-                        backgroundColor: ['#5DADE2', '#48C9B0', '#F4D03F', '#E67E22', '#EC7063']
+                        data: [50, 60, 80, 95, 150],
+                        backgroundColor: ['green', 'green', 'green', 'green', 'red']
                     }]
                 },
                 options: {
