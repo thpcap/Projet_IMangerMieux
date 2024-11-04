@@ -11,7 +11,7 @@
             $currentPageId = $_GET['page'];  
         }
         ?>
-        <button id="menuButton" >☰</button>
+        <button id="menuButton" >☰ Menu</button>
         <header class="header" style="display:none">
             
             <br id="mbr">

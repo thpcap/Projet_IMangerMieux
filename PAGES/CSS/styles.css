@@ -145,7 +145,7 @@ body.DarkMode {
     box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
     background-color: bisque;
     border: 0;
-    width: 50px;
+    width: 80px;
     border-radius: 20px;
 }
 #menuButton:hover{
