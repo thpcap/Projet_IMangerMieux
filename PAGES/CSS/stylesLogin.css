@@ -15,9 +15,7 @@ body {
     background-color: beige; /* Couleur de fond du formulaire */
     height: auto; /* Ajuste la hauteur en fonction du contenu */
     text-align: center; /* Centre le texte */
-    padding: 20px; /* Padding intérieur */
-    padding-right: 50px;
-    padding-left: 50px;
+    padding: 50px; /* Padding intérieur */
     border-radius: 20px; /* Coins arrondis */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 1); /* Ombre */
     animation: fadeIn 0.5s; /* Animation de fade-in pour l'apparition du formulaire */
@@ -25,7 +23,6 @@ body {
 
 table {
     margin: auto; /* Centre le tableau */
-    margin-top: 0;
     width: 100%; /* Utilise toute la largeur du conteneur */
 }
 
@@ -64,10 +61,7 @@ input:focus {
     margin: 10px 0; /* Espacement autour du message d'erreur */
 }
 
-th{
-    padding: 0;
-}
-td {
+th, td {
     padding: 5px; /* Espacement autour des cellules du tableau */
 }
 

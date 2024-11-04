@@ -59,7 +59,10 @@
                 $('#error').text('Aucun utilisateur connecté.');
                 return;
             }
-
+            $('#content').css({
+                opacity: 1,
+                transform: 'translateY(0)'
+            });
             // Requête pour récupérer les informations de l'utilisateur
             $.ajax({
                 url: "<?php require_once('ConfigFrontEnd.php'); echo URL_API ?>/user.php?login=" + login,
@@ -131,7 +134,10 @@
             });
 
         });
-
+        $('#content').css({
+            opacity: 1,
+            transform: 'translateY(0)'
+        });
         // Fonction de modification de l'utilisateur
         function modifyUser() {
             event.preventDefault(); // Empêche l'envoi du formulaire par défaut
@@ -215,5 +221,7 @@
             return null;
         }
 
+    
+        
     </script>
 </section>
