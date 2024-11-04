@@ -126,6 +126,13 @@
                     echo json_encode(['error' => 'La date fournie est invalide.']);
                     exit;
                 }
+                
+                // Vérifier que la date de naissance est antérieure à la date actuelle
+                if ($dateTime >= new DateTime()) {
+                    http_response_code(400); // Mauvaise requête
+                    echo json_encode(['error' => 'La date doit être antérieure à la date actuelle.']);
+                    exit;
+                }
 
                 // Vérifier que l'adresse e-mail est valide
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
