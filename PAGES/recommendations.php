@@ -1,11 +1,5 @@
 <section>
     <h1>Recommandations Nutritionnelles</h1>
-    
-    <form id="userForm">
-        <label for="login">Login :</label>
-        <input type="text" id="login" required>
-        <button type="submit">Obtenir les recommandations</button>
-    </form>
 
     <div id="recommandations" style="display:none;">
         <div class="recommandation">Eau : <span id="eau" class="indicateur"></span> L</div>
@@ -17,9 +11,9 @@
 
     <script>
         // Fonction pour récupérer et afficher les recommandations
-        async function afficherRecommandations(login) {
+        async function afficherRecommandations() {
             try {
-                const response = await fetch(`http://localhost/Projet_IMangerMieux/Projet_IMangerMieux/API/recommandations.php?login=${login}`, {
+                const response = await fetch("http://localhost/Projet_IMangerMieux/Projet_IMangerMieux/API/recommandations.php", {
                     method: 'GET',
                     credentials: 'include' // Pour inclure les cookies de session
                 });
@@ -41,7 +35,8 @@
                 document.getElementById('energie').innerText = data.energie.toFixed(0);
                 document.getElementById('proteines').innerText = data.proteines.toFixed(1);
                 document.getElementById('glucides').innerText = data.glucides.toFixed(1);
-                document.getElementById('sel').innerText = data.sel.toFixed(0); // Correction ici pour le sel
+                document.getElementById('sel').innerText = data.sel.toFixed(0);
+
                 // Afficher la section des recommandations
                 document.getElementById('recommandations').style.display = 'block';
             } catch (error) {
@@ -50,11 +45,7 @@
             }
         }
 
-        // Gestion de l'envoi du formulaire
-        document.getElementById('userForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Empêche le rechargement de la page
-            const login = document.getElementById('login').value;
-            afficherRecommandations(login); // Appeler la fonction avec le login
-        });
+        // Charger les recommandations dès le chargement de la page
+        document.addEventListener('DOMContentLoaded', afficherRecommandations);
     </script>
 </section>
