@@ -1,5 +1,5 @@
 <!-- Ajout de votre contenu existant -->
-<div id="content" style="text-align: center; opacity: 0; transform: translateY(-50px); transition: opacity 0.5s ease, transform 0.5s ease;">
+<div id="content" style="text-align: center;">
     <h1 style="color: blue;">Bienvenue</h1>
     <img src="../logo/upper_logo.png" alt="" style="box-shadow:0 0 10px rgba(0, 0, 0, 0.2); border-radius:50%;">
     <h2>IMangerMieux</h2>

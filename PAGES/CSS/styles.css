@@ -102,6 +102,9 @@ body.DarkMode {
     padding: 20px;
     box-sizing: border-box; /* Inclure le padding dans la taille */
     overflow: auto; /* Gérer le défilement du contenu s'il dépasse */
+    opacity: 0;
+    transform: translateY(-50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 #userdata{

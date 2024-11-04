@@ -31,6 +31,7 @@
             <p id="confirmationMessage" style="display:none;">Merci ! Votre message a été envoyé. Nous reviendrons vers vous sous 24 à 48 heures.</p>
     </div>
     <script>
+        
         $(document).ready(function () {
             $('#contactForm').on('submit', function (e) {
                 e.preventDefault();
@@ -58,6 +59,10 @@
                         alert("Erreur lors de l'envoi du message. veuillez nous contacter à l'adresse imangermieux@gmail.com ");
                     },
                 });
+            });
+            $('#content').css({
+                opacity: 1,
+                transform: 'translateY(0)'
             });
         });
     </script>
