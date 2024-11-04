@@ -43,6 +43,22 @@
             const parts = value.split(`; ${name}=`);
             if (parts.length === 2) return parts.pop().split(';').shift();
         }
+
+        function getColorArray(data) {
+            let colorArray = [];
+            for (let key in data) {
+                if (data[key] < 80) {
+                    colorArray.push('yellow');
+                } else if (data[key] >= 80 && data[key] <= 120) {
+                    colorArray.push('lightgreen');
+                } else {
+                    colorArray.push('red');
+                }
+            }
+            return colorArray;
+        }
+
+
         $(document).ready(function(){
             function fetchUserData() {
                 const login = getCookie('login');
@@ -91,15 +107,22 @@
                     window.location.href="pagesCreator.php?page=modifUser";
                 }
             );
+            let data = { Energie: 130, Protéines: 60, Glucides: 80, Eau: 120, Sel: 150 };
+            let labels = Object.keys(data); // Extraction des clés pour les labels
+            let colors = getColorArray(data); // Génération des couleurs
+
+
+            
+
             var ctx = document.getElementById('myChart').getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Energie', 'Protéines', 'Glucides', 'Eau', 'Sel'],
+                    labels: labels, // Utilisation des clés comme labels
                     datasets: [{
-                        label: 'Nutriments en %des AR',
-                        data: [50, 60, 80, 95, 150],
-                        backgroundColor: ['green', 'green', 'green', 'green', 'red']
+                        label: 'Nutriments en % des AR',
+                        data: Object.values(data), // Utilisation des valeurs de l'objet
+                        backgroundColor: colors
                     }]
                 },
                 options: {

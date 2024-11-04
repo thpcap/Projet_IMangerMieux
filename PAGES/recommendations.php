@@ -13,7 +13,7 @@
         // Fonction pour récupérer et afficher les recommandations
         async function afficherRecommandations() {
             try {
-                const response = await fetch("http://localhost/Projet_IMangerMieux/Projet_IMangerMieux/API/recommandations.php", {
+                const response = await fetch("<?php require_once('ConfigFrontEnd.php'); echo URL_API;?>/recommandations.php", {
                     method: 'GET',
                     credentials: 'include' // Pour inclure les cookies de session
                 });
