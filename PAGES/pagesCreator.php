@@ -11,7 +11,7 @@ if (isset($_SESSION['connected']) && $_SESSION['connected']) {
     }
     ?>
     <button id="menuButton">☰ Menu</button>
-    <header class="header" style="display:none">
+    <header class="header">
         <br id="mbr">
         <button id='logoutButton'>Déconnexion</button>
         <div id="userdata"></div>
@@ -152,9 +152,10 @@ if (isset($_SESSION['connected']) && $_SESSION['connected']) {
             window.location.href = "pagesCreator.php?page=modifUser";
         });
 
-        $('#menuButton').on('click', function() {
-            event.stopPropagation();
-            $('.header').toggle();
+        $('#menuButton').on('click', function(event) {
+            event.stopPropagation(); // Prevents the click event from bubbling up
+            $('.header').toggleClass('active'); // Toggle the 'active' class
+            $('body').toggleClass('active'); // Toggle the 'active' class on the body
         });
     });
 </script>

@@ -4,14 +4,20 @@ body {
     color: black;
     font-family: Arial, Helvetica, sans-serif;
     height: 100vh; /* Utilisation de 100vh pour la hauteur de la fenêtre */
-    width: 100%; /* Utilisation de 100% pour la largeur */
+    width: auto; /* Utilisation de 100% pour la largeur */
     margin: 0;
+    transition: margin-left 0.3s ease; /* Transition for smooth movement */
+}
+body.active {
+    margin-left: 200px; /* Push the body content to the right */
+    
 }
 
 header {
     background-color: beige;
     left: 0;
     top: 0;
+    position: absolute;
     height: 100%;
     padding: 15px;
     padding-top: 15px;
@@ -19,7 +25,14 @@ header {
     box-shadow: -5px 0 10px rgba(0, 0, 0, 1);
     text-align: center;
     z-index: 10;
+    transition: left 0.3s ease; /* Add a transition for smooth animation */
+    left: -300px; /* Hide it off-screen initially */
 }
+
+header.active {
+    left: 0; /* Move it into view */
+}
+
 #Menu{
     background-color: bisque;
     border-radius: 10px;
