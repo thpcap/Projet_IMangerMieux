@@ -89,7 +89,7 @@ if (isset($_SESSION['connected']) && $_SESSION['connected']) {
                 method: "GET",
                 success: function(data) {
                     if (data && typeof data === 'object') {
-                        let labels = Object.keys(data);
+                        let labels = Object.keys(data).map(label => label.replace(/\s*\(g\/100g\)/, ''));
                         let values = Object.values(data);
                         let colors = getColorArray(data);
 
@@ -107,7 +107,7 @@ if (isset($_SESSION['connected']) && $_SESSION['connected']) {
                             },
                             options: {
                                 indexAxis: 'y',
-                                responsive: false,
+                                responsive: true,
                                 scales: {
                                     x: {
                                         beginAtZero: true

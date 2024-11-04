@@ -1,6 +1,6 @@
 <div id="content" style="text-align: center; ">
     <h1 style="color: blue;">Bienvenue</h1>
-    <img src="../logo/upper_logo.png" alt="">
+    <img src="../logo/upper_logo.png" alt="" style="box-shadow:0 0 10px rgba(0, 0, 0, 0.2); border-radius:50%;">
     <h2>IMangerMieux</h2>
     <p style="color: blue;"><strong><u>Votre allié pour une nutrition saine et équilibrée.</u></strong></p>
     <h3>Site de gestion de la nutrition</h3>
