@@ -1,162 +1,162 @@
-
 <?php 
-    session_start();
-    require_once('ConfigFrontEnd.php');
-    if(isset($_SESSION['connected'])&&$_SESSION['connected']){
-        require_once('template_header.php'); /** contenu de header */
-        require_once('template_menu.php');  /** contenu menu */ 
-        $currentPageId = 'accueil';
+session_start();
+require_once('ConfigFrontEnd.php');
+if (isset($_SESSION['connected']) && $_SESSION['connected']) {
+    require_once('template_header.php'); /** contenu de header */
+    require_once('template_menu.php');  /** contenu menu */ 
+    $currentPageId = 'accueil';
 
-        if (isset($_GET['page'])) {
-            $currentPageId = $_GET['page'];  
-        }
-        ?>
-        <button id="menuButton" >☰ Menu</button>
-        <header class="header" style="display:none">
-            
-            <br id="mbr">
-            <button id='logoutButton'>Deconnexion</button>
-            <div id="userdata"></div>
-            
-            <?php
-            require_once('template_menu.php');
-            renderMenuToHTML($currentPageId);
-            ?>
-            <canvas id="myChart" width="150" height="150"></canvas>
-        </header>
-
-        <?php
-        $pageToInclude = $currentPageId . ".php";
-        if (is_readable($pageToInclude)) {
-            require_once($pageToInclude); 
-        } else {
-            require_once('error.php');    
-        }
-    }else{
-        header("Location:".URL_Login);
+    if (isset($_GET['page'])) {
+        $currentPageId = $_GET['page'];  
     }
+    ?>
+    <button id="menuButton">☰ Menu</button>
+    <header class="header" style="display:none">
+        <br id="mbr">
+        <button id='logoutButton'>Déconnexion</button>
+        <div id="userdata"></div>
+        
+        <?php
+        require_once('template_menu.php');
+        renderMenuToHTML($currentPageId);
+        ?>
+        <canvas id="myChart" width="150" height="150"></canvas>
+    </header>
+
+    <?php
+    $pageToInclude = $currentPageId . ".php";
+    if (is_readable($pageToInclude)) {
+        require_once($pageToInclude); 
+    } else {
+        require_once('error.php');    
+    }
+} else {
+    header("Location:" . URL_Login);
+}
 ?>   
-    <script>
-        
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        }
+<script>
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
 
-        function getColorArray(data) {
-            let colorArray = [];
-            for (let key in data) {
-                if (data[key] < 80) {
-                    colorArray.push('yellow');
-                } else if (data[key] >= 80 && data[key] <= 120) {
-                    colorArray.push('lightgreen');
-                } else {
-                    colorArray.push('red');
-                }
+    function getColorArray(data) {
+        let colorArray = [];
+        for (let key in data) {
+            if (data[key] < 80) {
+                colorArray.push('yellow');
+            } else if (data[key] >= 80 && data[key] <= 120) {
+                colorArray.push('lightgreen');
+            } else {
+                colorArray.push('red');
             }
-            return colorArray;
         }
+        return colorArray;
+    }
 
-
-        $(document).ready(function(){
-            function fetchUserData() {
-                const login = getCookie('login');
-                if (!login) {
-                    $('#userdata').html('Aucun utilisateur connecté.'+login);
-                    return;
-                }
-                $.ajax({
-                    url: "<?php require_once('ConfigFrontEnd.php'); echo URL_API ?>/user.php?login=" + login,
-                    method: "GET",
-                    success: function(data) {
-                        // Vérifiez si les données contiennent des résultats
-                        if (Array.isArray(data) && data.length > 0) {
-                            // Affichez le nom et le prénom dans la div userdata
-                            $('#userdata').html(`<p id='prenom'>${data[0].PRENOM}</p><p id='nom'>${data[0].NOM}</p>`);
-                        } else {
-                            $('#userdata').html('');
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('Erreur lors de la récupération des données utilisateur:', textStatus, errorThrown);
-                        $('#userdata').html('Erreur lors de la récupération des données utilisateur.');
+    $(document).ready(function() {
+        function fetchUserData() {
+            const login = getCookie('login');
+            if (!login) {
+                $('#userdata').html('Aucun utilisateur connecté.' + login);
+                return;
+            }
+            $.ajax({
+                url: "<?php require_once('ConfigFrontEnd.php'); echo URL_API ?>/user.php?login=" + login,
+                method: "GET",
+                success: function(data) {
+                    if (Array.isArray(data) && data.length > 0) {
+                        $('#userdata').html(`<p id='prenom'>${data[0].PRENOM}</p><p id='nom'>${data[0].NOM}</p>`);
+                    } else {
+                        $('#userdata').html('');
                     }
-                });
-            }
-            fetchUserData();
-            
-            $('#logoutButton').on('click',
-                function() {
-                    event.stopPropagation(); // Empêche la propagation de l'événement
-                    $.ajax({
-                        url: "<?php echo URL_API ?>/disconnect.php",
-                        method: "POST",
-                        success: function(response) {
-                            // Rediriger vers index.php après la déconnexion
-                            window.location.href = "index.php";
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.error('Erreur lors de la déconnexion:', textStatus, errorThrown);
-                        }
-                    });
-                }
-            );
-            $('#userdata').on('click',
-                function(){
-                    window.location.href="pagesCreator.php?page=modifUser";
-                }
-            );
-            let data = { Energie: 130, Protéines: 60, Glucides: 80, Eau: 120, Sel: 150 };
-            let labels = Object.keys(data); // Extraction des clés pour les labels
-            let colors = getColorArray(data); // Génération des couleurs
-
-
-            
-
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels, // Utilisation des clés comme labels
-                    datasets: [{
-                        label: 'Nutriments en % des AR',
-                        data: Object.values(data), // Utilisation des valeurs de l'objet
-                        backgroundColor: colors
-                    }]
                 },
-                options: {
-                    indexAxis: 'y', // This makes the bar chart horizontal
-                    responsive: false, // To allow custom sizing
-                    scales: {
-                        x: {
-                            beginAtZero: true // Ensures bars start from zero
-                        }
-                    },
-                    width: 150, // Set the width of the chart
-                    plugins: {
-                        legend: {
-                            labels: {
-                                boxWidth: 0 // Removes the box/rectangle before the label
-                            }
-                        }
-                    }
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Erreur lors de la récupération des données utilisateur:', textStatus, errorThrown);
+                    $('#userdata').html('Erreur lors de la récupération des données utilisateur.');
                 }
             });
-            $('#menuButton').on('click',function(){
-                event.stopPropagation(); // Empêche la propagation de l'événement
-                $('.header').toggle();
-                
+        }
+        fetchUserData();
+
+        function fetchChartData() {
+            const login = getCookie('login');
+            const date = new Date().toISOString().split('T')[0]; // Récupère la date du jour au format YYYY-MM-DD
+
+            $.ajax({
+                url: "<?php require_once('ConfigFrontEnd.php'); echo URL_API ?>/nutrients.php?login=" + login + "&date=" + date,
+                method: "GET",
+                success: function(data) {
+                    if (data && typeof data === 'object') {
+                        let labels = Object.keys(data);
+                        let values = Object.values(data);
+                        let colors = getColorArray(data);
+
+                        // Initialisation du graphique Chart.js
+                        var ctx = document.getElementById('myChart').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Nutriments en % des AR',
+                                    data: values,
+                                    backgroundColor: colors
+                                }]
+                            },
+                            options: {
+                                indexAxis: 'y',
+                                responsive: false,
+                                scales: {
+                                    x: {
+                                        beginAtZero: true
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        labels: {
+                                            boxWidth: 0
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        console.error('Erreur: données invalides reçues');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Erreur lors de la récupération des données du graphique:', textStatus, errorThrown);
+                }
             });
-        
-            
+        }
+
+        fetchChartData();
+
+        $('#logoutButton').on('click', function() {
+            event.stopPropagation();
+            $.ajax({
+                url: "<?php echo URL_API ?>/disconnect.php",
+                method: "POST",
+                success: function(response) {
+                    window.location.href = "index.php";
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Erreur lors de la déconnexion:', textStatus, errorThrown);
+                }
+            });
         });
-        
-        
-    
-      
-    </script>
-    </body>
+
+        $('#userdata').on('click', function() {
+            window.location.href = "pagesCreator.php?page=modifUser";
+        });
+
+        $('#menuButton').on('click', function() {
+            event.stopPropagation();
+            $('.header').toggle();
+        });
+    });
+</script>
+</body>
 </html>
-
-
