@@ -13,43 +13,37 @@ if (!isset($_SESSION['connected']) || !$_SESSION['connected'] || !isset($_SESSIO
 
 switch ($_SERVER["REQUEST_METHOD"]) {
     case 'GET':
-        if (isset($_GET['login']) && $_GET['login'] === $_SESSION['login']) {
-            // Récupérer les informations utilisateur depuis la base de données
-            $stmt = $pdo->prepare(
-                "SELECT ID_SEXE, DATE_DE_NAISSANCE, ID_PRATIQUE FROM utilisateur WHERE LOGIN = :login"
-            );
+        // Récupérer les informations utilisateur depuis la base de données
+        $stmt = $pdo->prepare(
+            "SELECT ID_SEXE, DATE_DE_NAISSANCE, ID_PRATIQUE FROM utilisateur WHERE LOGIN = :login"
+        );
 
-            try {
-                $stmt->execute([':login' => $_SESSION['login']]);
-                $userData = $stmt->fetch(PDO::FETCH_ASSOC);
-                
-                if (!$userData) {
-                    http_response_code(404);
-                    echo json_encode(['error' => 'Utilisateur non trouvé']);
-                    exit;
-                }
-                
-                $sexe = $userData['ID_SEXE'];
-                $dateNaissance = $userData['DATE_DE_NAISSANCE']; // Récupérer la date de naissance
-                $niveauActivite = $userData['ID_PRATIQUE'];
-
-                // Calculer l'âge et l'ID de tranche d'âge
-                $age = calculerAge($dateNaissance);
-                
-
-                // Calculer les besoins nutritionnels
-                $recommandations = calculRecommandations($age, $sexe, $niveauActivite);
-
-                http_response_code(200);
-                echo json_encode($recommandations);
-
-            } catch (PDOException $e) {
-                http_response_code(500);
-                echo json_encode(['error' => 'Erreur de base de données : ' . $e->getMessage()]);
+        try {
+            $stmt->execute([':login' => $_SESSION['login']]);
+            $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if (!$userData) {
+                http_response_code(404);
+                echo json_encode(['error' => 'Utilisateur non trouvé']);
+                exit;
             }
-        } else {
-            http_response_code(400);
-            echo json_encode(['error' => 'Le login est requis ou ne correspond pas à l\'utilisateur connecté.']);
+            
+            $sexe = $userData['ID_SEXE'];
+            $dateNaissance = $userData['DATE_DE_NAISSANCE']; 
+            $niveauActivite = $userData['ID_PRATIQUE'];
+
+            // Calculer l'âge et l'ID de tranche d'âge
+            $age = calculerAge($dateNaissance);
+
+            // Calculer les besoins nutritionnels
+            $recommandations = calculRecommandations($age, $sexe, $niveauActivite);
+
+            http_response_code(200);
+            echo json_encode($recommandations);
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Erreur de base de données : ' . $e->getMessage()]);
         }
         break;
 
@@ -63,11 +57,9 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 function calculerAge($dateNaissance) {
     $dateNaissance = new DateTime($dateNaissance);
     $aujourdhui = new DateTime();
-    $age = $aujourdhui->diff($dateNaissance)->y; // Récupère l'âge en années
+    $age = $aujourdhui->diff($dateNaissance)->y;
     return $age;
 }
-
-
 
 // Fonction pour calculer les recommandations nutritionnelles
 function calculRecommandations($age, $sexe, $niveauActivite) {
@@ -76,9 +68,9 @@ function calculRecommandations($age, $sexe, $niveauActivite) {
     // Calcul des recommandations
     $recommandations['eau'] = 2 + 0.1 * $niveauActivite;
     $recommandations['energie'] = ($sexe === 'homme') ? 2500 + ($niveauActivite * 200) : 2000 + ($niveauActivite * 150);
-    $recommandations['proteines'] = $age; // Recommandation de base (exemple)
+    $recommandations['proteines'] = $age;
     $recommandations['glucides'] = $recommandations['energie'] * 0.55 / 4;
-    $recommandations['sel'] = 5*$niveauActivite; // Besoins quotidiens en sel en grammes
+    $recommandations['sel'] = 5 * $niveauActivite;
 
     return $recommandations;
 }
