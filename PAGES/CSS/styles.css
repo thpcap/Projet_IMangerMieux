@@ -287,3 +287,53 @@ select option:hover {
     transform: scale(1.05); /* Légère augmentation de taille au survol */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); /* Ombre plus prononcée */
 }
+/* Styles globaux pour les inputs de type file */
+input[type="file"] {
+    display: none; /* Cacher l'input de type file par défaut */
+}
+
+/* Styles pour les fichiers */
+.custom-file-upload {
+    display: inline-block; /* Affichage en ligne pour aligner avec le texte */
+    padding: 10px 20px; /* Rembourrage autour du texte */
+    border-radius: 10px; /* Coins arrondis */
+    border: 2px solid #ccc; /* Bordure grise */
+    background-color: white; /* Couleur de fond */
+    color: black; /* Couleur du texte */
+    font-size: 16px; /* Taille de la police */
+    cursor: pointer; /* Curseur en forme de main au survol */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s; /* Transition douce pour les états */
+}
+
+.custom-file-upload:hover {
+    border-color: #b0c4de; /* Changement de couleur de la bordure au survol */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre plus prononcée au survol */
+}
+
+.file-name {
+    margin-left: 10px; /* Espace entre le bouton et le nom du fichier */
+    font-size: 16px; /* Taille de la police */
+    color: black; /* Couleur du texte */
+}
+
+#confirmationMessage {
+    margin-top: 20px; /* Espace au-dessus du message de confirmation */
+    color: green; /* Couleur du texte */
+    font-weight: bold; /* Met le texte en gras */
+}
+#removeFile {
+    margin-top: 10px; /* Espace au-dessus du bouton */
+    background-color: #FF6347; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 5px 10px; /* Espacement intérieur */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur en forme de main au survol */
+    transition: background-color 0.3s, transform 0.2s; /* Transition douce pour le survol */
+}
+
+#removeFile:hover {
+    background-color: #FF4500; /* Couleur plus sombre au survol */
+    transform: scale(1.05); /* Légère augmentation de taille au survol */
+}
