@@ -15,37 +15,40 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     case 'GET':
         if (isset($_GET['login'])) {
             if ($_GET['login'] !== $_SESSION['login']) {
-                http_response_code(401); // Non autorisé
+                http_response_code(401);
                 echo json_encode(['error' => 'Vous devez être connecté pour accéder à cette ressource.']);
                 exit;
             }
-
-            // --- MODIFIÉ : Définir les paramètres d'intervalle et de date ---
-            $interval = $_GET['interval'] ?? 'week'; // Définit la semaine comme intervalle par défaut
+    
+            // Filtrage par intervalle
+            $interval = $_GET['interval'] ?? 'week'; // Par défaut : semaine
             $date = $_GET['date'] ?? null;
-
-            // --- MODIFIÉ : Préparer la requête SQL en fonction de l'intervalle ---
+    
+            // Construire la requête en fonction du filtre
             $sql = "SELECT REPAS.ID_REPAS, REPAS.QUANTITE, REPAS.DATE, ALIMENT.LABEL_ALIMENT 
                     FROM REPAS 
                     INNER JOIN ALIMENT ON REPAS.ID_ALIMENT = ALIMENT.ID_ALIMENT 
                     WHERE REPAS.LOGIN = :login";
-                    
+                
+            $params = [':login' => $_SESSION['login']];
+
             if ($interval === 'day' && $date) {
-                $sql .= " AND DATE(REPAS.DATE) = :date";
-            } elseif ($interval === 'month') {
-                $sql .= " AND REPAS.DATE >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
-            } else { // Par défaut: semaine
-                $sql .= " AND REPAS.DATE >= DATE_SUB(NOW(), INTERVAL 1 WEEK)";
+                $sql .= " AND DATE(REPAS.DATE) = DATE(:date)";
+                $params[':date'] = $date;
+            } elseif ($interval === 'month' && $date) {
+                // Filtrage par mois entier basé sur la date sélectionnée
+                $month = date('m', strtotime($date));
+                $year = date('Y', strtotime($date));
+                $sql .= " AND MONTH(REPAS.DATE) = :month AND YEAR(REPAS.DATE) = :year";
+                $params[':month'] = $month;
+                $params[':year'] = $year;
+            } else { // Par défaut : filtrer par semaine
+                $sql .= " AND REPAS.DATE >= DATE_SUB(CURDATE(), INTERVAL (DAYOFWEEK(CURDATE()) + 5) % 7 DAY)";
             }
 
-            $stmt = $pdo->prepare($sql); // --- MODIFIÉ ---
+            $stmt = $pdo->prepare($sql);
 
             try {
-                // --- MODIFIÉ : Définir les paramètres pour exécution ---
-                $params = [':login' => $_SESSION['login']];
-                if ($interval === 'day' && $date) {
-                    $params[':date'] = $date;
-                }
                 $stmt->execute($params);
                 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } catch (PDOException $e) {
@@ -56,6 +59,20 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 
             http_response_code(200);
             echo json_encode($data);
+            break;
+        } elseif (isset($_GET['aliments'])) {
+            // Nouvelle route pour récupérer la liste des aliments
+            $sql = "SELECT ID_ALIMENT, LABEL_ALIMENT FROM ALIMENT";
+            $stmt = $pdo->prepare($sql);
+            try {
+                $stmt->execute();
+                $aliments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                http_response_code(200);
+                echo json_encode($aliments);
+            } catch (PDOException $e) {
+                http_response_code(500);
+                echo json_encode(['error' => 'Erreur de base de données : ' . $e->getMessage()]);
+            }
             break;
         } else {
             http_response_code(400);
@@ -109,90 +126,98 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         }
         break;
 
-        case 'PUT':
-            $data = json_decode(file_get_contents('php://input'), true);
-        
-            // Vérifier que `login`, `quantite` et `date` sont bien présents
-            if (!isset($data['login']) || !isset($data['quantite']) || !isset($data['date'])) {
-                $missingFields = [];
-                if (!isset($data['login'])) $missingFields[] = 'login';
-                if (!isset($data['quantite'])) $missingFields[] = 'quantite';
-                if (!isset($data['date'])) $missingFields[] = 'date';
-        
-                http_response_code(400);
-                echo json_encode(['error' => 'Données manquantes pour la mise à jour du REPAS.', 'missing_fields' => $missingFields]);
-                exit;
-            }
-        
-            $login = $data['login'];
-            $quantite = $data['quantite'];
-            $date = $data['date'];
-            $id_aliment = $data['id_aliment'] ?? null;
-        
-            // S'assurer que l'utilisateur est autorisé à modifier les repas
-            if ($login !== $_SESSION['login']) {
-                http_response_code(401);
-                echo json_encode(['error' => 'Vous ne pouvez pas modifier ce REPAS.']);
-                exit;
-            }
-        
-            // Vérifier si un repas existe pour cette `date` et `login`
-            $stmt = $pdo->prepare("SELECT ID_REPAS FROM REPAS WHERE LOGIN = :login AND DATE(DATE) = DATE(:date)");
-            $stmt->execute([':login' => $login, ':date' => $date]);
-            $existingMeal = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-            if ($existingMeal) {
-                // Si le repas existe, préparer la requête de mise à jour
-                $id_REPAS = $existingMeal['ID_REPAS'];
-                $updateFields = [':quantite' => $quantite, ':date' => $date, ':id_REPAS' => $id_REPAS];
-                $sql = "UPDATE REPAS SET QUANTITE = :quantite, DATE = :date";
-        
-                if ($id_aliment !== null) {
-                    $sql .= ", ID_ALIMENT = :id_aliment";
-                    $updateFields[':id_aliment'] = $id_aliment;
+    case 'PUT':
+        $data = json_decode(file_get_contents('php://input'), true);
+    
+        if (!isset($data['login']) || !isset($data['ID_REPAS']) || !isset($data['quantite']) || !isset($data['date'])) {
+            $missingFields = [];
+            if (!isset($data['login'])) $missingFields[] = 'login';
+            if (!isset($data['ID_REPAS'])) $missingFields[] = 'ID_REPAS';
+            if (!isset($data['quantite'])) $missingFields[] = 'quantite';
+            if (!isset($data['date'])) $missingFields[] = 'date';
+    
+            http_response_code(400);
+            echo json_encode(['error' => 'Données manquantes pour la mise à jour du REPAS.', 'missing_fields' => $missingFields]);
+            exit;
+        }
+    
+        $login = $data['login'];
+        $ID_REPAS = $data['ID_REPAS'];
+        $quantite = $data['quantite'];
+        $date = $data['date'];
+        $id_aliment = $data['id_aliment'] ?? null;
+    
+        if ($login !== $_SESSION['login']) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Vous ne pouvez pas modifier ce REPAS.']);
+            exit;
+        }
+    
+        $stmt = $pdo->prepare("SELECT LOGIN FROM REPAS WHERE ID_REPAS = :ID_REPAS");
+        $stmt->execute([':ID_REPAS' => $ID_REPAS]);
+        $existingMeal = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($existingMeal && $existingMeal['LOGIN'] === $login) {
+            $updateFields = [
+                ':quantite' => $quantite,
+                ':date' => $date,
+                ':ID_REPAS' => $ID_REPAS
+            ];
+            $sql = "UPDATE REPAS SET QUANTITE = :quantite, DATE = :date";
+    
+            if ($id_aliment !== null) {
+                $sql .= ", ID_ALIMENT = :id_aliment";
+                $updateFields[':id_aliment'] = $id_aliment;
+    
+                $stmt = $pdo->prepare("SELECT COUNT(*) FROM ALIMENT WHERE ID_ALIMENT = :id_aliment");
+                $stmt->execute([':id_aliment' => $id_aliment]);
+                $alimentExists = $stmt->fetchColumn();
+    
+                if (!$alimentExists) {
+                    http_response_code(400);
+                    echo json_encode(['error' => 'L\'aliment spécifié n\'existe pas.']);
+                    exit;
                 }
-        
-                $sql .= " WHERE ID_REPAS = :id_REPAS"; // Mise à jour du repas trouvé
-        
-                $stmt = $pdo->prepare($sql);
-        
-                try {
-                    $stmt->execute($updateFields);
-                    http_response_code(200);
-                    echo json_encode(['message' => 'Repas mis à jour avec succès.']);
-                } catch (PDOException $e) {
-                    http_response_code(500);
-                    echo json_encode(['error' => 'Erreur de base de données : ' . $e->getMessage()]);
-                }
-            } else {
-                http_response_code(404);
-                echo json_encode(['error' => 'Aucun repas trouvé pour cette date.']);
             }
-            break;
-        
-        
-
+    
+            $sql .= " WHERE ID_REPAS = :ID_REPAS";
+            $stmt = $pdo->prepare($sql);
+    
+            try {
+                $stmt->execute($updateFields);
+                http_response_code(200);
+                echo json_encode(['message' => 'Repas mis à jour avec succès.']);
+            } catch (PDOException $e) {
+                http_response_code(500);
+                echo json_encode(['error' => 'Erreur de base de données : ' . $e->getMessage()]);
+            }
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'Repas non trouvé ou accès non autorisé.']);
+        }
+        break;
+    
     case 'DELETE':
         $data = json_decode(file_get_contents('php://input'), true);
-
-        if (isset($data['login']) && isset($data['id_REPAS'])) {
+    
+        if (isset($data['login']) && isset($data['ID_REPAS'])) {
             $login = $data['login'];
-            $id_REPAS = $data['id_REPAS'];
-
+            $ID_REPAS = $data['ID_REPAS'];
+    
             if ($login !== $_SESSION['login']) {
                 http_response_code(401);
                 echo json_encode(['error' => 'Vous ne pouvez pas supprimer ce REPAS.']);
                 exit;
             }
-
-            $stmt = $pdo->prepare("SELECT LOGIN FROM REPAS WHERE ID_REPAS = :id_REPAS");
-            $stmt->execute([':id_REPAS' => $id_REPAS]);
+    
+            $stmt = $pdo->prepare("SELECT LOGIN FROM REPAS WHERE ID_REPAS = :ID_REPAS");
+            $stmt->execute([':ID_REPAS' => $ID_REPAS]);
             $existingMeal = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    
             if ($existingMeal && $existingMeal['LOGIN'] === $login) {
-                $stmt = $pdo->prepare("DELETE FROM REPAS WHERE ID_REPAS = :id_REPAS");
+                $stmt = $pdo->prepare("DELETE FROM REPAS WHERE ID_REPAS = :ID_REPAS");
                 try {
-                    $stmt->execute([':id_REPAS' => $id_REPAS]);
+                    $stmt->execute([':ID_REPAS' => $ID_REPAS]);
                     http_response_code(200);
                     echo json_encode(['message' => 'Repas supprimé avec succès.']);
                 } catch (PDOException $e) {
@@ -208,10 +233,9 @@ switch ($_SERVER["REQUEST_METHOD"]) {
             echo json_encode(['error' => 'Données manquantes pour la suppression du REPAS.']);
         }
         break;
-
+    
     default:
         http_response_code(405);
         echo json_encode(['error' => 'Méthode non autorisée']);
         break;
 }
-
