@@ -1,4 +1,4 @@
-<div id="appContainer" style="margin: auto; margin-top: 20px; max-width: 800px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); background-color: #f9f9f9;">
+<div id="content" style="margin: auto; margin-top: 20px; max-width: 800px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); background-color: #f9f9f9;">
     <h1 style="text-align: center; color: #333;">Liste des Aliments Consommés</h1>
 
     <!-- Sélection de l'intervalle de filtrage -->
@@ -273,6 +273,11 @@ $(document).ready(function() {
     $('#toggleFormButton').on('click', function() {
         $('#formContainer').toggle();
         $(this).text($('#formContainer').is(':visible') ? '-' : '+');
+    });
+
+    $('#content').css({
+        opacity: 1,
+        transform: 'translateY(0)'
     });
 
 });
