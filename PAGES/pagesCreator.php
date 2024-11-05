@@ -38,7 +38,7 @@ if (isset($_SESSION['connected']) && $_SESSION['connected']) {
         </div>
     <?php }
 } else {
-    header("Location:" . URL_Login);
+    header("Location:" . URL_Index);
 }
 ?>   
 <script>
