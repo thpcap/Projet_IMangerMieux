@@ -156,6 +156,7 @@ body.DarkMode {
 }
 #menuButton{
     position:absolute;
+    cursor: pointer; /* Curseur en forme de main au survol */
     left:5px;
     top:5px;
     z-index:100;
@@ -177,13 +178,15 @@ body.DarkMode {
 input[type="date"], 
 input[type="text"], 
 input[type="email"], 
-input[type="password"], 
+input[type="password"],
+input[type="search"],
 textarea {
     width: calc(100% - 5px); /* Prend toute la largeur moins le padding */
     padding: 5px; /* Espace intérieur */
     margin: 5px 0; /* Espacement vertical */
     border-radius: 10px; /* Coins arrondis */
     border: 2px solid #ccc; /* Bordure grise */
+    cursor: pointer; /* Curseur en forme de main au survol */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ombre légère */
     transition: border-color 0.3s, box-shadow 0.3s; /* Animation douce pour les changements */
 }
@@ -192,7 +195,8 @@ textarea {
 input[type="date"]:hover, 
 input[type="text"]:hover, 
 input[type="email"]:hover, 
-input[type="password"]:hover, 
+input[type="password"]:hover,
+input[type="search"]:hover,
 textarea:hover {
     border: 2px solid #b0c4de; /* Changement de couleur de la bordure */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Ombre plus prononcée au survol */
@@ -202,7 +206,8 @@ textarea:hover {
 input[type="date"]:focus, 
 input[type="text"]:focus, 
 input[type="email"]:focus, 
-input[type="password"]:focus, 
+input[type="password"]:focus,
+input[type="search"]:focus,
 textarea:focus {
     border: 2px solid #6495ed; /* Bordure bleue lors de l'activation */
     box-shadow: 0 0 10px rgba(100, 149, 237, 0.5); /* Ombre bleue pour mettre en avant l'élément */
@@ -244,6 +249,7 @@ select:focus {
 select option {
     padding: 10px; /* Ajoute du padding aux options (note : padding ne s'applique pas toujours sur tous les navigateurs) */
     background-color: white; /* Couleur de fond par défaut */
+    border-radius: 10px; /* Coins arrondis */
     color: black; /* Couleur du texte */
 }
 
@@ -336,4 +342,24 @@ input[type="file"] {
 #removeFile:hover {
     background-color: #FF4500; /* Couleur plus sombre au survol */
     transform: scale(1.05); /* Légère augmentation de taille au survol */
+}
+#validateDateButton {
+    background-color: #4CAF50; /* Couleur de fond vert */
+    color: white; /* Couleur du texte */
+    padding: 5px 10px; /* Espacement intérieur */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur en forme de main au survol */
+    transition: background-color 0.3s, transform 0.2s; /* Transition douce pour le survol */
+    margin-left: 10px; /* Espace à gauche du bouton */
+}
+
+#validateDateButton:hover {
+    background-color: #45a049; /* Couleur légèrement plus sombre au survol */
+    transform: scale(1.05); /* Légère augmentation de taille au survol */
+}
+
+#validateDateButton:focus {
+    outline: none; /* Enlève la bordure de focus par défaut */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Ombre autour du bouton au focus */
 }
