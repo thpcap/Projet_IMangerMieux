@@ -30,6 +30,13 @@ if (isset($_SESSION['connected']) && $_SESSION['connected']) {
     } else {
         require_once('error.php');    
     }
+
+    // Vérifier si la page n'est pas accueil.php avant d'afficher le logo
+    if ($currentPageId !== 'accueil') { ?>
+        <div id="logoContainer">
+            <img src="../logo/upper_logo.png" alt="Logo" id="bottomRightLogo">
+        </div>
+    <?php }
 } else {
     header("Location:" . URL_Login);
 }

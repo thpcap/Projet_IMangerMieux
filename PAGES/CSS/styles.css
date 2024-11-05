@@ -363,3 +363,26 @@ input[type="file"] {
     outline: none; /* Enlève la bordure de focus par défaut */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Ombre autour du bouton au focus */
 }
+
+#logoContainer {
+    position: fixed; /* Position fixe par rapport à la fenêtre */
+    bottom: 20px; /* Distance du bas de l'écran */
+    right: 20px; /* Distance du côté droit de l'écran */
+    display: none; /* Masqué par défaut */
+    z-index: 1000; /* Pour s'assurer qu'il est au-dessus des autres éléments */
+}
+
+#bottomRightLogo {
+    width: 75px; /* Ajustez la taille selon vos besoins */
+    height: auto; /* Garde les proportions de l'image */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Ombre pour le logo */
+    transition: transform 0.3s; /* Transition douce pour les effets au survol */
+    border-radius: 50%;
+}
+
+/* Rendre visible le logo uniquement sur les écrans de bureau */
+@media (min-width: 1024px) {
+    #logoContainer {
+        display: block; /* Affiche le logo uniquement sur les écrans plus larges */
+    }
+}
