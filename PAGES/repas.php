@@ -1,30 +1,30 @@
-<div id="appContainer" style="margin: auto; margin-top:20px">
-    <h1>Liste des Aliments Consommés</h1>
+<div id="appContainer" style="margin: auto; margin-top: 20px; max-width: 800px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); background-color: #f9f9f9;">
+    <h1 style="text-align: center; color: #333;">Liste des Aliments Consommés</h1>
 
     <!-- Sélection de l'intervalle de filtrage -->
-    <label for="interval-selection">Afficher par :</label>
-    <select id="interval-selection">
-        <option value="day" selected>Jour</option> <!-- Changer la sélection par défaut à "Jour" -->
+    <label for="interval-selection" style="font-weight: bold;">Afficher par :</label>
+    <select id="interval-selection" style="margin: 10px 0; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+        <option value="day" selected>Jour</option>
         <option value="week">Semaine</option>
         <option value="month">Mois</option>
     </select>
 
     <!-- Champ de sélection de la date (pour jour et mois) -->
-    <input type="date" id="date-input" style="display: block;" /> <!-- Afficher le champ de date par défaut -->
+    <input type="date" id="date-input" style="display: block; margin: 10px 0; padding: 8px; border-radius: 4px; border: 1px solid #ccc;" />
 
     <!-- Formulaire pour l'ajout d'un repas -->
-    <div id="formContainer" style="display:none;">
-        <h2>Créer un nouveau repas</h2>
+    <div id="formContainer" style="display:none; margin-top: 20px; padding: 15px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <h2 style="color: #555;">Créer un nouveau repas</h2>
         <form id="createMealForm">
-            <table>
+            <table style="width: 100%;">
                 <tr>
                     <td><label for="quantite">Quantité :</label></td>
-                    <td><input type="number" id="quantite" name="quantite" required></td>
+                    <td><input type="number" id="quantite" name="quantite" required style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;"></td>
                 </tr>
                 <tr>
                     <td><label for="date">Date :</label></td>
                     <td>
-                        <input type="date" id="date" name="date">
+                        <input type="date" id="date" name="date" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
                         <input type="checkbox" id="setNowDate" name="setNowDate">
                         <label for="setNowDate">Utiliser la date actuelle</label>
                     </td>
@@ -32,27 +32,27 @@
                 <tr>
                     <td><label for="id_aliment">Aliment :</label></td>
                     <td>
-                        <select id="id_aliment" name="id_aliment" required>
+                        <select id="id_aliment" name="id_aliment" required style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
                             <!-- Options des aliments ajoutées dynamiquement ici -->
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2"><button type="submit" id="submitButton">Ajouter Repas</button></td>
+                    <td colspan="2"><button type="submit" id="submitButton" style="background-color: #4CAF50; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer;">Ajouter Repas</button></td>
                 </tr>
             </table>
         </form>
     </div>
-
-    <table id="repasTable" class="display">
+    <p id="error-message" style="display: none; color: #DC3545; text-align: center; font-weight: bold;"></p>
+    <table id="repasTable" class="display" style="width: 100%; margin-top: 20px; border-collapse: collapse;">
         <thead>
-            <tr>
-                <th><button id="toggleFormButton">+</button></th>
+            <tr style="background-color: #f2f2f2;">
+                <th><button id="toggleFormButton" style="background-color: #007BFF; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">+</button></th>
                 <th style="display: none;">ID REPAS</th>
-                <th>Aliment</th>
-                <th>Quantité</th>
-                <th>Date</th>
-                <th>Actions</th>
+                <th style="text-align: left;">Aliment</th>
+                <th style="text-align: left;">Quantité</th>
+                <th style="text-align: left;">Date</th>
+                <th style="text-align: left;">Actions</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -64,6 +64,14 @@ $(document).ready(function() {
     const apiUrl = '<?php require_once('ConfigFrontEnd.php'); echo URL_API;?>/repas.php';
     const alimentsUrl = '<?php require_once('ConfigFrontEnd.php'); echo URL_API;?>/aliments.php?aliments=true';
     let currentMealId = null;
+
+    function displayError(message) {
+        const errorMessage = $('#error-message');
+        errorMessage.text(message).show(); // Afficher le message d'erreur
+        setTimeout(() => {
+            errorMessage.fadeOut(); // Cacher le message après 5 secondes
+        }, 5000);
+    }
 
     function fetchRepas() {
         const login = getCookie('login');
@@ -92,8 +100,8 @@ $(document).ready(function() {
                             <td contenteditable="false" class="editable-cell" data-field="quantite">${meal.QUANTITE}</td>
                             <td contenteditable="false" class="editable-cell" data-field="date">${new Date(meal.DATE).toLocaleDateString('fr-FR')}</td>
                             <td>
-                                <button class="edit-button">Modifier</button>
-                                <button class="delete-button">Supprimer</button>
+                                <button class="edit-button" style="background-color: #FFC107; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Modifier</button>
+                                <button class="delete-button" style="background-color: #DC3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Supprimer</button>
                             </td>
                         </tr>
                     `);
@@ -104,7 +112,7 @@ $(document).ready(function() {
             },
             error: function(xhr, status, error) {
                 console.error("Erreur lors de la récupération des repas:", error);
-                alert("Erreur lors de la récupération des repas.");
+                displayError("Erreur lors de la récupération des repas.");
             }
         });
     }
@@ -124,7 +132,7 @@ $(document).ready(function() {
             },
             error: function(xhr, status, error) {
                 console.error("Erreur lors de la récupération des aliments:", error);
-                alert("Erreur lors de la récupération des aliments.");
+                displayError("Erreur lors de la récupération des aliments.");
             }
         });
     }
@@ -144,13 +152,13 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify({ login: getCookie('login'), quantite: quantite, date: date, id_aliment: id_aliment }),
             success: function(response) {
-                alert("Repas ajouté avec succès.");
+                displayError("Repas ajouté avec succès.");
                 fetchRepas();
                 $('#createMealForm')[0].reset();
             },
             error: function(xhr, status, error) {
                 console.error("Erreur lors de l'ajout du repas:", xhr.responseText);
-                alert("Erreur lors de l'ajout du repas.");
+                displayError("Erreur lors de l'ajout du repas.");
             }
         });
     });
@@ -164,6 +172,11 @@ $(document).ready(function() {
                 row.find('[data-field="quantite"]').attr('contenteditable', 'true').addClass('editing');
                 row.find('[data-field="date"]').attr('contenteditable', 'true').addClass('editing');
                 $(this).text('Enregistrer');
+
+                // Ajout de la classe highlight
+                row.find('[data-field="quantite"]').addClass('highlight');
+                row.find('[data-field="date"]').addClass('highlight');
+
             } else {
                 const ID_REPAS = row.data('id');
                 const quantite = row.find('[data-field="quantite"]').text().trim();
@@ -174,6 +187,10 @@ $(document).ready(function() {
                 row.find('[data-field="quantite"]').attr('contenteditable', 'false').removeClass('editing');
                 row.find('[data-field="date"]').attr('contenteditable', 'false').removeClass('editing');
                 $(this).text('Modifier');
+
+                // Retirer la classe highlight après l'enregistrement
+                row.find('[data-field="quantite"]').removeClass('highlight');
+                row.find('[data-field="date"]').removeClass('highlight');
             }
         });
 
@@ -198,12 +215,12 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(updateData),
             success: function(response) {
-                alert("Repas mis à jour avec succès.");
+                displayError("Repas mis à jour avec succès.");
                 fetchRepas();
             },
             error: function(xhr, status, error) {
                 console.error("Erreur lors de la mise à jour du repas:", xhr.responseText);
-                alert("Erreur lors de la mise à jour du repas.");
+                displayError("Erreur lors de la mise à jour du repas.");
             }
         });
     }
@@ -216,12 +233,12 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify({ login: login, ID_REPAS: ID_REPAS }),
             success: function(response) {
-                alert("Repas supprimé avec succès.");
+                displayError("Repas supprimé avec succès.");
                 fetchRepas();
             },
             error: function(xhr, status, error) {
                 console.error("Erreur lors de la suppression du repas:", xhr.responseText);
-                alert("Erreur lors de la suppression du repas.");
+                displayError("Erreur lors de la suppression du repas.");
             }
         });
     }
