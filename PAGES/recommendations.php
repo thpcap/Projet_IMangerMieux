@@ -1,5 +1,5 @@
-<section>
-    <h1>Recommandations Nutritionnelles</h1>
+<section >
+    <h1 style="color: blue; text-align: center">Recommandations Nutritionnelles</h1>
 
     <div id="recommandations" style="display:none;">
         <div class="recommandation">Eau : <span id="eau" class="indicateur"></span> L</div>

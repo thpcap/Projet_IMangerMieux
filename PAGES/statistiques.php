@@ -1,5 +1,5 @@
 <div id="content" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
-    <h2>Vos statistiques nutritionnelles</h2>
+    <h2 style="color: blue">Vos statistiques nutritionnelles</h2>
     <p id="errorParagraph" style="color: red; display: none;"></p> <!-- Message d'erreur, caché par défaut -->
     <div style="display: flex; align-items: center; margin-bottom: 20px;">
         <input type="date" id="dateInput" style="margin-right: 10px;"> <!-- Champ pour sélectionner la date -->
