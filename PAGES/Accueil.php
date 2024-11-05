@@ -28,7 +28,7 @@
         margin: 20px auto; /* Centre le contenu et ajoute un espace en haut et en bas */
         transition: transform 0.5s ease, opacity 0.5s ease; /* Transition douce pour l'apparition */
         opacity: 0; /* Initialement caché pour l'animation */
-        transform: translateY(20px); /* Déplacement vers le bas pour l'animation */
+        transform: translateY(-20px); /* Déplacement vers le bas pour l'animation */
     }
 
     h1 {
