@@ -1,6 +1,6 @@
 <section class="contact-page">
     <div id="content">
-        <h1>Nous Contacter</h1>
+        <h1 style="color: blue">Nous Contacter</h1>
         <p>Vous avez rencontré un problème ? Envoyez-nous un message, et nous vous répondrons dans les plus brefs délais.</p>
 
         <form id="contactForm">
