@@ -172,3 +172,118 @@ body.DarkMode {
 #myChart{
     padding: 10px;
 }
+
+/* Styles globaux pour tous les inputs */
+input[type="date"], 
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+textarea {
+    width: calc(100% - 5px); /* Prend toute la largeur moins le padding */
+    padding: 5px; /* Espace intérieur */
+    margin: 5px 0; /* Espacement vertical */
+    border-radius: 10px; /* Coins arrondis */
+    border: 2px solid #ccc; /* Bordure grise */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ombre légère */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Animation douce pour les changements */
+}
+
+/* État au survol */
+input[type="date"]:hover, 
+input[type="text"]:hover, 
+input[type="email"]:hover, 
+input[type="password"]:hover, 
+textarea:hover {
+    border: 2px solid #b0c4de; /* Changement de couleur de la bordure */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Ombre plus prononcée au survol */
+}
+
+/* État actif (focus) */
+input[type="date"]:focus, 
+input[type="text"]:focus, 
+input[type="email"]:focus, 
+input[type="password"]:focus, 
+textarea:focus {
+    border: 2px solid #6495ed; /* Bordure bleue lors de l'activation */
+    box-shadow: 0 0 10px rgba(100, 149, 237, 0.5); /* Ombre bleue pour mettre en avant l'élément */
+    outline: none; /* Supprimer le contour par défaut */
+}
+
+/* Styles spécifiques pour le textarea (s'il est utilisé) */
+textarea {
+    height: 100px; /* Hauteur par défaut pour le textarea */
+    resize: none; /* Empêcher le redimensionnement */
+}
+
+/* Styles globaux pour tous les selects */
+select {
+    width: calc(100% - 5px); /* Remplit toute la largeur moins le padding */
+    padding: 5px; /* Ajoute du padding à l'intérieur */
+    border-radius: 10px; /* Coins arrondis */
+    border: 2px solid #ccc; /* Bordure grise */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ombre légère */
+    background-color: white; /* Couleur de fond */
+    color: black; /* Couleur du texte */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Transition douce pour la couleur de la bordure */
+}
+
+/* Effet au survol */
+select:hover {
+    border-color: #b0c4de; /* Changement de couleur de la bordure au survol */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Ombre plus prononcée au survol */
+}
+
+/* État actif (focus) */
+select:focus {
+    border-color: #6495ed; /* Bordure bleue lors de l'activation */
+    box-shadow: 0 0 10px rgba(100, 149, 237, 0.5); /* Ombre bleue pour mettre en avant l'élément */
+    outline: none; /* Supprimer le contour par défaut */
+}
+
+/* Styles pour les options dans le select */
+select option {
+    padding: 10px; /* Ajoute du padding aux options (note : padding ne s'applique pas toujours sur tous les navigateurs) */
+    background-color: white; /* Couleur de fond par défaut */
+    color: black; /* Couleur du texte */
+}
+
+/* Changement de couleur des options au survol (selon le navigateur) */
+select option:hover {
+    background-color: #f0f0f0; /* Fond légèrement plus sombre au survol des options */
+}
+
+/* Styles pour le bouton de soumission */
+#submit {
+    background-color: #FF7F50; /* Couleur de fond du bouton */
+    color: white; /* Couleur du texte */
+    padding: 5px 10px; /* Espacement intérieur */
+    border-radius: 10px; /* Coins arrondis */
+    cursor: pointer; /* Curseur en forme de main au survol */
+    border: none; /* Pas de bordure par défaut */
+    font-size: 16px; /* Taille de police */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Ombre */
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s; /* Transitions douces pour les effets */
+}
+
+/* Effet au survol */
+#submit:hover {
+    background-color: #e07c5c; /* Couleur de fond plus sombre au survol */
+    transform: scale(1.05); /* Légère augmentation de taille au survol */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); /* Ombre plus prononcée */
+}
+#deleteUserBtn{
+    background-color: red; /* Couleur de fond du bouton */
+    color: white; /* Couleur du texte */
+    padding: 5px 10px; /* Espacement intérieur */
+    border-radius: 10px; /* Coins arrondis */
+    cursor: pointer; /* Curseur en forme de main au survol */
+    border: none; /* Pas de bordure par défaut */
+    font-size: 16px; /* Taille de police */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Ombre */
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s; /* Transitions douces pour les effets */
+}
+#deleteUserBtn:hover{
+    background-color: rgb(255, 47, 47); /* Couleur de fond plus sombre au survol */
+    transform: scale(1.05); /* Légère augmentation de taille au survol */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); /* Ombre plus prononcée */
+}

@@ -25,7 +25,7 @@
                 <label for="attachment">Pièces jointes (facultatif) :</label>
                 <input type="file" id="attachment" name="attachment">
 
-                <button type="submit">Envoyer</button>
+                <button id="submit" type="submit">Envoyer</button>
             </form>
 
             <p id="confirmationMessage" style="display:none;">Merci ! Votre message a été envoyé. Nous reviendrons vers vous sous 24 à 48 heures.</p>
