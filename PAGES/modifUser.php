@@ -38,18 +38,24 @@
                             <td><input id="inputLogin" type="text" hidden required></td>
                         </tr>
                         <tr>
+                            <th colspan="2"><br></th>
+                        </tr>
+                        <tr>
                             <th colspan="2"><input id="submit" type="submit" value="Modifier"></th>
                         </tr>
                     </tbody>
                 </table>                
             </form>
-
+            <br>
             <div class="deleteSection">
                 <button id="deleteUserBtn" onclick="deleteUser()">Supprimer le compte</button>
             </div>
+            <br>
+            <p style="color:red"><strong>Attention ce site n'est pas sécurisé</strong></p>
+            <p style="color:red"><strong>N'utilisez pas vos veritables donnés personelles</strong></p>
         </div>
     </div>
-
+    
     <script>
         $(document).ready(function(){
             // Récupération des données utilisateur et remplissage des champs
@@ -134,7 +140,7 @@
             });
 
         });
-        $('#content').css({
+        $('.modifyUser').css({
             opacity: 1,
             transform: 'translateY(0)'
         });

@@ -1,6 +1,7 @@
 <?php
     require_once('init_PDO.php');
     require_once('usefullFunctions.php');
+    setHeaders();
     switch ($_SERVER["REQUEST_METHOD"]) {
         case 'POST':
             // Récupérer l'entrée JSON
@@ -32,7 +33,7 @@
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 if ($user) {
                     // Connexion réussie
-                    setHeaders();
+                    
                     session_start();
                     $_SESSION['login'] = $login;
                     $_SESSION['connected'] = true;
@@ -41,7 +42,7 @@
                     echo json_encode(['connected' => true]);
                 } else {
                     // Échec de la connexion
-                    setHeaders();
+                    
                     http_response_code(401); // Non autorisé
                     echo json_encode(['connected' => false]);
                 }

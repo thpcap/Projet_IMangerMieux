@@ -70,7 +70,10 @@
             </table>                
         </form>
     </div>
-
+    </div class="warning">
+        <div style="position:fixed; bottom:0; background-color:white; border-radius:20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);padding:5px">
+        <p style="color:red"><strong>Attention ce site n'est pas sécurisé, N'utilisez pas vos veritables donnés personelles</strong></p>
+    </div>
     <script>
         $(document).ready(function(){
             // ajout des options de sexe

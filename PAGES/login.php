@@ -47,7 +47,14 @@
                 </tbody>
             </table>                
         </form>
+        
+    </div class="warning">
+        <div style="position:absolute; bottom:0;">
+        <p style="color:red"><strong>Attention ce site n'est pas sécurisé, N'utilisez pas vos veritables donnés personelles</strong></p>
+        <p style="margin:auto; bottom: 10px; text-align:center; font-size:small;">Ce projet a été développé lors d'un cours de développement Web à <a href="https://imt-nord-europe.fr/">IMT Nord Europe</a>.</p>
     </div>
+    
+
     <script>
         function login(){
             event.preventDefault();
