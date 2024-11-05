@@ -17,7 +17,7 @@ header {
     background-color: beige;
     left: 0;
     top: 0;
-    position: absolute;
+    position: fixed;
     height: 100%;
     padding: 15px;
     padding-top: 15px;
@@ -155,7 +155,7 @@ body.DarkMode {
     
 }
 #menuButton{
-    position:absolute;
+    position:fixed;
     cursor: pointer; /* Curseur en forme de main au survol */
     left:5px;
     top:5px;
@@ -385,4 +385,10 @@ input[type="file"] {
     #logoContainer {
         display: block; /* Affiche le logo uniquement sur les écrans plus larges */
     }
+}
+
+.highlight {
+    background-color: #ffeb3b; /* Couleur de fond jaune */
+    color: #000; /* Couleur du texte noire */
+    transition: background-color 0.5s ease; /* Animation pour adoucir la transition */
 }
