@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>Créer un Compte</title>
-    <link rel="icon" href="">
+    <title>IMangerMieux</title>
+    <link rel="icon" href="../logo/upper_logo.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="CSS/stylesLogin.css">
@@ -16,12 +16,15 @@
             <table>
                 <tbody>
                     <tr>
-                        <th colspan="2"><h1>Créer un Compte</h1></th>
+                        <th colspan="2"><h1>IMangerMieux</h1></th>
                     </tr>
                     <tr>
                         <th colspan="2">
                             <img src="../logo/upper_logo.png" alt="Logo" style="max-height: 100px; box-shadow:0 0 10px rgba(0, 0, 0, 0.2); border-radius:50%;">
                         </th>
+                    </tr>
+                    <tr>
+                        <th colspan="2"><h2>Créer un Compte</h2></th>
                     </tr>
                     <tr>
                         <th colspan="2"><p id="error" class="error-message"></p></th>

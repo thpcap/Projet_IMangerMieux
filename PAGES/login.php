@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>Se Connecter</title>
+    <title>IMangerMieux</title>
     <link rel="icon" href="">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,12 +14,15 @@
             <table>
                 <tbody>
                     <tr>
-                        <th colspan="2"><h1>Se Connecter</h1></th>
+                        <th colspan="2"><h1>IMangerMieux</h1></th>
                     </tr>
                     <tr>
                         <th colspan="2">
                             <img src="../logo/upper_logo.png" alt="that's not a moon it's a space station" style="max-height: 100px; box-shadow:0 0 10px rgba(0, 0, 0, 0.2); border-radius:50%;">
                         </th>
+                    </tr>
+                    <tr>
+                        <th colspan="2"><h2>Se Connecter</h2></th>
                     </tr>
                     <tr>
                         <th colspan="2">
