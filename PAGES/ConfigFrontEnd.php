@@ -9,7 +9,7 @@
     $mymenu = array(
         'Accueil' => array('Accueil'),
         'repas' => array('Repas'),
-        'statistiques' => array('Statistiques'),
+        'statistiques' => array('Tableau de Bord '),
         'recommendations' => array('Recommandations'),
         'contact'=> array('Contact Us')
     );

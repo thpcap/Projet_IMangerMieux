@@ -1,4 +1,4 @@
-<section id="content">
+<section id="content" >
     <h1 style="color: blue; text-align: center">Recommandations Nutritionnelles</h1>
     <P style="text-align: justify;line-height: 1.5">Chaque individu a des besoins nutritionnels spécifiques qui varient selon 
         l'âge, le sexe, le niveau d'activité physique et d'autres facteurs. Pour assurer une bonne santé, 
