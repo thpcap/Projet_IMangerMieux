@@ -15,7 +15,7 @@
                 <option value="Bug technique">Bug technique</option>
                 <option value="Problème de compte">Problème de compte</option>
                 <option value="Suggestion">Suggestion</option>
-                <option value="Modifier le Mot de Passe">Suggestion</option>
+                <option value="Modifier le Mot de Passe">Changer le mot de Passe</option>
                 <option value="Autre">Autre</option>
             </select>
 
