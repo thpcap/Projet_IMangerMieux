@@ -124,7 +124,7 @@ create table UTILISATEUR
    ID_SEXE              int not null,
    ID_AGE               int not null,
    ID_PRATIQUE          bigint,
-   MDP                  varchar(50) not null,
+   MDP                  varchar(255) not null,
    NOM                  varchar(50) not null,
    PRENOM               varchar(50) not null,
    DATE_DE_NAISSANCE    date not null,

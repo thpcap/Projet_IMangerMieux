@@ -37,21 +37,14 @@
                         <tr>
                             <td><input id="inputLogin" type="text" hidden required></td>
                         </tr>
-                        <tr>
-                            <th colspan="2"><br></th>
-                        </tr>
-                        <tr>
-                            <th colspan="2"><input id="submit" type="submit" value="Modifier"></th>
-                        </tr>
-                        <tr>
-                            <th colspan="2"><br></th>
-                        </tr>
-                        <tr>
-                            <th colspan="2"><button id="deleteUserBtn" onclick="deleteUser()">Supprimer le compte</button></th>
-                        </tr>
                     </tbody>
-                </table>                
+                </table>
+                <br>
+                <th colspan="2"><input id="submit" type="submit" value="Modifier"></th>
+                                     
             </form>
+            <br>
+            <button id="deleteUserBtn" onclick="deleteUser()">Supprimer le compte</button>
             <br>
             <p style="color:red"><strong>Attention ce site n'est pas sécurisé</strong></p>
             <p style="color:red"><strong>N'utilisez pas vos veritables donnés personelles</strong></p>

@@ -15,19 +15,12 @@
                 <option value="Bug technique">Bug technique</option>
                 <option value="Problème de compte">Problème de compte</option>
                 <option value="Suggestion">Suggestion</option>
+                <option value="Modifier le Mot de Passe">Changer le mot de Passe</option>
                 <option value="Autre">Autre</option>
             </select>
 
             <label for="message">Description du problème :</label>
             <textarea id="message" name="message" required></textarea>
-
-            <label for="attachment">Pièces jointes (facultatif) :</label>
-            <label class="custom-file-upload">
-                <input type="file" id="attachment" name="attachment" />
-                Choisir un fichier
-            </label>
-            <span class="file-name" id="fileName">Aucun fichier sélectionné</span>
-            <button type="button" id="removeFile" style="display:none;">Retirer le fichier</button>
             <br>
             <button id="submit" type="submit">Envoyer</button>
         </form>
@@ -37,20 +30,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            // Affiche le nom du fichier sélectionné et montre le bouton "Retirer le fichier"
-            $('#attachment').on('change', function () {
-                const fileName = this.files.length > 0 ? this.files[0].name : 'Aucun fichier sélectionné';
-                $('#fileName').text(fileName);
-                $('#removeFile').show(); // Affiche le bouton "Retirer le fichier"
-            });
-
-            // Retire le fichier sélectionné
-            $('#removeFile').on('click', function () {
-                $('#attachment').val(''); // Réinitialise le champ de fichier
-                $('#fileName').text('Aucun fichier sélectionné'); // Réinitialise le nom du fichier
-                $(this).hide(); // Cache le bouton "Retirer le fichier"
-            });
-
             $('#contactForm').on('submit', function (e) {
                 e.preventDefault();
 
@@ -64,8 +43,8 @@
                     contentType: false, // Nécessaire pour envoyer des fichiers
                     data: formData,
                     success: function (response) {
-                        $('#confirmationMessage').show(); // Affiche le message de confirmation
-                        $('#contactForm')[0].reset(); // Vide le formulaire
+                        $('#confirmationMessage').show(); // Show confirmation message on success
+                        $('#contactForm')[0].reset(); // Clear form fields
                         $('#removeFile').hide(); // Cache le bouton "Retirer le fichier" après soumission
                         $('#fileName').text('Aucun fichier sélectionné'); // Réinitialise le nom du fichier
                     },

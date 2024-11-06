@@ -45,7 +45,7 @@
         $('#validateDateButton').on('click', function() {
             const selectedDate = $('#dateInput').val(); // Récupère la date sélectionnée
             if (!selectedDate) {
-                displayErrorMessage('Veuillez sélectionner une date.'); // Message d'erreur si aucune date
+                displayErrorMessage('Veuillez sélectionner une date. et non 0ABY ne marche pas'); // Message d'erreur si aucune date
                 return;
             }
             fetchDataAndDisplayChart(selectedDate); // Récupérer et afficher les données pour la date sélectionnée

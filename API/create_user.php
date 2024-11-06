@@ -6,7 +6,7 @@
         case 'POST':
             // Récupérer l'entrée JSON
             $data = json_decode(file_get_contents("php://input"));
-            $set= isset($data->login) && isset($data->motDePasse) && isset($data->email) && isset($data->nom) && isset($data->prenom) && isset($data->sexe) && isset($data->niveauPratique) && isset($data->date);
+            $set = isset($data->login) && isset($data->motDePasse) && isset($data->email) && isset($data->nom) && isset($data->prenom) && isset($data->sexe) && isset($data->niveauPratique) && isset($data->date);
 
             // Vérifier que toutes les données requises sont présentes
             if ($set) {
@@ -35,7 +35,6 @@
                     exit;
                 }
 
-
                 // Vérifier que l'adresse e-mail est valide
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     http_response_code(400); // Mauvaise requête
@@ -49,7 +48,6 @@
                 $emailExists = $stmt->fetchColumn();
 
                 if ($emailExists > 0) {
-                    // L'e-mail existe déjà
                     http_response_code(409); // Conflit
                     echo json_encode(['error' => 'L\'adresse e-mail existe déjà.']);
                     exit;
@@ -61,9 +59,8 @@
                 $loginExists = $stmt->fetchColumn();
 
                 if ($loginExists > 0) {
-                    // Le login existe déjà
                     http_response_code(409); // Conflit
-                    echo json_encode(['error' => 'Le login existe deja.']);
+                    echo json_encode(['error' => 'Le login existe déjà.']);
                     exit;
                 }
 
@@ -73,7 +70,6 @@
                 $sexeExists = $stmt->fetchColumn();
 
                 if ($sexeExists == 0) {
-                    // L'ID du sexe est invalide
                     http_response_code(400); // Mauvaise requête
                     echo json_encode(['error' => 'L\'ID du sexe est invalide.']);
                     exit;
@@ -85,11 +81,13 @@
                 $niveauPratiqueExists = $stmt->fetchColumn();
 
                 if ($niveauPratiqueExists == 0) {
-                    // L'ID du niveau de pratique est invalide
                     http_response_code(400); // Mauvaise requête
                     echo json_encode(['error' => 'L\'ID du niveau de pratique est invalide.']);
                     exit;
                 }
+
+                // Hacher le mot de passe avant l'insertion
+                $hashedPassword = password_hash($motDePasse, PASSWORD_DEFAULT);
 
                 // Préparer la requête SQL pour l'insertion
                 $stmt = $pdo->prepare("
@@ -104,7 +102,7 @@
                         :login,
                         :motDePasse,
                         (SELECT TRANCHES_D_AGE.ID_AGE 
-                         FROM TRANCHE_D_AGE 
+                         FROM TRANCHES_D_AGE 
                          WHERE :date BETWEEN 
                                COALESCE(DATE_SUB(NOW(), INTERVAL TRANCHES_D_AGE.MAX_AGE YEAR), '1900-01-01') 
                          AND 
@@ -122,7 +120,7 @@
                         ':sexe' => $sexe,
                         ':niveauPratique' => $niveauPratique,
                         ':login' => $login,
-                        ':motDePasse' => $motDePasse
+                        ':motDePasse' => $hashedPassword // Utiliser le mot de passe haché
                     ]);
                 } catch (PDOException $e) {
                     http_response_code(500); // Erreur serveur interne
@@ -133,20 +131,18 @@
                 // Insertion réussie, retourner la réponse appropriée
                 setHeaders();
                 session_start();
-                $_SESSION['login'] = $login; // Stocker le login échappé dans la session
+                $_SESSION['login'] = $login;
                 $_SESSION['connected'] = true;
-                setcookie('login',$login, 0, "/");
+                setcookie('login', $login, 0, "/");
                 http_response_code(201); // Ressource créée
                 echo json_encode(['connected' => true]);
             } else {
-                // Informations manquantes dans la requête
                 http_response_code(400); // Mauvaise requête
                 echo json_encode(['error' => 'Toutes les informations sont requises.']);
             }
             break;
 
         default:
-            // Méthode non autorisée
             http_response_code(405); // Méthode non autorisée
             echo json_encode(['error' => 'Méthode non autorisée.']);
             break;

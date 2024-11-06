@@ -213,35 +213,35 @@
             break;
             case 'DELETE':
                 // Supprimer un UTILISATEUR
-                // Récupérer l'entrée JSON
                 $data = json_decode(file_get_contents("php://input"));
-    
+            
                 if (isset($data->login) && isset($data->motDePasse)) {
                     $login = escape_special_characters($data->login);
-                    $password = $data->motDePasse; // Le mot de passe brut pour la vérification
-    
+                    $password = $data->motDePasse; // Mot de passe brut pour la vérification
+            
                     // Vérifier que l'UTILISATEUR est en train de supprimer son propre compte
                     if ($login !== $_SESSION['login']) {
                         http_response_code(403); // Interdit
                         echo json_encode(['error' => 'Accès interdit. Vous ne pouvez pas supprimer un autre compte UTILISATEUR.']);
                         exit;
                     }
-                    // Rechercher l'UTILISATEUR et vérifier le mot de passe en clair (non haché)
+            
+                    // Rechercher l'UTILISATEUR et récupérer le mot de passe haché
                     $stmt = $pdo->prepare("SELECT UTILISATEUR.MDP FROM UTILISATEUR WHERE UTILISATEUR.LOGIN = :login");
                     $stmt->execute([':login' => $login]);
                     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
+            
                     if ($user) {
-                        // Comparer le mot de passe en clair (non haché)
-                        if ($password === $user['MDP']) {
+                        // Comparer le mot de passe fourni avec le hachage stocké
+                        if (password_verify($password, $user['MDP'])) {
                             // Le mot de passe est correct, procéder à la suppression
                             $stmt = $pdo->prepare("DELETE FROM UTILISATEUR WHERE LOGIN = :login");
                             $stmt->execute([':login' => $login]);
-
+            
                             // Fermer la session et envoyer une réponse de succès
-                            $_SESSION=[];
+                            $_SESSION = [];
                             session_destroy();
-                            setcookie('login','', time() - 3600, '/');
+                            setcookie('login', '', time() - 3600, '/');
                             http_response_code(200); // Succès
                             echo json_encode(['success' => 'Utilisateur supprimé avec succès.']);
                         } else {
@@ -254,13 +254,12 @@
                         http_response_code(404); // Non trouvé
                         echo json_encode(['error' => 'Utilisateur non trouvé.']);
                     }
-
-    
+            
                 } else {
                     http_response_code(400); // Mauvaise requête
                     echo json_encode(['error' => 'Le login et le mot de passe sont requis.']);
                 }
-                break;
+                break;            
 
         default:
             // Si une méthode autre  est utilisée, renvoyer une erreur 405

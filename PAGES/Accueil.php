@@ -4,7 +4,10 @@
     <h2>IMangerMieux</h2>
     <p style="color: blue;"><strong><u>Votre allié pour une nutrition saine et équilibrée.</u></strong></p>
     <h3>Site de gestion de la nutrition</h3>
-    <p>Pour commencer, veuillez ajouter des repas.</p>
+    <p>
+        Pour commencer veuillez rajouter des aliments.
+        
+    </p>
     <br>
     <p style="margin:auto; bottom: 10px; text-align:center; font-size:small;">Ce projet a été développé lors d'un cours de développement Web à <a href="https://imt-nord-europe.fr/">IMT Nord Europe</a>.</p>
 </div>
@@ -26,9 +29,6 @@
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ombre pour donner du relief */
         max-width: 600px; /* Limite la largeur maximale */
         margin: 20px auto; /* Centre le contenu et ajoute un espace en haut et en bas */
-        transition: transform 0.5s ease, opacity 0.5s ease; /* Transition douce pour l'apparition */
-        opacity: 0; /* Initialement caché pour l'animation */
-        transform: translateY(-20px); /* Déplacement vers le bas pour l'animation */
     }
 
     h1 {

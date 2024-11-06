@@ -12,7 +12,8 @@ if (isset($_SESSION['connected']) && $_SESSION['connected']) {
     ?>
     <button id="menuButton">☰ Menu</button>
     <header class="header">
-        <br id="mbr">
+        <br>
+        <br>
         <button id='logoutButton'>Déconnexion</button>
         <div id="userdata"></div>
         
@@ -32,13 +33,13 @@ if (isset($_SESSION['connected']) && $_SESSION['connected']) {
     }
 
     // Vérifier si la page n'est pas accueil.php avant d'afficher le logo
-    if ($currentPageId !== 'accueil') { ?>
+    if ($currentPageId !== 'Accueil'&&$currentPageId !== 'accueil') { ?>
         <div id="logoContainer">
             <img src="../logo/upper_logo.png" alt="Logo" id="bottomRightLogo">
         </div>
     <?php }
 } else {
-    header("Location:" . URL_Login);
+    header("Location:" . URL_Index);
 }
 ?>   
 <script>
