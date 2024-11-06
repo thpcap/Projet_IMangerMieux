@@ -9,8 +9,8 @@
         'accueil' => array('Accueil'),
         'repas' => array('Repas'),
         'statistiques' => array('Statistiques'),
-        'recommendations' => array('Recommendations'),
-        'contact'=> array('Contact')
+        'recommendations' => array('Recommandations'),
+        'contact'=> array('Contact Us')
     );
     
 
