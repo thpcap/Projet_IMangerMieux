@@ -21,14 +21,6 @@
 
             <label for="message">Description du problème :</label>
             <textarea id="message" name="message" required></textarea>
-
-            <label for="attachment">Pièces jointes (facultatif) :</label>
-            <label class="custom-file-upload">
-                <input type="file" id="attachment" name="attachment" />
-                Choisir un fichier
-            </label>
-            <span class="file-name" id="fileName">Aucun fichier sélectionné</span>
-            <button type="button" id="removeFile" style="display:none;">Retirer le fichier</button>
             <br>
             <button id="submit" type="submit">Envoyer</button>
         </form>
@@ -37,20 +29,6 @@
     </div>
     <script>
         $(document).ready(function () {
-            // Affiche le nom du fichier sélectionné et montre le bouton "Retirer le fichier"
-            $('#attachment').on('change', function () {
-                const fileName = this.files.length > 0 ? this.files[0].name : 'Aucun fichier sélectionné';
-                $('#fileName').text(fileName);
-                $('#removeFile').show(); // Affiche le bouton "Retirer le fichier"
-            });
-
-            // Retire le fichier sélectionné
-            $('#removeFile').on('click', function () {
-                $('#attachment').val(''); // Réinitialise le champ de fichier
-                $('#fileName').text('Aucun fichier sélectionné'); // Réinitialise le nom du fichier
-                $(this).hide(); // Cache le bouton "Retirer le fichier"
-            });
-
             $('#contactForm').on('submit', function (e) {
                 e.preventDefault();
 
@@ -69,7 +47,12 @@
                     contentType: 'application/json',
                     data: JSON.stringify(formData),
                     success: function (response) {
-                        $('#confirmationMessage').show(); // Show confirmation message on success
+                        if (formData.subject === "Bug technique") {
+                        $('#confirmationMessage').html("Merci ! Votre message a été envoyé. Nous reviendrons vers vous sous 24 à 48 heures. <br>*Votre rapport de bug a bien été pris en compte ! Nous travaillons pour résoudre le problème au plus vite.*<br>et souvenez vous \"Ce n'est pas un bug, c'est une nouvelle fonctionnalité... d'un certain point de vue.\"<br>- Obi-Wan Kenobi <p style=\"font-size=small\">ceci n'est pas une veritable citation</p> ");
+                    } else {
+                        $('#confirmationMessage').text("Merci ! Votre message a été envoyé. Nous reviendrons vers vous sous 24 à 48 heures.");
+                    }
+                        
                         $('#contactForm')[0].reset(); // Clear form fields
                         $('#removeFile').hide(); // Cache le bouton "Retirer le fichier" après soumission
                         $('#fileName').text('Aucun fichier sélectionné'); // Réinitialise le nom du fichier
