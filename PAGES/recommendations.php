@@ -49,7 +49,7 @@
         </select>
     
 
-        <button id="calculateBtn" style="background-color: #007BFF; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;" onclick="calculateNeeds()">Mes besoins</button>
+        <button id="calculateBtn" style="font-weight: bold;background-color: #007BFF; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;" onclick="calculateNeeds()">Mes besoins</button>
 
         <div id="result" style="margin-top: 15px; display: none;">
             <h3>Résultat :</h3>

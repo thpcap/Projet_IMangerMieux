@@ -51,6 +51,7 @@ header.active {
 }
 
 #Menu a {
+    font-weight: bold;
     color: black; /* Changer la couleur des liens en noir */
     text-decoration: none; /* Retirer le soulignement des liens */
     display: block; /* Assurer que chaque lien occupe toute la largeur disponible */
@@ -108,6 +109,7 @@ body.DarkMode {
 }
 
 #userdata{
+    font-weight: bold;
     margin-top: 10px;
     padding: 2%;
     background-color: bisque;
@@ -128,6 +130,7 @@ body.DarkMode {
 }
 .modifyUser{
     width: 100%;
+    
 }
 .centered {
     display: block;
@@ -142,6 +145,7 @@ body.DarkMode {
     margin-left: 5px;
 }
 #logoutButton{
+    font-weight: bold;
     background-color: white;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -156,6 +160,7 @@ body.DarkMode {
     
 }
 #menuButton{
+    font-weight: bold;
     position:fixed;
     cursor: pointer; /* Curseur en forme de main au survol */
     left:5px;
