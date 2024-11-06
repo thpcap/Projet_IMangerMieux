@@ -146,6 +146,7 @@ body.DarkMode {
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     width: 100%;
+    font-size: large;
     border: 0;
 }
 #logoutButton:hover{
@@ -162,8 +163,9 @@ body.DarkMode {
     z-index:100;
     box-shadow:0 0 10px rgba(0, 0, 0, 0.3);
     background-color: bisque;
+    font-size: large;
     border: 0;
-    width: 80px;
+    width: 100px;
     border-radius: 20px;
 }
 #menuButton:hover{

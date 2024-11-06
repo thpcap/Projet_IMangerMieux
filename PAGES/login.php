@@ -26,7 +26,9 @@
                     </tr>
                     <tr>
                         <th colspan="2">
-                            <p id="error" class="error">Login ou Mot de Passe erroné(s)</p>
+                            <p id="error" class="error">Login ou Mot de Passe erroné(s).
+                                Ce ne sont pas les droides que vous recherchez.
+                            </p>
                         </th>
                     </tr>
                     <tr>

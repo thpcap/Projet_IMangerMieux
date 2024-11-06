@@ -12,7 +12,8 @@ if (isset($_SESSION['connected']) && $_SESSION['connected']) {
     ?>
     <button id="menuButton">☰ Menu</button>
     <header class="header">
-        <br id="mbr">
+        <br>
+        <br>
         <button id='logoutButton'>Déconnexion</button>
         <div id="userdata"></div>
         

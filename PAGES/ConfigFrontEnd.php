@@ -7,7 +7,7 @@
     define("URL_Index","index.php");//adresse de la page de login
     //tableau qui structure le menu
     $mymenu = array(
-        'accueil' => array('Accueil'),
+        'Accueil' => array('Accueil'),
         'repas' => array('Repas'),
         'statistiques' => array('Statistiques'),
         'recommendations' => array('Recommendations'),
