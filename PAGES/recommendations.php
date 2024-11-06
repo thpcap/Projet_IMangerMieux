@@ -1,12 +1,12 @@
 <section id="content">
     <h1 style="color: blue; text-align: center">Recommandations Nutritionnelles</h1>
-    <P style="text-align: justify;">Chaque individu a des besoins nutritionnels spécifiques qui varient selon 
+    <P style="text-align: justify;line-height: 1.5">Chaque individu a des besoins nutritionnels spécifiques qui varient selon 
         l'âge, le sexe, le niveau d'activité physique et d'autres facteurs. Pour assurer une bonne santé, 
         il est essentiel de respecter certaines recommandations de consommation en <strong>Energie</strong>, macronutriments 
         (<strong>Protéines, Glucides, Lipides</strong>) et micronutriments (<strong>Vitamines, Minéraux, etc.</strong> ). Ces recommandations 
         sont définies par l'Organisation Mondiale de la Santé OMS et servent de repères pour une alimentation équilibrée.</P>
     <h2>Calculez votre besoin nutritionnel par jour</h2>
-    <p style="text-align: justify;"> <strong>BesoinsPro©</strong> est un outil de calcul des besoins nutritionnels 
+    <p style="text-align: justify;line-height: 1.5"> <strong>BesoinsPro©</strong> est un outil de calcul des besoins nutritionnels 
         vous permet d'estimer votre apport quotidien en nutriments essentiels. Il s'appuie sur 
         des méthodes utilisées par les diététiciens-nutritionnistes pour fournir des recommandations 
         basées sur votre âge, sexe, poids, taille et niveau d'activité physique.</p>
