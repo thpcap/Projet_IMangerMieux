@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once('init_PDO.php');
 require_once('usefullFunctions.php');
 
@@ -11,67 +11,84 @@ if (!isset($_SESSION['connected']) || !$_SESSION['connected'] || !isset($_SESSIO
     exit;
 }
 
-switch ($_SERVER["REQUEST_METHOD"]) {
-    case 'GET':
-        // Récupérer les informations utilisateur depuis la base de données
-        $stmt = $pdo->prepare(
-            "SELECT ID_SEXE, DATE_DE_NAISSANCE, ID_PRATIQUE FROM utilisateur WHERE LOGIN = :login"
-        );
+try {
+    switch ($_SERVER["REQUEST_METHOD"]) {
+        case 'POST':
+            $inputData = json_decode(file_get_contents("php://input"), true);
 
-        try {
-            $stmt->execute([':login' => $_SESSION['login']]);
-            $userData = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            if (!$userData) {
-                http_response_code(404);
-                echo json_encode(['error' => 'Utilisateur non trouvé']);
+            // Récupérer les données
+            $sexe = $inputData['sexe'] ?? null;
+            $poids = $inputData['poids'] ?? null;
+            $taille = $inputData['taille'] ?? null;
+            $age = $inputData['age'] ?? null;
+            $niveauActivite = $inputData['niveauActivite'] ?? null;
+            $nutrient = $inputData['nutrient'] ?? null;
+
+            if (empty($sexe) || empty($poids) || empty($taille) || empty($age) || empty($niveauActivite) || empty($nutrient)) {
+                http_response_code(400);
+                echo json_encode(['error' => 'Données manquantes ou invalides']);
                 exit;
             }
+
+            if (!is_numeric($poids) || !is_numeric($taille) || !is_numeric($age) || !is_numeric($niveauActivite)) {
+                http_response_code(400);
+                echo json_encode(['error' => 'Les valeurs numériques doivent être valides']);
+                exit;
+            }
+
+            // Calcul des besoins nutritionnels en fonction du nutriment sélectionné
+            $recommandations = [];
+
+            switch ($nutrient) {
+                case 'eau':
+                    // Selon l'OMS, l'apport en eau recommandé est d'environ 2 à 3 litres par jour pour les adultes.
+                    // On considère un apport de base de 2,7 L/jour pour les femmes et 3,7 L/jour pour les hommes, ajusté selon l'activité.
+                    $recommandations['eau'] = ($sexe === 'homme') ? 3.7 : 2.7;
+                    $recommandations['eau'] += 0.1 * $niveauActivite; // Ajustement basé sur le niveau d'activité.
+                    break;
+                case 'energie':
+                    // Apport énergétique basé sur les besoins moyens d'entretien selon l'âge, le sexe et l'activité physique.
+                    // Exemple de formule simplifiée en kcal/jour :
+                    if ($sexe === 'homme') {
+                        $recommandations['energie'] = 88.36 + (13.4 * $poids) + (4.8 * $taille) - (5.7 * $age);
+                    } else {
+                        $recommandations['energie'] = 447.6 + (9.2 * $poids) + (3.1 * $taille) - (4.3 * $age);
+                    }
+                    $recommandations['energie'] *= (1.2 + (0.1 * $niveauActivite)); // Facteur d'ajustement pour le niveau d'activité.
+                    break;
+                case 'proteines':
+                    // Selon l'OMS, l'apport recommandé en protéines est de 0,8 g/kg de poids corporel pour les adultes.
+                    $recommandations['proteines'] = $poids * 0.8;
+                    break;
+                case 'glucides':
+                    // L'OMS recommande que 55-75% de l'apport énergétique total provienne des glucides.
+                    // Ici, nous prenons un ratio de 60% pour l'exemple :
+                    $ratioGlucides = 0.60;
+                    $recommandations['glucides'] = ($recommandations['energie'] * $ratioGlucides) / 4; // 1 g de glucides = 4 kcal.
+                    break;
+                case 'sel':
+                    // L'OMS recommande de limiter l'apport en sel à moins de 5 g/jour.
+                    $recommandations['sel'] = 5;
+                    break;
+                default:
+                    http_response_code(400);
+                    echo json_encode(['error' => 'Nutriment non valide']);
+                    exit;
+            }
             
-            $sexe = $userData['ID_SEXE'];
-            $dateNaissance = $userData['DATE_DE_NAISSANCE']; 
-            $niveauActivite = $userData['ID_PRATIQUE'];
-
-            // Calculer l'âge et l'ID de tranche d'âge
-            $age = calculerAge($dateNaissance);
-
-            // Calculer les besoins nutritionnels
-            $recommandations = calculRecommandations($age, $sexe, $niveauActivite);
 
             http_response_code(200);
             echo json_encode($recommandations);
+            break;
 
-        } catch (PDOException $e) {
-            http_response_code(500);
-            echo json_encode(['error' => 'Erreur de base de données : ' . $e->getMessage()]);
-        }
-        break;
-
-    default:
-        http_response_code(405);
-        echo json_encode(['error' => 'Méthode non autorisée']);
-        break;
-}
-
-// Fonction pour calculer l'âge
-function calculerAge($dateNaissance) {
-    $dateNaissance = new DateTime($dateNaissance);
-    $aujourdhui = new DateTime();
-    $age = $aujourdhui->diff($dateNaissance)->y;
-    return $age;
-}
-
-// Fonction pour calculer les recommandations nutritionnelles
-function calculRecommandations($age, $sexe, $niveauActivite) {
-    $recommandations = [];
-
-    // Calcul des recommandations
-    $recommandations['eau'] = 2 + 0.1 * $niveauActivite;
-    $recommandations['energie'] = ($sexe === 'homme') ? 2500 + ($niveauActivite * 200) : 2000 + ($niveauActivite * 150);
-    $recommandations['proteines'] = $age;
-    $recommandations['glucides'] = $recommandations['energie'] * 0.55 / 4;
-    $recommandations['sel'] = 5 * $niveauActivite;
-
-    return $recommandations;
+        default:
+            http_response_code(405);
+            echo json_encode(['error' => 'Méthode non autorisée']);
+            break;
+    }
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Erreur du serveur : ' . $e->getMessage()]);
+    exit;
 }
 ?>
