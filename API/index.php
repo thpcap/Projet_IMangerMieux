@@ -13,6 +13,7 @@
                 padding: 20px;
             }
             .container {
+
                 max-width: 1500px;
                 margin: auto;
                 background: beige;
@@ -57,12 +58,25 @@
             .param {
                 font-weight: bold;
             }
+            #title {
+                display: flex;
+                flex-direction: column; /* Pour empiler l'image et le titre verticalement */
+                align-items: center; /* Centre horizontalement */
+            }
+
+            #title img {
+                max-width: 100%; /* L'image s'ajuste à la largeur du conteneur sans déformer */
+                height: auto; /* Conserve les proportions de l'image */
+            }
         </style>
     </head>
     <body>
         <div class="container">
-            <h1>Documentation API</h1>
-
+            <div id="title">
+                <img src="upper_logo.png" alt="">
+                <h1>Documentation API IMangerMieux</h1>
+            </div>
+            
             <div class="endpoint">
                 <h2>POST - Connexion de l'utilisateur</h2>
                 <p><span class="method">POST</span> <code>/API/login.php</code></p>
