@@ -1,3 +1,6 @@
+<p style="color: red; font-size: large;">
+    cette fonction retourne beaucoup d'erreurs c'est normal
+</p>
 <?php
     require_once("../init_PDO.php");
     $querry=file_get_contents('create_db.sql');

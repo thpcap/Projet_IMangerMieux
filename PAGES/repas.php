@@ -18,7 +18,7 @@
         <form id="createMealForm">
             <table style="width: 100%;">
                 <tr>
-                    <td><label for="quantite">Quantité :</label></td>
+                    <td><label for="quantite">Quantité en g: </label></td>
                     <td><input type="number" id="quantite" name="quantite" required style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;"></td>
                 </tr>
                 <tr>
@@ -50,7 +50,7 @@
                 <th><button id="toggleFormButton" style="background-color: #007BFF; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">+</button></th>
                 <th style="display: none;">ID REPAS</th>
                 <th style="text-align: left;">Aliment</th>
-                <th style="text-align: left;">Quantité</th>
+                <th style="text-align: left;">Quantité en g</th>
                 <th style="text-align: left;">Date</th>
                 <th style="text-align: left;">Actions</th>
             </tr>
@@ -97,7 +97,7 @@ $(document).ready(function() {
                             <td></td>
                             <td style="display: none;">${meal.ID_REPAS}</td>
                             <td>${meal.LABEL_ALIMENT}</td>
-                            <td contenteditable="false" class="editable-cell" data-field="quantite">${meal.QUANTITE}</td>
+                            <td contenteditable="false" class="editable-cell" data-field="quantite">${meal.QUANTITE*100}</td>
                             <td contenteditable="false" class="editable-cell" data-field="date">${new Date(meal.DATE).toLocaleDateString('fr-FR')}</td>
                             <td>
                                 <button class="edit-button" style="background-color: #FFC107; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Modifier</button>
@@ -150,7 +150,7 @@ $(document).ready(function() {
             url: apiUrl,
             method: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({ login: getCookie('login'), quantite: quantite, date: date, id_aliment: id_aliment }),
+            data: JSON.stringify({ login: getCookie('login'), quantite: (quantite/100), date: date, id_aliment: id_aliment }),
             success: function(response) {
                 displayError("Repas ajouté avec succès.");
                 fetchRepas();
@@ -205,7 +205,7 @@ $(document).ready(function() {
         const updateData = {
             login: login,
             ID_REPAS: ID_REPAS,
-            quantite: quantite,
+            quantite: (quantite/100),
             date: new Date(date.split('/').reverse().join('-')).toISOString().split('T')[0]
         };
 
