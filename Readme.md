@@ -9,6 +9,8 @@ the API manual is at /API/index.php
 
 the Connection input file is /PAGES/index.php
 
+to create the tatabase ther is an endpoint in API/Administration/reateDB.php
+
 And remember:
 "It's not a bug, it's a feature... from a certain point of view."
 – Obi-Wan Kenobi
